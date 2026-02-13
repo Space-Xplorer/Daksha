@@ -4,9 +4,89 @@ Pytest configuration and shared fixtures.
 This module provides fixtures for testing the Daksha system.
 """
 
-import pytest
-from typing import Dict, Any
+import csv
+from pathlib import Path
+from typing import Dict, Any, List, Optional
 from datetime import datetime
+
+import pytest
+
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+DATA_DIR = ROOT_DIR / "models" / "data"
+LOAN_DATA_PATH = DATA_DIR / "loan_data.csv"
+HEALTH_DATA_PATH = DATA_DIR / "hi.csv"
+
+
+def _parse_float(value: Optional[str]) -> Optional[float]:
+    if value is None:
+        return None
+    cleaned = str(value).strip()
+    if cleaned == "":
+        return None
+    try:
+        return float(cleaned)
+    except ValueError:
+        return None
+
+
+def _parse_int(value: Optional[str]) -> Optional[int]:
+    parsed = _parse_float(value)
+    if parsed is None:
+        return None
+    try:
+        return int(parsed)
+    except (ValueError, TypeError):
+        return None
+
+
+def _load_csv_rows(path: Path) -> List[Dict[str, str]]:
+    if not path.exists():
+        return []
+    with open(path, "r", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        return [dict(row) for row in reader]
+
+
+def _load_loan_rows() -> List[Dict[str, Any]]:
+    rows = []
+    for row in _load_csv_rows(LOAN_DATA_PATH):
+        rows.append({
+            "no_of_dependents": _parse_int(row.get("no_of_dependents")),
+            "education": (row.get("education") or "").strip(),
+            "self_employed": (row.get("self_employed") or "").strip(),
+            "income_annum": _parse_float(row.get("income_annum")),
+            "loan_amount": _parse_float(row.get("loan_amount")),
+            "loan_term": _parse_float(row.get("loan_term")),
+            "cibil_score": _parse_float(row.get("cibil_score")),
+            "residential_assets_value": _parse_float(row.get("residential_assets_value")) or 0.0,
+            "commercial_assets_value": _parse_float(row.get("commercial_assets_value")) or 0.0,
+            "luxury_assets_value": _parse_float(row.get("luxury_assets_value")) or 0.0,
+            "bank_asset_value": _parse_float(row.get("bank_asset_value")) or 0.0,
+            "loan_status": (row.get("loan_status") or "").strip()
+        })
+    return rows
+
+
+def _load_health_rows() -> List[Dict[str, Any]]:
+    rows = []
+    for row in _load_csv_rows(HEALTH_DATA_PATH):
+        rows.append({
+            "age": _parse_int(row.get("age")),
+            "sex": (row.get("sex") or "").strip(),
+            "weight": _parse_float(row.get("weight")),
+            "bmi": _parse_float(row.get("bmi")),
+            "hereditary_diseases": (row.get("hereditary_diseases") or "").strip(),
+            "no_of_dependents": _parse_int(row.get("no_of_dependents")),
+            "smoker": _parse_int(row.get("smoker")),
+            "city": (row.get("city") or "").strip(),
+            "bloodpressure": _parse_float(row.get("bloodpressure")),
+            "diabetes": _parse_int(row.get("diabetes")),
+            "regular_ex": _parse_int(row.get("regular_ex")),
+            "job_title": (row.get("job_title") or "").strip(),
+            "claim": _parse_float(row.get("claim"))
+        })
+    return rows
 
 
 # ============================================================================
@@ -16,10 +96,22 @@ from datetime import datetime
 @pytest.fixture
 def valid_loan_application() -> Dict[str, Any]:
     """Valid loan application data."""
+    rows = [row for row in _load_loan_rows() if row.get("cibil_score") and row.get("income_annum") and row.get("loan_amount")]
+    rows.sort(key=lambda r: r.get("cibil_score") or 0, reverse=True)
+    pick = rows[0] if rows else {}
     return {
-        "cibil_score": 750,
-        "annual_income": 1200000.0,
-        "loan_amount": 500000.0,
+        "cibil_score": pick.get("cibil_score", 750),
+        "income_annum": pick.get("income_annum", 1200000.0),
+        "annual_income": pick.get("income_annum", 1200000.0),
+        "loan_amount": pick.get("loan_amount", 500000.0),
+        "loan_term": pick.get("loan_term", 12),
+        "education": pick.get("education", "Graduate"),
+        "self_employed": pick.get("self_employed", "No"),
+        "no_of_dependents": pick.get("no_of_dependents", 1),
+        "residential_assets_value": pick.get("residential_assets_value", 0.0),
+        "commercial_assets_value": pick.get("commercial_assets_value", 0.0),
+        "luxury_assets_value": pick.get("luxury_assets_value", 0.0),
+        "bank_asset_value": pick.get("bank_asset_value", 0.0),
         "employment_type": "salaried",
         "existing_debt": 100000.0,
         "age": 32,
@@ -32,10 +124,22 @@ def valid_loan_application() -> Dict[str, Any]:
 @pytest.fixture
 def invalid_loan_application_low_cibil() -> Dict[str, Any]:
     """Invalid loan application with low CIBIL score."""
+    rows = [row for row in _load_loan_rows() if row.get("cibil_score") and row.get("income_annum") and row.get("loan_amount")]
+    rows.sort(key=lambda r: r.get("cibil_score") or 9999)
+    pick = rows[0] if rows else {}
     return {
-        "cibil_score": 550,  # Too low
-        "annual_income": 600000.0,
-        "loan_amount": 500000.0,
+        "cibil_score": pick.get("cibil_score", 550),
+        "income_annum": pick.get("income_annum", 600000.0),
+        "annual_income": pick.get("income_annum", 600000.0),
+        "loan_amount": pick.get("loan_amount", 500000.0),
+        "loan_term": pick.get("loan_term", 12),
+        "education": pick.get("education", "Not Graduate"),
+        "self_employed": pick.get("self_employed", "No"),
+        "no_of_dependents": pick.get("no_of_dependents", 2),
+        "residential_assets_value": pick.get("residential_assets_value", 0.0),
+        "commercial_assets_value": pick.get("commercial_assets_value", 0.0),
+        "luxury_assets_value": pick.get("luxury_assets_value", 0.0),
+        "bank_asset_value": pick.get("bank_asset_value", 0.0),
         "employment_type": "salaried",
         "existing_debt": 200000.0,
         "age": 28,
@@ -48,10 +152,22 @@ def invalid_loan_application_low_cibil() -> Dict[str, Any]:
 @pytest.fixture
 def edge_case_loan_application() -> Dict[str, Any]:
     """Edge case loan application (borderline approval)."""
+    rows = [row for row in _load_loan_rows() if row.get("cibil_score") and row.get("income_annum") and row.get("loan_amount")]
+    rows.sort(key=lambda r: r.get("cibil_score") or 0)
+    pick = rows[len(rows) // 2] if rows else {}
     return {
-        "cibil_score": 650,  # Borderline
-        "annual_income": 800000.0,
-        "loan_amount": 400000.0,
+        "cibil_score": pick.get("cibil_score", 650),
+        "income_annum": pick.get("income_annum", 800000.0),
+        "annual_income": pick.get("income_annum", 800000.0),
+        "loan_amount": pick.get("loan_amount", 400000.0),
+        "loan_term": pick.get("loan_term", 12),
+        "education": pick.get("education", "Graduate"),
+        "self_employed": pick.get("self_employed", "No"),
+        "no_of_dependents": pick.get("no_of_dependents", 1),
+        "residential_assets_value": pick.get("residential_assets_value", 0.0),
+        "commercial_assets_value": pick.get("commercial_assets_value", 0.0),
+        "luxury_assets_value": pick.get("luxury_assets_value", 0.0),
+        "bank_asset_value": pick.get("bank_asset_value", 0.0),
         "employment_type": "self_employed",
         "existing_debt": 150000.0,
         "age": 45,
@@ -68,18 +184,23 @@ def edge_case_loan_application() -> Dict[str, Any]:
 @pytest.fixture
 def valid_insurance_application() -> Dict[str, Any]:
     """Valid insurance application data."""
+    rows = [row for row in _load_health_rows() if row.get("age") and row.get("bmi") is not None and row.get("smoker") is not None]
+    rows = [row for row in rows if row.get("smoker") == 0 and (row.get("diabetes") or 0) == 0]
+    rows = [row for row in rows if (row.get("age") or 0) < 60]
+    pick = rows[0] if rows else {}
     return {
-        "age": 32,
-        "bmi": 24.5,
-        "smoker": False,
-        "pre_existing_conditions": [],
-        "family_history": [],
-        "occupation_risk": "low",
+        "age": pick.get("age", 32),
+        "bmi": pick.get("bmi", 24.5),
+        "smoker": pick.get("smoker", 0),
+        "bloodpressure": pick.get("bloodpressure", 0),
+        "diabetes": pick.get("diabetes", 0),
+        "regular_ex": pick.get("regular_ex", 1),
+        "sex": pick.get("sex", "male"),
+        "hereditary_diseases": pick.get("hereditary_diseases", "NoDisease"),
+        "no_of_dependents": pick.get("no_of_dependents", 0),
+        "city": pick.get("city", "Boston"),
+        "job_title": pick.get("job_title", "Engineer"),
         "coverage_amount": 1000000.0,
-        "bloodpressure": 0,  # Normal
-        "diabetes": 0,  # No
-        "regular_ex": True,
-        "gender": "M",
         "name": "Rajesh Kumar"
     }
 
@@ -87,18 +208,23 @@ def valid_insurance_application() -> Dict[str, Any]:
 @pytest.fixture
 def invalid_insurance_application_high_risk() -> Dict[str, Any]:
     """Invalid insurance application with high risk factors."""
+    rows = [row for row in _load_health_rows() if row.get("age") and row.get("bmi") is not None and row.get("smoker") is not None]
+    rows = [row for row in rows if row.get("smoker") == 1 or (row.get("diabetes") or 0) == 1]
+    rows.sort(key=lambda r: r.get("bmi") or 0, reverse=True)
+    pick = rows[0] if rows else {}
     return {
-        "age": 55,
-        "bmi": 32.0,  # Obese
-        "smoker": True,
-        "pre_existing_conditions": ["diabetes", "hypertension"],
-        "family_history": ["heart_disease"],
-        "occupation_risk": "high",
+        "age": pick.get("age", 55),
+        "bmi": pick.get("bmi", 32.0),
+        "smoker": pick.get("smoker", 1),
+        "bloodpressure": pick.get("bloodpressure", 1),
+        "diabetes": pick.get("diabetes", 1),
+        "regular_ex": pick.get("regular_ex", 0),
+        "sex": pick.get("sex", "male"),
+        "hereditary_diseases": pick.get("hereditary_diseases", "NoDisease"),
+        "no_of_dependents": pick.get("no_of_dependents", 1),
+        "city": pick.get("city", "NewYork"),
+        "job_title": pick.get("job_title", "Manager"),
         "coverage_amount": 2000000.0,
-        "bloodpressure": 1,  # High
-        "diabetes": 1,  # Yes
-        "regular_ex": False,
-        "gender": "M",
         "name": "Test User"
     }
 
@@ -106,18 +232,22 @@ def invalid_insurance_application_high_risk() -> Dict[str, Any]:
 @pytest.fixture
 def edge_case_insurance_application() -> Dict[str, Any]:
     """Edge case insurance application (borderline premium)."""
+    rows = [row for row in _load_health_rows() if row.get("age") and row.get("bmi") is not None and row.get("smoker") is not None]
+    rows.sort(key=lambda r: r.get("age") or 0)
+    pick = rows[len(rows) // 2] if rows else {}
     return {
-        "age": 40,
-        "bmi": 27.0,  # Slightly overweight
-        "smoker": False,
-        "pre_existing_conditions": ["diabetes"],
-        "family_history": [],
-        "occupation_risk": "medium",
+        "age": pick.get("age", 40),
+        "bmi": pick.get("bmi", 27.0),
+        "smoker": pick.get("smoker", 0),
+        "bloodpressure": pick.get("bloodpressure", 0),
+        "diabetes": pick.get("diabetes", 1),
+        "regular_ex": pick.get("regular_ex", 1),
+        "sex": pick.get("sex", "female"),
+        "hereditary_diseases": pick.get("hereditary_diseases", "NoDisease"),
+        "no_of_dependents": pick.get("no_of_dependents", 1),
+        "city": pick.get("city", "Boston"),
+        "job_title": pick.get("job_title", "Engineer"),
         "coverage_amount": 1500000.0,
-        "bloodpressure": 0,
-        "diabetes": 1,  # Controlled diabetes
-        "regular_ex": True,
-        "gender": "F",
         "name": "Priya Sharma"
     }
 
@@ -258,8 +388,7 @@ def initial_loan_state(valid_loan_application):
         request_type="loan",
         applicant_data=valid_loan_application,
         loan_type="home",
-        submitted_name="Rajesh Kumar",
-        submitted_dob="1990-05-15"
+        submitted_aadhaar="123456789012"
     )
 
 
@@ -271,8 +400,7 @@ def initial_insurance_state(valid_insurance_application):
     return create_initial_state(
         request_type="insurance",
         applicant_data=valid_insurance_application,
-        submitted_name="Rajesh Kumar",
-        submitted_dob="1990-05-15"
+        submitted_aadhaar="123456789012"
     )
 
 
@@ -288,8 +416,7 @@ def initial_both_state(valid_loan_application, valid_insurance_application):
         request_type="both",
         applicant_data=combined_data,
         loan_type="home",
-        submitted_name="Rajesh Kumar",
-        submitted_dob="1990-05-15"
+        submitted_aadhaar="123456789012"
     )
 
 

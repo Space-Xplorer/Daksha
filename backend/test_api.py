@@ -4,10 +4,26 @@ Quick test script for Daksha API.
 This script tests the basic API endpoints to ensure everything is working.
 """
 
-import requests
 import json
 
+import pytest
+import requests
+
 BASE_URL = "http://localhost:5000/api"
+
+
+def _api_available() -> bool:
+    try:
+        response = requests.get(f"{BASE_URL}/health", timeout=1)
+        return response.status_code == 200
+    except requests.exceptions.RequestException:
+        return False
+
+
+pytestmark = pytest.mark.skipif(
+    not _api_available(),
+    reason="API server not running on localhost:5000"
+)
 
 def test_health():
     """Test health endpoint."""

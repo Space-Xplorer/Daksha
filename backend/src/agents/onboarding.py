@@ -11,8 +11,10 @@ from pathlib import Path
 
 from src.schemas.state import ApplicationState
 from src.utils.ocr_service_factory import get_ocr_service
+from src.utils.ocr_service_mock import OCRService as MockOCRService
 from src.utils.logging import log_agent_execution, log_error
 from src.utils.error_handling import safe_agent_wrapper
+from src.utils.storage import save_extracted_data
 
 
 class OnboardingAgent:
@@ -35,6 +37,7 @@ class OnboardingAgent:
             groq_api_key: Optional Groq API key for LLM-based classification
         """
         self.ocr_service = get_ocr_service(groq_api_key=groq_api_key)
+        self.mock_ocr_service = MockOCRService()
     
     def process_documents(self, state: ApplicationState) -> ApplicationState:
         """
@@ -47,8 +50,6 @@ class OnboardingAgent:
             Updated application state with extracted data
         """
         import base64
-        import tempfile
-        import os
         
         request_id = state.get("request_id", "unknown")
         start_time = time.time()
@@ -72,7 +73,7 @@ class OnboardingAgent:
             extracted_data = {}
             verification_status = {}
             ocr_confidence_scores = {}  # Track OCR confidence per document
-            temp_files = []  # Track temporary files for cleanup
+            ocr_documents = []
             
             # Process each document
             for doc in uploaded_docs:
@@ -95,13 +96,13 @@ class OnboardingAgent:
                         else:
                             ext = ".pdf"  # Default to PDF
                         
-                        # Create temporary file
-                        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=ext)
-                        temp_file.write(content)
-                        temp_file.close()
-                        
-                        doc_path = temp_file.name
-                        temp_files.append(doc_path)
+                        app_id = state.get("application_id") or "unknown"
+                        output_dir = Path("temp") / "uploads" / app_id
+                        output_dir.mkdir(parents=True, exist_ok=True)
+                        safe_name = f"{doc.get('type', 'document')}{ext}"
+                        target_path = output_dir / safe_name
+                        target_path.write_bytes(content)
+                        doc_path = str(target_path)
                         
                     except Exception as e:
                         log_error("onboarding", f"Failed to decode document {doc.get('name')}: {str(e)}", request_id)
@@ -110,8 +111,12 @@ class OnboardingAgent:
                 if not doc_path:
                     continue
                 
+                ocr_service = self.ocr_service
+                if not Path(doc_path).exists():
+                    ocr_service = self.mock_ocr_service
+
                 # Extract text and classify
-                result = self.ocr_service.process_document(
+                result = ocr_service.process_document(
                     doc_path,
                     preprocess=True,
                     classify=True
@@ -128,13 +133,22 @@ class OnboardingAgent:
                 logger = logging.getLogger(__name__)
                 logger.info(f"OCR confidence for {doc_type}: {confidence:.1f}%")
                 
+                # Track OCR artifacts for downstream rules/fraud checks
+                ocr_documents.append({
+                    "document_type": doc_type,
+                    "file_path": doc_path,
+                    "text": text,
+                    "confidence": confidence,
+                    "text_length": len(text)
+                })
+
                 # Extract fields based on request type
                 if request_type in ["loan", "both"]:
-                    loan_data = self._extract_loan_fields(doc_type, text)
+                    loan_data = self._extract_loan_fields(doc_type, text, ocr_service)
                     extracted_data.update(loan_data)
                 
                 if request_type in ["insurance", "health", "both"]:
-                    health_data = self._extract_health_fields(doc_type, text)
+                    health_data = self._extract_health_fields(doc_type, text, ocr_service)
                     extracted_data.update(health_data)
                 
                 # Verify document freshness
@@ -142,17 +156,11 @@ class OnboardingAgent:
                     doc_type, text
                 )
             
-            # Cleanup temporary files
-            for temp_file in temp_files:
-                try:
-                    os.unlink(temp_file)
-                except Exception:
-                    pass
-            
             # Update state with extracted data and confidence scores
             state["extracted_data"] = extracted_data
             state["document_verification"] = verification_status
             state["ocr_confidence_scores"] = ocr_confidence_scores  # Add confidence tracking
+            state["ocr_documents"] = ocr_documents
             
             # Merge extracted data with applicant_data (don't overwrite existing)
             for key, value in extracted_data.items():
@@ -160,6 +168,17 @@ class OnboardingAgent:
                     state["applicant_data"][key] = value
             
             state["onboarding_completed"] = True
+
+            if state.get("application_id"):
+                save_extracted_data(
+                    state["application_id"],
+                    extracted_data,
+                    ocr_documents=ocr_documents,
+                    metadata={
+                        "request_id": request_id,
+                        "request_type": request_type
+                    }
+                )
             
             duration_ms = (time.time() - start_time) * 1000
             log_agent_execution("OnboardingAgent", request_id, "completed", duration_ms)
@@ -174,7 +193,7 @@ class OnboardingAgent:
         
         return state
     
-    def _extract_loan_fields(self, doc_type: str, text: str) -> Dict[str, Any]:
+    def _extract_loan_fields(self, doc_type: str, text: str, ocr_service=None) -> Dict[str, Any]:
         """
         Extract loan-specific fields from document text.
         
@@ -187,9 +206,11 @@ class OnboardingAgent:
         """
         fields = {}
         
+        ocr_service = ocr_service or self.ocr_service
+
         if doc_type == "cibil_report":
             # Extract CIBIL score
-            cibil = self.ocr_service.extract_field(text, "cibil_score")
+            cibil = ocr_service.extract_field(text, "cibil_score")
             if cibil:
                 try:
                     fields["cibil_score"] = int(cibil)
@@ -198,7 +219,7 @@ class OnboardingAgent:
         
         elif doc_type == "salary_slip":
             # Extract monthly income and calculate annual
-            monthly = self.ocr_service.extract_field(text, "monthly_income")
+            monthly = ocr_service.extract_field(text, "monthly_income")
             if monthly:
                 try:
                     monthly_val = float(str(monthly).replace(",", ""))
@@ -208,7 +229,7 @@ class OnboardingAgent:
         
         elif doc_type in ["itr_form16", "itr", "form_16", "tds_certificate"]:
             # Extract annual income directly
-            annual = self.ocr_service.extract_field(text, "annual_income")
+            annual = ocr_service.extract_field(text, "annual_income")
             if annual:
                 try:
                     fields["income_annum"] = float(str(annual).replace(",", ""))
@@ -217,7 +238,7 @@ class OnboardingAgent:
         
         elif doc_type == "bank_statement":
             # Extract bank balance
-            balance = self.ocr_service.extract_field(text, "bank_balance")
+            balance = ocr_service.extract_field(text, "bank_balance")
             if balance:
                 try:
                     fields["bank_asset_value"] = float(str(balance).replace(",", ""))
@@ -226,7 +247,7 @@ class OnboardingAgent:
         
         elif doc_type == "property_document":
             # Extract property value
-            value = self.ocr_service.extract_field(text, "property_value")
+            value = ocr_service.extract_field(text, "property_value")
             if value:
                 try:
                     fields["residential_assets_value"] = float(str(value).replace(",", ""))
@@ -235,26 +256,26 @@ class OnboardingAgent:
         
         elif doc_type in ["aadhaar_card", "pan_card", "passport", "voter_id", "birth_certificate", "tenth_marksheet"]:
             # Extract age and gender
-            age = self.ocr_service.extract_field(text, "age")
+            age = ocr_service.extract_field(text, "age")
             if age:
                 try:
                     fields["age"] = int(age)
                 except (ValueError, TypeError):
                     pass
             
-            gender = self.ocr_service.extract_field(text, "gender")
+            gender = ocr_service.extract_field(text, "gender")
             if gender:
                 fields["gender"] = gender
 
-            name = self.ocr_service.extract_field(text, "name")
+            name = ocr_service.extract_field(text, "name")
             if name:
                 fields["name"] = name.strip()
 
-            aadhaar_number = self.ocr_service.extract_field(text, "aadhaar_number")
+            aadhaar_number = ocr_service.extract_field(text, "aadhaar_number")
             if aadhaar_number:
                 fields["aadhaar_number"] = aadhaar_number.replace(" ", "")
 
-            pan_number = self.ocr_service.extract_field(text, "pan_number")
+            pan_number = ocr_service.extract_field(text, "pan_number")
             if pan_number:
                 fields["pan_number"] = pan_number
 
@@ -274,7 +295,7 @@ class OnboardingAgent:
         
         return fields
     
-    def _extract_health_fields(self, doc_type: str, text: str) -> Dict[str, Any]:
+    def _extract_health_fields(self, doc_type: str, text: str, ocr_service=None) -> Dict[str, Any]:
         """
         Extract health-specific fields from document text.
         
@@ -286,10 +307,11 @@ class OnboardingAgent:
             Dictionary of extracted health fields
         """
         fields = {}
+        ocr_service = ocr_service or self.ocr_service
         
         if doc_type == "diagnostic_report":
             # Extract HbA1c for diabetes detection
-            hba1c = self.ocr_service.extract_field(text, "hba1c")
+            hba1c = ocr_service.extract_field(text, "hba1c")
             if hba1c:
                 try:
                     hba1c_val = float(hba1c)
@@ -299,7 +321,7 @@ class OnboardingAgent:
                     pass
             
             # Extract cholesterol
-            cholesterol = self.ocr_service.extract_field(text, "cholesterol")
+            cholesterol = ocr_service.extract_field(text, "cholesterol")
             if cholesterol:
                 try:
                     fields["cholesterol"] = float(cholesterol)
@@ -307,7 +329,7 @@ class OnboardingAgent:
                     pass
             
             # Extract blood sugar
-            blood_sugar = self.ocr_service.extract_field(text, "blood_sugar")
+            blood_sugar = ocr_service.extract_field(text, "blood_sugar")
             if blood_sugar:
                 try:
                     fields["blood_sugar"] = float(blood_sugar)
@@ -316,8 +338,8 @@ class OnboardingAgent:
         
         elif doc_type == "physical_exam":
             # Extract height and weight for BMI calculation
-            height = self.ocr_service.extract_field(text, "height")
-            weight = self.ocr_service.extract_field(text, "weight")
+            height = ocr_service.extract_field(text, "height")
+            weight = ocr_service.extract_field(text, "weight")
             
             if height and weight:
                 try:
@@ -331,7 +353,7 @@ class OnboardingAgent:
                     pass
             
             # Extract blood pressure
-            bp = self.ocr_service.extract_field(text, "blood_pressure")
+            bp = ocr_service.extract_field(text, "blood_pressure")
             if bp and isinstance(bp, tuple) and len(bp) == 2:
                 try:
                     systolic, diastolic = bp
@@ -343,7 +365,7 @@ class OnboardingAgent:
                     pass
             
             # Extract heart rate
-            hr = self.ocr_service.extract_field(text, "heart_rate")
+            hr = ocr_service.extract_field(text, "heart_rate")
             if hr:
                 try:
                     fields["heart_rate"] = int(hr)
@@ -388,18 +410,18 @@ class OnboardingAgent:
         
         elif doc_type in ["aadhaar_card", "pan_card", "passport", "voter_id", "birth_certificate", "tenth_marksheet"]:
             # Extract age and gender
-            age = self.ocr_service.extract_field(text, "age")
+            age = ocr_service.extract_field(text, "age")
             if age:
                 try:
                     fields["age"] = int(age)
                 except (ValueError, TypeError):
                     pass
             
-            gender = self.ocr_service.extract_field(text, "gender")
+            gender = ocr_service.extract_field(text, "gender")
             if gender:
                 fields["gender"] = gender
 
-            name = self.ocr_service.extract_field(text, "name")
+            name = ocr_service.extract_field(text, "name")
             if name:
                 fields["name"] = name.strip()
 

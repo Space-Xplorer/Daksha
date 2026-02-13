@@ -105,6 +105,9 @@ class VerificationAgent:
             prediction = state["loan_prediction"]
             applicant_data = state["applicant_data"]
             
+            if not self.llm or not self.parser:
+                return self._fallback_verification("REVIEW")
+
             # Format reasoning for prompt
             reasoning_text = self._format_reasoning(prediction.get("reasoning", {}))
             
@@ -217,6 +220,9 @@ Task: Verify if this decision is reasonable. Consider:
             prediction = state["insurance_prediction"]
             applicant_data = state["applicant_data"]
             
+            if not self.llm or not self.parser:
+                return self._fallback_verification("REVIEW")
+
             # Format reasoning for prompt
             reasoning_text = self._format_reasoning(prediction.get("reasoning", {}))
             
@@ -260,6 +266,15 @@ Task: Verify if this premium is reasonable. Consider:
         except Exception as e:
             logger.error(f"Insurance verification failed: {e}")
             raise
+
+    def _fallback_verification(self, recommendation: str) -> Dict[str, Any]:
+        """Return a safe default verification result when LLM is unavailable."""
+        return {
+            "verified": True,
+            "confidence": 0.5,
+            "concerns": [],
+            "recommendation": recommendation
+        }
     
     async def _verify_insurance_decision_async(self, state: ApplicationState) -> Dict[str, Any]:
         """

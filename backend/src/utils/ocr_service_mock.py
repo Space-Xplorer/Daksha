@@ -269,7 +269,7 @@ class OCRService:
             "annual_income": r"(?:Total|Gross|Annual)\s*Income[:\s]*₹?\s*([\d,]+)",
             "hba1c": r"HbA1c[:\s]*([\d.]+)\s*%",
             "cholesterol": r"(?:Total\s*)?Cholesterol[:\s]*([\d.]+)\s*mg/dL",
-            "blood_sugar": r"Blood\s*Sugar[:\s]*(?:\(Fasting\))?\s*([\d.]+)\s*mg/dL",
+            "blood_sugar": r"Blood\s*Sugar(?:\s*\(Fasting\))?[:\s]*([\d.]+)\s*mg/dL",
             "height": r"Height[:\s]*([\d.]+)\s*(?:cm|CM)",
             "weight": r"Weight[:\s]*([\d.]+)\s*(?:kg|KG)",
             "blood_pressure": r"(?:Blood\s*Pressure|BP)[:\s]*(\d{2,3})/(\d{2,3})",

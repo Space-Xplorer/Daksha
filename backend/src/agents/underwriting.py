@@ -7,10 +7,14 @@ The agent uses Daksha (EBM classifier) for loan approval and Health Shield
 """
 
 import logging
+import pickle
+import sys
 import numpy as np
 import pandas as pd
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from pathlib import Path
+
+sys.modules.setdefault("src.agents.underwriting", sys.modules[__name__])
 
 from src.schemas.state import ApplicationState
 from src.utils.model_loader import ModelLoader
@@ -63,6 +67,16 @@ class UnderwritingAgent:
             ])
             
             if not models_loaded:
+                self._load_models_from_fallback()
+
+            models_loaded = all([
+                self.credit_model is not None,
+                self.credit_encoders is not None,
+                self.health_model is not None,
+                self.health_encoders is not None
+            ])
+
+            if not models_loaded:
                 raise RuntimeError("Required models not available. Cannot proceed.")
 
             logger.info("All models loaded successfully")
@@ -70,6 +84,29 @@ class UnderwritingAgent:
         except Exception as e:
             logger.error(f"Model loading failed: {e}")
             raise RuntimeError(f"Underwriting agent initialization failed: {e}")
+
+    def _load_models_from_fallback(self) -> None:
+        """Load models directly from the default backend/models directory."""
+        fallback_dir = Path(__file__).resolve().parents[2] / "models"
+
+        def _load(path: Path) -> Optional[Any]:
+            if not path.exists():
+                return None
+            try:
+                with open(path, "rb") as handle:
+                    return pickle.load(handle)
+            except Exception as exc:
+                logger.error(f"Failed to load model from {path}: {exc}")
+                return None
+
+        if self.credit_model is None:
+            self.credit_model = _load(fallback_dir / "ebm_finance.pkl")
+        if self.credit_encoders is None:
+            self.credit_encoders = _load(fallback_dir / "fin_encoders.pkl")
+        if self.health_model is None:
+            self.health_model = _load(fallback_dir / "ebm_health.pkl")
+        if self.health_encoders is None:
+            self.health_encoders = _load(fallback_dir / "health_encoders.pkl")
     
     def process_loan(self, state: ApplicationState) -> ApplicationState:
         """
@@ -102,6 +139,15 @@ class UnderwritingAgent:
 
             # Validate monotonicity (log only, don't block)
             self._validate_loan_monotonicity(applicant_data, approval_probability, reasoning)
+
+            # Apply guardrail for very low CIBIL scores
+            cibil_score = applicant_data.get("cibil_score")
+            if cibil_score is not None:
+                try:
+                    if float(cibil_score) < 600:
+                        approval_probability = min(approval_probability, 0.3)
+                except (TypeError, ValueError):
+                    pass
 
             # Update state
             state["loan_prediction"] = {
@@ -239,7 +285,10 @@ class UnderwritingAgent:
             
             # Fill missing values
             df = df.fillna(0)
-            
+
+            # Align to model feature order to avoid shape mismatches
+            df = self._align_to_model_features(df, self.credit_model)
+
             # Convert to numpy array
             features = df.values
             
@@ -261,8 +310,39 @@ class UnderwritingAgent:
             Encoded feature array ready for model prediction
         """
         try:
+            # Normalize known boolean-like fields to numeric values
+            normalized = dict(applicant_data)
+            boolean_fields = [
+                "smoker",
+                "diabetes",
+                "bloodpressure",
+                "regular_ex",
+                "blood_pressure_problems",
+                "any_transplants",
+                "any_chronic_diseases",
+                "known_allergies",
+                "history_of_cancer_in_family"
+            ]
+
+            for field in boolean_fields:
+                if field in normalized:
+                    value = normalized[field]
+                    if isinstance(value, str):
+                        value_lower = value.strip().lower()
+                        if value_lower in ["yes", "true", "1"]:
+                            normalized[field] = 1
+                        elif value_lower in ["no", "false", "0"]:
+                            normalized[field] = 0
+                    elif isinstance(value, bool):
+                        normalized[field] = 1 if value else 0
+
             # Create DataFrame from applicant data
-            df = pd.DataFrame([applicant_data])
+            df = pd.DataFrame([normalized])
+
+            # Ensure boolean-like columns are numeric
+            for field in boolean_fields:
+                if field in df.columns:
+                    df[field] = pd.to_numeric(df[field], errors="coerce")
             
             # Apply categorical encoding using pre-trained encoders
             for col, encoder in self.health_encoders.items():
@@ -289,7 +369,10 @@ class UnderwritingAgent:
             
             # Fill missing values
             df = df.fillna(0)
-            
+
+            # Align to model feature order to avoid shape mismatches
+            df = self._align_to_model_features(df, self.health_model)
+
             # Convert to numpy array
             features = df.values
             
@@ -347,6 +430,26 @@ class UnderwritingAgent:
             logger.error(f"Reasoning extraction failed: {e}")
             # Return empty dict instead of error dict to avoid breaking downstream processing
             return {}
+
+    def _align_to_model_features(self, df: pd.DataFrame, model: Any) -> pd.DataFrame:
+        """Align dataframe columns to model feature order when available."""
+        feature_names: Optional[List[str]] = None
+        for attr in ("feature_names_", "feature_names", "feature_names_in_"):
+            if hasattr(model, attr):
+                try:
+                    feature_names = list(getattr(model, attr))
+                    break
+                except Exception:
+                    continue
+
+        if not feature_names:
+            return df
+
+        for name in feature_names:
+            if name not in df.columns:
+                df[name] = 0
+
+        return df[feature_names]
     
     def _validate_loan_monotonicity(
         self, 

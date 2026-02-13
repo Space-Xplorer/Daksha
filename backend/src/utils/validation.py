@@ -250,6 +250,44 @@ def validate_request_type(
     return len(errors) == 0, errors
 
 
+def check_basic_rules(request_type: str, applicant_data: Dict[str, Any]) -> Tuple[bool, Optional[str]]:
+    """
+    Apply basic eligibility rules for loan and insurance flows.
+
+    Rules:
+    - Reject if age >= 60 for both loan and insurance
+    - For loan: reject if loan_amount >= income * tenure
+    """
+    age = applicant_data.get("age")
+    if age is not None:
+        try:
+            if float(age) >= 60:
+                return False, "Applicant age must be below 60"
+        except (TypeError, ValueError):
+            pass
+
+    if request_type in ["loan", "both"]:
+        loan_amount = applicant_data.get("loan_amount")
+        tenure = applicant_data.get("tenure") or applicant_data.get("loan_tenure")
+        income = (
+            applicant_data.get("income")
+            or applicant_data.get("annual_income")
+            or applicant_data.get("income_annum")
+        )
+
+        try:
+            if loan_amount is not None and tenure is not None and income is not None:
+                loan_amount_val = float(loan_amount)
+                tenure_val = float(tenure)
+                income_val = float(income)
+                if loan_amount_val >= income_val * tenure_val:
+                    return False, "Loan amount must be less than income multiplied by tenure"
+        except (TypeError, ValueError):
+            pass
+
+    return True, None
+
+
 def sanitize_input(data: Dict[str, Any]) -> Dict[str, Any]:
     """
     Sanitize input data to prevent injection attacks.

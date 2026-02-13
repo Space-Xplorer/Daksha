@@ -18,6 +18,7 @@ class ApplicationState(TypedDict, total=False):
     
     # Request metadata
     request_id: str
+    application_id: Optional[str]
     request_type: Literal["loan", "insurance", "both"]
     loan_type: Optional[str]  # "home", "personal", "vehicle", "business"
     timestamp: str
@@ -43,6 +44,8 @@ class ApplicationState(TypedDict, total=False):
     
     # OCR extracted data (pre-filled form)
     extracted_data: Dict[str, Any]
+    ocr_documents: List[Dict[str, Any]]
+    ocr_confidence_scores: Dict[str, Any]
     
     # User-edited data (final applicant data)
     applicant_data: Dict[str, Any]
@@ -55,6 +58,12 @@ class ApplicationState(TypedDict, total=False):
     compliance_checked: bool
     compliance_passed: bool
     compliance_violations: List[Dict[str, str]]  # [{rule, reason, severity}, ...]
+
+    # Rules check results
+    rules_checked: bool
+    rules_passed: bool
+    rules_violations: List[Dict[str, Any]]
+    rules_extracted_texts: List[Dict[str, Any]]
     
     # ML model outputs
     loan_prediction: Optional[Dict[str, Any]]  # {approved: bool, probability: float, reasoning: dict}
@@ -70,6 +79,9 @@ class ApplicationState(TypedDict, total=False):
     # Explanation outputs
     loan_explanation: Optional[str]
     insurance_explanation: Optional[str]
+
+    # Fraud detection
+    fraud_results: List[Dict[str, Any]]
     
     # Supervisor decision
     supervisor_decision: Optional[Dict[str, Any]]
@@ -107,7 +119,8 @@ def create_initial_state(
     submitted_name: Optional[str] = None,
     submitted_dob: Optional[str] = None,
     submitted_aadhaar: Optional[str] = None,
-    uploaded_documents: Optional[List[Dict[str, Any]]] = None
+    uploaded_documents: Optional[List[Dict[str, Any]]] = None,
+    application_id: Optional[str] = None
 ) -> ApplicationState:
     """
     Create an initial ApplicationState with required fields.
@@ -127,6 +140,7 @@ def create_initial_state(
     
     state: ApplicationState = {
         "request_id": f"req_{uuid.uuid4().hex[:12]}",
+        "application_id": application_id,
         "request_type": request_type,
         "loan_type": loan_type,
         "timestamp": datetime.utcnow().isoformat(),
@@ -141,6 +155,8 @@ def create_initial_state(
         # Documents
         "uploaded_documents": uploaded_documents or [],
         "extracted_data": {},
+        "ocr_documents": [],
+        "ocr_confidence_scores": {},
         "applicant_data": applicant_data,
         "document_verification": {},
         "onboarding_completed": False,
@@ -149,6 +165,12 @@ def create_initial_state(
         "compliance_checked": False,
         "compliance_passed": False,
         "compliance_violations": [],
+
+        # Rules
+        "rules_checked": False,
+        "rules_passed": False,
+        "rules_violations": [],
+        "rules_extracted_texts": [],
         
         # Predictions
         "loan_prediction": None,
@@ -164,6 +186,9 @@ def create_initial_state(
         # Explanations
         "loan_explanation": None,
         "insurance_explanation": None,
+
+        # Fraud
+        "fraud_results": [],
         
         # Supervisor
         "supervisor_decision": None,

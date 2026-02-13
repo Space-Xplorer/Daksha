@@ -23,14 +23,17 @@ class MockDigiLockerAPI:
     In production, this would be replaced with actual DigiLocker integration.
     """
     
-    def __init__(self, db_path: str = 'src/mock_db.json'):
+    def __init__(self, db_path: Optional[str] = None):
         """
         Initialize Mock DigiLocker API.
         
         Args:
             db_path: Path to mock database JSON file
         """
-        self.db_path = Path(db_path)
+        if db_path is None:
+            self.db_path = Path(__file__).resolve().parents[1] / "mock_db.json"
+        else:
+            self.db_path = Path(db_path)
         self.db = self._load_database()
     
     def _load_database(self) -> Dict[str, Any]:
@@ -147,7 +150,7 @@ class KYCAgent:
     allowing application submission.
     """
     
-    def __init__(self, db_path: str = 'src/mock_db.json'):
+    def __init__(self, db_path: Optional[str] = None):
         """
         Initialize KYC Agent.
         
@@ -194,6 +197,7 @@ class KYCAgent:
                     state["kyc_verified"] = False
                     state["rejected"] = True
                     state["rejection_reason"] = f"KYC Failed: {error_msg}"
+                    state["kyc_rejection_reason"] = state["rejection_reason"]
                     state["errors"].append(error_msg)
 
                     log_error("validation", error_msg, request_id)
@@ -204,6 +208,7 @@ class KYCAgent:
                     state["kyc_verified"] = False
                     state["rejected"] = True
                     state["rejection_reason"] = f"KYC Failed: {error_msg}"
+                    state["kyc_rejection_reason"] = state["rejection_reason"]
                     state["errors"].append(error_msg)
 
                     log_error("validation", error_msg, request_id)
@@ -235,6 +240,7 @@ class KYCAgent:
                 state["kyc_verified"] = False
                 state["rejected"] = True
                 state["rejection_reason"] = self._format_rejection_reason(result["reason"])
+                state["kyc_rejection_reason"] = state["rejection_reason"]
                 state["errors"].append(result["reason"])
                 
                 log_error("kyc", result["reason"], request_id)
@@ -246,6 +252,7 @@ class KYCAgent:
             state["kyc_verified"] = False
             state["rejected"] = True
             state["rejection_reason"] = f"KYC Failed: System error"
+            state["kyc_rejection_reason"] = state["rejection_reason"]
             state["errors"].append(error_msg)
             
             log_error("system", error_msg, request_id)
@@ -337,7 +344,7 @@ class KYCAgent:
         Returns:
             Formatted rejection message
         """
-        return f"KYC Verification Failed: {reason}\n\nPlease ensure:\n" \
+        return f"KYC Failed: {reason}\n\nPlease ensure:\n" \
                "- Your name matches exactly as per your DigiLocker account\n" \
                "- Your date of birth is correct (format: YYYY-MM-DD)\n" \
                "- You have a valid DigiLocker account"

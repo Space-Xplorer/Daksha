@@ -10,6 +10,8 @@ from langgraph.graph import StateGraph, END
 from src.schemas.state import ApplicationState
 from src.services.kyc import KYCAgent
 from src.agents.onboarding import OnboardingAgent
+from src.agents.rules import RulesAgent
+from src.agents.fraud import FraudAgent
 from src.agents.compliance import ComplianceAgent
 from src.agents.underwriting import UnderwritingAgent
 from src.agents.verification import VerificationAgent
@@ -23,6 +25,8 @@ from src.utils.logging import log_request, log_agent_execution
 # Initialize agents
 kyc_agent = KYCAgent()
 onboarding_agent = OnboardingAgent()
+rules_agent = RulesAgent()
+fraud_agent = FraudAgent()
 compliance_agent = ComplianceAgent()
 underwriting_agent = UnderwritingAgent()
 verification_agent = VerificationAgent()
@@ -42,6 +46,18 @@ def kyc_node(state: ApplicationState) -> ApplicationState:
 def onboarding_node(state: ApplicationState) -> ApplicationState:
     """Onboarding and document processing node."""
     return onboarding_agent.process_documents(state)
+
+
+@safe_agent_wrapper
+def rules_node(state: ApplicationState) -> ApplicationState:
+    """Rules validation node."""
+    return rules_agent.check_rules(state)
+
+
+@safe_agent_wrapper
+def fraud_node(state: ApplicationState) -> ApplicationState:
+    """OCR fraud detection node."""
+    return fraud_agent.check_fraud(state)
 
 
 @safe_agent_wrapper
@@ -143,7 +159,7 @@ def should_continue_after_kyc(state: ApplicationState) -> Literal["onboarding", 
         return "end"
 
 
-def should_continue_after_onboarding(state: ApplicationState) -> Literal["hitl_checkpoint", "compliance"]:
+def should_continue_after_onboarding(state: ApplicationState) -> Literal["rules", "hitl_checkpoint"]:
     """
     Conditional edge after onboarding: go to HITL checkpoint or directly to compliance.
     
@@ -153,9 +169,22 @@ def should_continue_after_onboarding(state: ApplicationState) -> Literal["hitl_c
     Returns:
         Next node name
     """
-    # Always go through HITL checkpoint for data review
-    # In production, this could be conditional based on confidence scores
-    return "hitl_checkpoint"
+    # Go directly to rules validation after OCR processing
+    return "rules"
+
+
+def should_continue_after_rules(state: ApplicationState) -> Literal["fraud", "end"]:
+    """
+    Conditional edge after rules: continue to fraud checks or end if rejected.
+    """
+    if state.get("rejected") or not state.get("rules_passed", True):
+        return "end"
+    return "fraud"
+
+
+def should_continue_after_fraud(state: ApplicationState) -> Literal["compliance"]:
+    """Always continue to compliance after fraud checks."""
+    return "compliance"
 
 
 def should_continue_after_hitl(state: ApplicationState) -> Literal["compliance", "onboarding"]:
@@ -285,6 +314,30 @@ def finalize_state(state: ApplicationState) -> ApplicationState:
     Returns:
         Finalized state
     """
+    if state.get("rejected") or state.get("kyc_verified") is False:
+        state.pop("loan_prediction", None)
+        state.pop("insurance_prediction", None)
+        state.pop("loan_explanation", None)
+        state.pop("insurance_explanation", None)
+
+    if state.get("compliance_checked") and state.get("compliance_passed") is False:
+        state.pop("loan_prediction", None)
+        state.pop("insurance_prediction", None)
+        state.pop("loan_explanation", None)
+        state.pop("insurance_explanation", None)
+
+    if state.get("kyc_verified") is False:
+        state["kyc_rejection_reason"] = (
+            state.get("kyc_rejection_reason")
+            or state.get("rejection_reason")
+            or "KYC Failed"
+        )
+
+    if state.get("loan_prediction") is None:
+        state.pop("loan_prediction", None)
+    if state.get("insurance_prediction") is None:
+        state.pop("insurance_prediction", None)
+
     state["completed"] = True
     return state
 
@@ -295,14 +348,15 @@ def create_daksha_workflow() -> StateGraph:
     
     The workflow follows this path:
     1. KYC verification (can reject)
-    2. Onboarding (document processing)
-    3. HITL checkpoint (human review of extracted data)
-    4. Compliance checking (can reject)
-    5. Router (determines loan/insurance/both)
-    6. Underwriting (loan and/or insurance)
-    7. Verification (LLM sanity check)
-    8. Transparency (explanation generation)
-    9. Supervisor (final decision, can loop back)
+    2. Onboarding (document OCR)
+    3. Rules validation (can reject)
+    4. Fraud checks (non-blocking)
+    5. Compliance checking (can reject)
+    6. Router (determines loan/insurance/both)
+    7. Underwriting (loan and/or insurance)
+    8. Verification (LLM sanity check)
+    9. Transparency (explanation generation)
+    10. Supervisor (final decision, can loop back)
     
     Returns:
         Compiled StateGraph workflow
@@ -313,6 +367,8 @@ def create_daksha_workflow() -> StateGraph:
     # Add nodes
     workflow.add_node("kyc", kyc_node)
     workflow.add_node("onboarding", onboarding_node)
+    workflow.add_node("rules", rules_node)
+    workflow.add_node("fraud", fraud_node)
     workflow.add_node("hitl_checkpoint", hitl_checkpoint_node)
     workflow.add_node("compliance", compliance_node)
     workflow.add_node("router", router_node)
@@ -339,12 +395,31 @@ def create_daksha_workflow() -> StateGraph:
         }
     )
     
-    # Onboarding → HITL Checkpoint
+    # Onboarding → Rules
     workflow.add_conditional_edges(
         "onboarding",
         should_continue_after_onboarding,
         {
-            "hitl_checkpoint": "hitl_checkpoint",
+            "rules": "rules",
+            "hitl_checkpoint": "hitl_checkpoint"
+        }
+    )
+
+    # Rules → Fraud (or end if rejected)
+    workflow.add_conditional_edges(
+        "rules",
+        should_continue_after_rules,
+        {
+            "fraud": "fraud",
+            "end": "finalize"
+        }
+    )
+
+    # Fraud → Compliance
+    workflow.add_conditional_edges(
+        "fraud",
+        should_continue_after_fraud,
+        {
             "compliance": "compliance"
         }
     )

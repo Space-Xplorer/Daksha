@@ -16,7 +16,7 @@
     "user_7788": {
       "digilockerid": "DL7788EFGH5678",
       "name": "Priya Sharma",
-      "dob": "19850320",
+      "dob": "19950320",
       "gender": "Female",
       "address": "456 Park Street, Mumbai, Maharashtra 400001",
       "aadhaar_number": "234567890123",
@@ -29,7 +29,7 @@
     "user_6677": {
       "digilockerid": "DL6677IJKL9012",
       "name": "Amit Patel",
-      "dob": "19920710",
+      "dob": "19880810",
       "gender": "Male",
       "address": "789 Anna Salai, Chennai, Tamil Nadu 600002",
       "aadhaar_number": "345678901234",
@@ -52,10 +52,23 @@
       "passport_number": "M2345678",
       "voter_id_number": "JKL4567890"
     },
+    "user_3344": {
+      "digilockerid": "DL3344UVWX1122",
+      "name": "Sunita Reddy",
+      "dob": "19781205",
+      "gender": "Female",
+      "address": "999 Jubilee Hills, Hyderabad, Telangana 500033",
+      "aadhaar_number": "678901234567",
+      "aadhaar_last4": "4567",
+      "pan": "ABCDE6789L",
+      "pan_number": "ABCDE6789L",
+      "passport_number": "Z1234567",
+      "voter_id_number": "PQR6789012"
+    },
     "user_4455": {
       "digilockerid": "DL4455QRST7890",
       "name": "Vikram Singh",
-      "dob": "19950112",
+      "dob": "19850615",
       "gender": "Male",
       "address": "654 Civil Lines, Delhi 110054",
       "aadhaar_number": "567890123456",
@@ -97,7 +110,7 @@
     },
     "valid_kyc_female": {
       "name": "Priya Sharma",
-      "dob": "1985-03-20",
+      "dob": "1995-03-20",
       "expected_result": "SUCCESS",
       "digilocker_id": "DL7788EFGH5678"
     }

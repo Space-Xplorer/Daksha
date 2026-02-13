@@ -298,13 +298,14 @@ class ComplianceAgent:
             List of violations
         """
         violations = []
-        
-        # Use RAG if available, otherwise use rule-based checking
+
+        # Always apply rule-based checks
+        violations.extend(self._check_loan_compliance_rules(data, loan_type))
+
+        # Add RAG violations if available
         if self.llm and self.rules_db:
-            violations = self._check_loan_compliance_rag(data, loan_type)
-        else:
-            violations = self._check_loan_compliance_rules(data, loan_type)
-        
+            violations.extend(self._check_loan_compliance_rag(data, loan_type))
+
         return violations
     
     def _check_loan_compliance_rag(self, data: Dict[str, Any], loan_type: str) -> List[Dict[str, str]]:
@@ -499,13 +500,14 @@ IMPORTANT: Only flag actual violations. If data is "Not provided", do not flag a
             List of violations
         """
         violations = []
-        
-        # Use RAG if available, otherwise use rule-based checking
+
+        # Always apply rule-based checks
+        violations.extend(self._check_insurance_compliance_rules(data))
+
+        # Add RAG violations if available
         if self.llm and self.rules_db:
-            violations = self._check_insurance_compliance_rag(data)
-        else:
-            violations = self._check_insurance_compliance_rules(data)
-        
+            violations.extend(self._check_insurance_compliance_rag(data))
+
         return violations
     
     def _check_insurance_compliance_rag(self, data: Dict[str, Any]) -> List[Dict[str, str]]:

@@ -14,6 +14,8 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from src.schemas.state import create_initial_state
 from routes.applications import applications_db
+from src.utils.storage import save_applicant_data
+from src.utils.validation import check_basic_rules
 
 logger = logging.getLogger(__name__)
 
@@ -137,6 +139,27 @@ def submit_application(app_id):
             application.get("uploaded_documents", [])
         )
 
+        is_allowed, rule_reason = check_basic_rules(
+            application["request_type"],
+            application.get("applicant_data", {})
+        )
+        if not is_allowed:
+            application["status"] = "rejected"
+            application["rejection_reason"] = rule_reason
+            return jsonify({
+                "error": "Application rejected",
+                "reason": rule_reason
+            }), 400
+
+        save_applicant_data(
+            app_id,
+            application.get("applicant_data", {}),
+            metadata={
+                "request_type": application.get("request_type"),
+                "user_email": user_email
+            }
+        )
+
         state = create_initial_state(
             request_type=application['request_type'],
             applicant_data=application['applicant_data'],
@@ -144,7 +167,8 @@ def submit_application(app_id):
             submitted_name=application.get('submitted_name'),
             submitted_dob=application.get('submitted_dob'),
             submitted_aadhaar=application.get('submitted_aadhaar'),
-            uploaded_documents=uploaded_documents
+            uploaded_documents=uploaded_documents,
+            application_id=app_id
         )
         
         # Update application status
@@ -231,11 +255,14 @@ def get_workflow_status(app_id):
         # Add current state info
         state = execution['current_state']
         response['kyc_verified'] = state.get('kyc_verified', False)
+        response['rules_passed'] = state.get('rules_passed', False)
         response['compliance_passed'] = state.get('compliance_passed', False)
         response['hitl_checkpoint'] = state.get('hitl_checkpoint', False)
         
         # Add results if completed
         if execution['status'] == 'completed':
+            response['rules_violations'] = state.get('rules_violations', [])
+            response['fraud_results'] = state.get('fraud_results', [])
             response['loan_prediction'] = state.get('loan_prediction')
             response['insurance_prediction'] = state.get('insurance_prediction')
             response['loan_explanation'] = state.get('loan_explanation')
@@ -299,6 +326,15 @@ def get_workflow_results(app_id):
                 'passed': final_state.get('compliance_passed', False),
                 'violations': final_state.get('compliance_violations', [])
             },
+
+            # Rules Results
+            'rules': {
+                'passed': final_state.get('rules_passed', False),
+                'violations': final_state.get('rules_violations', [])
+            },
+
+            # Fraud Results
+            'fraud': final_state.get('fraud_results', []),
             
             # Loan Results
             'loan': {

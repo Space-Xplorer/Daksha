@@ -15,7 +15,8 @@ from src.utils.validation import (
 	validate_loan_application,
 	validate_insurance_application,
 	validate_request_type,
-	sanitize_input
+	sanitize_input,
+	check_basic_rules
 )
 
 
@@ -110,3 +111,26 @@ def test_sanitize_input_removes_dangerous_patterns():
 	assert "DROP" not in sanitized["name"].upper()
 	assert "--" not in sanitized["name"]
 	assert "XP_" not in sanitized["notes"].upper()
+
+
+def test_check_basic_rules_rejects_age_60_or_more():
+	ok, reason = check_basic_rules("loan", {"age": 60})
+	assert ok is False
+	assert "age" in reason.lower()
+
+
+def test_check_basic_rules_rejects_loan_amount_vs_income_tenure():
+	ok, reason = check_basic_rules("loan", {
+		"age": 30,
+		"loan_amount": 120000,
+		"income": 10000,
+		"tenure": 12
+	})
+	assert ok is False
+	assert "loan amount" in reason.lower()
+
+
+def test_check_basic_rules_allows_valid_case():
+	ok, reason = check_basic_rules("insurance", {"age": 35})
+	assert ok is True
+	assert reason is None
