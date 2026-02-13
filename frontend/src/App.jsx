@@ -227,12 +227,12 @@ const App = () => {
              <div className="grid md:grid-cols-2 gap-8">
                 <button onClick={() => { setShieldType('loan'); setStep(3); }} className="group p-12 bg-white border-4 border-transparent hover:border-blue-400 rounded-[4rem] shadow-2xl transition-all text-left">
                    <div className="p-6 bg-blue-50 text-blue-500 rounded-3xl w-fit mb-8 group-hover:scale-110 transition shadow-sm"><Landmark size={40} /></div>
-                  <h4 className="text-2xl font-black">LOAN</h4>
+                   <h4 className="text-2xl font-black">LOAN SHIELD</h4>
                    <p className="text-sm text-slate-400 mt-4 font-medium leading-relaxed">Verify your credit and get an instant approval roadmap.</p>
                 </button>
                 <button onClick={() => { setShieldType('health'); setStep(3); }} className="group p-12 bg-white border-4 border-transparent hover:border-emerald-400 rounded-[4rem] shadow-2xl transition-all text-left">
                    <div className="p-6 bg-emerald-50 text-emerald-500 rounded-3xl w-fit mb-8 group-hover:scale-110 transition shadow-sm"><Activity size={40} /></div>
-                  <h4 className="text-2xl font-black">HEALTH</h4>
+                   <h4 className="text-2xl font-black">HEALTH SHIELD</h4>
                    <p className="text-sm text-slate-400 mt-4 font-medium leading-relaxed">Assess your health biomarkers and unlock custom premiums.</p>
                 </button>
              </div>

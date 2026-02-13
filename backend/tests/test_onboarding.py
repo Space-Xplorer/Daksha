@@ -14,7 +14,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT_DIR))
 
 from src.agents.onboarding import OnboardingAgent
-from src.utils.ocr_service_simple import OCRService
+from src.utils.ocr_service_mock import OCRService
 
 
 @pytest.fixture

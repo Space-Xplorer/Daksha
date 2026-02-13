@@ -46,9 +46,24 @@ def validate_production_config() -> bool:
     print(f"  OCR_MODE: {ocr_mode}")
     
     if ocr_mode == 'production':
+        ocr_key = os.getenv('OCR_KEY')
+        if not ocr_key:
+            warnings.append("OCR_MODE=production but OCR_KEY not set. OCR.space will be unavailable.")
+            print("  ⚠️  OCR_KEY: NOT SET")
+        else:
+            print("  ✅ OCR_KEY: SET")
+
+        ocr_limit = os.getenv('OCR_MONTHLY_LIMIT', '25000')
+        try:
+            int(ocr_limit)
+            print(f"  ✅ OCR_MONTHLY_LIMIT: {ocr_limit}")
+        except ValueError:
+            warnings.append("OCR_MONTHLY_LIMIT is not a valid integer. Using default 25000.")
+            print(f"  ⚠️  OCR_MONTHLY_LIMIT: {ocr_limit} (INVALID)")
+
         if not os.getenv('TESSERACT_PATH'):
-            warnings.append("OCR_MODE=production but TESSERACT_PATH not set. Will use system default.")
-            print(f"  ⚠️  TESSERACT_PATH: NOT SET (will use system default)")
+            warnings.append("OCR_MODE=production but TESSERACT_PATH not set. Will use system default or OCR.space.")
+            print("  ⚠️  TESSERACT_PATH: NOT SET (will use system default or OCR.space)")
         else:
             tesseract_path = Path(os.getenv('TESSERACT_PATH', ''))
             if not tesseract_path.exists():

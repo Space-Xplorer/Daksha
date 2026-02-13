@@ -463,3 +463,67 @@
 2026-02-14 00:13:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:28] "GET /api/workflow/status/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
 2026-02-14 00:13:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:28] "OPTIONS /api/workflow/results/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
 2026-02-14 00:13:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:28] "GET /api/workflow/results/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 01:00:43 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:00:43] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 01:00:59 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:00:59] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 01:00:59 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:00:59] "[31m[1mPOST /api/applications/ HTTP/1.1[0m" 401 -
+2026-02-14 01:00:59 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:00:59] "OPTIONS /api/auth/refresh HTTP/1.1" 200 -
+2026-02-14 01:00:59 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:00:59] "POST /api/auth/refresh HTTP/1.1" 200 -
+2026-02-14 01:01:00 - routes.applications - INFO - [applications.py:85] - Application created: 54941047-a204-4d40-a230-96dc0468bc83 by admin@daksha.com
+2026-02-14 01:01:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:00] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 01:01:01 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:01] "OPTIONS /api/applications/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:01 - routes.applications - INFO - [applications.py:213] - Application updated: 54941047-a204-4d40-a230-96dc0468bc83
+2026-02-14 01:01:01 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:01] "PUT /api/applications/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:10 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:10] "OPTIONS /api/applications/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:10 - routes.applications - INFO - [applications.py:213] - Application updated: 54941047-a204-4d40-a230-96dc0468bc83
+2026-02-14 01:01:10 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:10] "PUT /api/applications/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:35 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:35] "OPTIONS /api/applications/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:35 - routes.applications - INFO - [applications.py:213] - Application updated: 54941047-a204-4d40-a230-96dc0468bc83
+2026-02-14 01:01:35 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:35] "PUT /api/applications/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:35 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:35] "OPTIONS /api/workflow/submit/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:35 - routes.workflow - INFO - [workflow.py:183] - Workflow started for application: 54941047-a204-4d40-a230-96dc0468bc83
+2026-02-14 01:01:35 - src.utils.logging - INFO - [logging.py:79] - Request req_50a2b166b79c: type=both, timestamp=2026-02-13T19:31:35.880158, metadata={}
+2026-02-14 01:01:35 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:35] "[35m[1mPOST /api/workflow/submit/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1[0m" 202 -
+2026-02-14 01:01:35 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_50a2b166b79c]: started
+2026-02-14 01:01:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:36] "OPTIONS /api/workflow/status/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:36] "GET /api/workflow/status/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:37 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_50a2b166b79c]: completed (duration: 1503.82ms)
+2026-02-14 01:01:37 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_50a2b166b79c]: started
+2026-02-14 01:01:37 - src.agents.onboarding - INFO - [onboarding.py:130] - OCR confidence for bank_statement: 95.0%
+2026-02-14 01:01:37 - src.agents.onboarding - INFO - [onboarding.py:130] - OCR confidence for salary_slip: 95.0%
+2026-02-14 01:01:37 - src.agents.onboarding - INFO - [onboarding.py:130] - OCR confidence for unknown: 95.0%
+2026-02-14 01:01:37 - src.agents.onboarding - INFO - [onboarding.py:130] - OCR confidence for itr_form16: 95.0%
+2026-02-14 01:01:37 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_50a2b166b79c]: completed (duration: 6.41ms)
+2026-02-14 01:01:37 - src.utils.logging - INFO - [logging.py:103] - Agent ComplianceAgent [req_50a2b166b79c]: started
+2026-02-14 01:01:37 - src.utils.logging - INFO - [logging.py:99] - Agent ComplianceAgent [req_50a2b166b79c]: completed (duration: 0.41ms)
+2026-02-14 01:01:37 - src.utils.logging - INFO - [logging.py:103] - Agent RouterAgent [req_50a2b166b79c]: started
+2026-02-14 01:01:37 - src.utils.logging - INFO - [logging.py:99] - Agent RouterAgent [req_50a2b166b79c]: completed (duration: 0.16ms)
+2026-02-14 01:01:37 - src.agents.underwriting - INFO - [underwriting.py:91] - Processing loan application
+2026-02-14 01:01:37 - interpret.utils._native - INFO - [_native.py:109] - EBM lib loading.
+2026-02-14 01:01:37 - interpret.utils._native - INFO - [_native.py:951] - Finding library for Windows, AMD64, bitsize=64, debug=False
+2026-02-14 01:01:37 - interpret.utils._native - INFO - [_native.py:984] - Loading EBM library C:\Users\mahes\AppData\Local\Programs\Python\Python313\Lib\site-packages\interpret\utils\..\root\bld\lib\libebm_win_x64.dll
+2026-02-14 01:01:37 - interpret.utils._clean_x - ERROR - [_clean_x.py:1471] - The model has 13 features, but X has 15 columns
+2026-02-14 01:01:37 - src.agents.underwriting - WARNING - [underwriting.py:131] - Model prediction failed: The model has 13 features, but X has 15 columns. Using mock prediction.
+2026-02-14 01:01:37 - src.agents.underwriting - INFO - [underwriting.py:150] - Using mock loan prediction (models not available)
+2026-02-14 01:01:37 - src.agents.underwriting - INFO - [underwriting.py:220] - Mock loan prediction: True (probability: 100.00%)
+2026-02-14 01:01:37 - src.agents.verification - INFO - [verification.py:82] - Loan verification: True
+2026-02-14 01:01:38 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:38] "GET /api/workflow/status/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:38 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 01:01:38 - src.agents.underwriting - INFO - [underwriting.py:309] - Processing insurance application
+2026-02-14 01:01:38 - interpret.utils._clean_x - ERROR - [_clean_x.py:1471] - The model has 12 features, but X has 9 columns
+2026-02-14 01:01:38 - src.agents.underwriting - WARNING - [underwriting.py:347] - Model prediction failed: The model has 12 features, but X has 9 columns. Using mock prediction.
+2026-02-14 01:01:38 - src.agents.underwriting - INFO - [underwriting.py:236] - Using mock insurance prediction (models not available)
+2026-02-14 01:01:38 - src.agents.underwriting - INFO - [underwriting.py:294] - Mock insurance prediction: premium = ₹21,600.00
+2026-02-14 01:01:38 - src.agents.verification - INFO - [verification.py:82] - Loan verification: True
+2026-02-14 01:01:38 - src.agents.verification - INFO - [verification.py:88] - Insurance verification: True
+2026-02-14 01:01:38 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 01:01:38 - src.agents.supervisor - INFO - [supervisor.py:89] - Supervisor decision: proceed - Continue workflow
+2026-02-14 01:01:38 - routes.workflow - INFO - [workflow.py:174] - Workflow completed for application: 54941047-a204-4d40-a230-96dc0468bc83
+2026-02-14 01:01:41 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:41] "GET /api/workflow/status/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:41 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:41] "OPTIONS /api/workflow/results/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:01:41 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 01:01:41] "GET /api/workflow/results/54941047-a204-4d40-a230-96dc0468bc83 HTTP/1.1" 200 -
+2026-02-14 01:05:05 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 01:05:05 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 01:05:05 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m

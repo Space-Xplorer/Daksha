@@ -1,5 +1,5 @@
 """
-Production OCR service with Tesseract and LLM-based classification.
+Production OCR service with OCR.space API and optional Tesseract fallback.
 """
 
 import cv2
@@ -10,74 +10,267 @@ from PIL import Image
 from pathlib import Path
 import logging
 import os
-from typing import Dict, Any, Optional, List
+import json
+import mimetypes
+import threading
+import urllib.request
+from datetime import datetime
+from typing import Dict, Any, Optional, List, Tuple
+from uuid import uuid4
 
 logger = logging.getLogger(__name__)
 
 class ProductionOCRService:
-    """Production OCR service using Tesseract."""
+    """Production OCR service using OCR.space with optional Tesseract fallback."""
+
+    FIELD_PATTERNS = {
+        "cibil_score": r"(?:CIBIL|Credit)\s*Score[:\s]*(\d{3})",
+        "monthly_income": r"(?:Gross|Net)\s*(?:Salary|Income)[:\s]*₹?\s*([\d,]+)",
+        "annual_income": r"(?:Total|Gross|Annual)\s*Income[:\s]*₹?\s*([\d,]+)",
+        "hba1c": r"HbA1c[:\s]*([\d.]+)\s*%",
+        "cholesterol": r"(?:Total\s*)?Cholesterol[:\s]*([\d.]+)\s*mg/dL",
+        "blood_sugar": r"Blood\s*Sugar[:\s]*(?:\(Fasting\))?\s*([\d.]+)\s*mg/dL",
+        "height": r"Height[:\s]*([\d.]+)\s*(?:cm|CM)",
+        "weight": r"Weight[:\s]*([\d.]+)\s*(?:kg|KG)",
+        "blood_pressure": r"(?:Blood\s*Pressure|BP)[:\s]*(\d{2,3})/(\d{2,3})",
+        "heart_rate": r"Heart\s*Rate[:\s]*(\d{2,3})\s*bpm",
+        "bank_balance": r"(?:Average|Closing)\s*Balance[:\s]*₹?\s*([\d,]+)",
+        "property_value": r"(?:Market|Assessed)\s*Value[:\s]*₹?\s*([\d,]+)",
+        "date": r"(\d{1,2}[-/]\d{1,2}[-/]\d{2,4})",
+        "name": r"(?:Name|Full\s*Name)[:\s]*([A-Za-z\s]+)",
+        "gender": r"(?:Gender|Sex)[:\s]*(Male|Female|M|F|Other)",
+        "aadhaar_number": r"(?:Aadhaar|Aadhar)[:\s]*(\d{4}\s*\d{4}\s*\d{4})",
+        "pan_number": r"(?:PAN|Permanent\s*Account\s*Number)[:\s]*([A-Z]{5}\d{4}[A-Z])",
+        "passport_number": r"(?:Passport\s*(?:No|Number))[:\s]*([A-Z0-9]{6,9})",
+        "voter_id_number": r"(?:EPIC|Voter\s*ID)[:\s]*([A-Z]{3}\d{7})"
+    }
     
     def __init__(self, groq_api_key: Optional[str] = None):
         """Initialize production OCR service."""
         self.groq_api_key = groq_api_key or os.getenv('GROQ_API_KEY')
-        
-        # Configure Tesseract path
+
+        self.ocr_key = os.getenv('OCR_KEY')
+        self.ocr_api_url = os.getenv('OCR_API_URL', 'https://api.ocr.space/parse/image')
+        self.ocr_language = os.getenv('OCR_LANGUAGE', 'eng')
+        self.ocr_engine = os.getenv('OCR_ENGINE', '1')
+        self.ocr_timeout = self._safe_int_env('OCR_API_TIMEOUT', 30)
+        self.ocr_monthly_limit = self._safe_int_env('OCR_MONTHLY_LIMIT', 25000)
+
+        self._usage_lock = threading.Lock()
+        self._usage_path = self._resolve_usage_path(os.getenv('OCR_USAGE_PATH'))
+
+        self.tesseract_available = False
         tesseract_path = os.getenv('TESSERACT_PATH')
         if tesseract_path:
             pytesseract.pytesseract.tesseract_cmd = tesseract_path
-        
-        # Test Tesseract installation
+
+        if not self.ocr_key:
+            self._init_tesseract()
+        else:
+            logger.info("OCR.space key detected, using OCR.space API as primary OCR")
+
+    def _safe_int_env(self, name: str, default: int) -> int:
+        value = os.getenv(name)
+        if value is None or value == "":
+            return default
         try:
-            pytesseract.get_tesseract_version()
-            logger.info("Tesseract OCR initialized successfully")
-        except Exception as e:
-            logger.error(f"Tesseract not found: {e}")
-            raise RuntimeError("Tesseract OCR not available. Please install Tesseract and set TESSERACT_PATH in .env")
+            return int(value)
+        except ValueError:
+            logger.warning(f"Invalid value for {name}, using default {default}")
+            return default
     
     def extract_text(self, file_path: str, preprocess: bool = True) -> str:
         """
-        Extract text from document using Tesseract OCR.
-        
+        Extract text from document using OCR.space or Tesseract fallback.
+
         Args:
             file_path: Path to document (PDF or image)
-            preprocess: Whether to preprocess image
-            
+            preprocess: Whether to preprocess image for Tesseract
+
         Returns:
             Extracted text
         """
+        if self.ocr_key:
+            try:
+                return self._extract_text_with_ocr_space(file_path)
+            except Exception as e:
+                logger.warning(f"OCR.space failed for {file_path}: {e}")
+                if not self.tesseract_available:
+                    self._init_tesseract()
+                if self.tesseract_available:
+                    return self._extract_text_with_tesseract(file_path, preprocess)
+                raise
+
+        if not self.tesseract_available:
+            raise RuntimeError("No OCR provider available. Set OCR_KEY or install Tesseract.")
+
+        return self._extract_text_with_tesseract(file_path, preprocess)
+
+    def _init_tesseract(self) -> None:
+        """Initialize Tesseract if available."""
         try:
-            # Convert PDF to images if needed
+            pytesseract.get_tesseract_version()
+            self.tesseract_available = True
+            logger.info("Tesseract OCR initialized successfully")
+        except Exception as e:
+            logger.warning(f"Tesseract not available: {e}")
+
+    def _extract_text_with_tesseract(self, file_path: str, preprocess: bool) -> str:
+        """Extract text using Tesseract OCR."""
+        try:
             if file_path.lower().endswith('.pdf'):
                 images = convert_from_path(file_path, dpi=300)
-                image = images[0]  # Process first page
+                image = images[0]
             else:
                 image = Image.open(file_path)
-            
-            # Convert to numpy array for preprocessing
+
             img_array = np.array(image)
-            
-            # Preprocess if requested
             if preprocess:
                 img_array = self._preprocess_image(img_array)
-            
-            # Extract text with confidence
+
             data = pytesseract.image_to_data(
                 img_array,
                 output_type=pytesseract.Output.DICT,
-                config='--psm 6'  # Assume uniform block of text
+                config='--psm 6'
             )
-            
-            # Combine text
+
             text = ' '.join([
                 word for word, conf in zip(data['text'], data['conf'])
-                if conf > 0  # Filter out low confidence
+                if conf > 0
             ])
-            
+
             return text
-            
+
         except Exception as e:
-            logger.error(f"Text extraction failed for {file_path}: {e}")
+            logger.error(f"Tesseract extraction failed for {file_path}: {e}")
             raise
+
+    def _extract_text_with_ocr_space(self, file_path: str) -> str:
+        """Extract text using OCR.space API with monthly usage cap."""
+        if not self._consume_monthly_quota():
+            if not self.tesseract_available:
+                self._init_tesseract()
+            if self.tesseract_available:
+                logger.warning("OCR.space monthly limit reached. Falling back to Tesseract.")
+                return self._extract_text_with_tesseract(file_path, preprocess=True)
+            raise RuntimeError("OCR.space monthly limit reached and no fallback available.")
+
+        with open(file_path, 'rb') as file_handle:
+            file_bytes = file_handle.read()
+
+        filename = Path(file_path).name
+        content_type = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
+
+        fields = {
+            'language': self.ocr_language,
+            'isOverlayRequired': 'false',
+            'OCREngine': self.ocr_engine
+        }
+        body, content_type_header = self._build_multipart_form(fields, {
+            'file': (filename, file_bytes, content_type)
+        })
+
+        request = urllib.request.Request(
+            self.ocr_api_url,
+            data=body,
+            headers={
+                'apikey': self.ocr_key,
+                'Content-Type': content_type_header
+            },
+            method='POST'
+        )
+
+        with urllib.request.urlopen(request, timeout=self.ocr_timeout) as response:
+            payload = response.read().decode('utf-8')
+
+        try:
+            data = json.loads(payload)
+        except json.JSONDecodeError as e:
+            raise RuntimeError(f"Invalid OCR.space response: {e}")
+
+        if data.get('IsErroredOnProcessing'):
+            raise RuntimeError(data.get('ErrorMessage') or 'OCR.space error')
+
+        parsed_results = data.get('ParsedResults') or []
+        if not parsed_results:
+            return ''
+
+        texts = [result.get('ParsedText', '') for result in parsed_results if result.get('ParsedText')]
+        return '\n'.join(texts).strip()
+
+    def _consume_monthly_quota(self) -> bool:
+        """Increment OCR usage for the month if under limit."""
+        if self.ocr_monthly_limit <= 0:
+            return True
+
+        current_month = datetime.utcnow().strftime('%Y-%m')
+
+        with self._usage_lock:
+            usage = self._read_usage()
+            if usage.get('month') != current_month:
+                usage = {'month': current_month, 'count': 0}
+
+            if usage.get('count', 0) >= self.ocr_monthly_limit:
+                return False
+
+            usage['count'] = usage.get('count', 0) + 1
+            self._write_usage(usage)
+
+        return True
+
+    def _read_usage(self) -> Dict[str, Any]:
+        if not self._usage_path.exists():
+            return {}
+
+        try:
+            with open(self._usage_path, 'r', encoding='utf-8') as file_handle:
+                return json.load(file_handle)
+        except Exception:
+            return {}
+
+    def _write_usage(self, usage: Dict[str, Any]) -> None:
+        self._usage_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(self._usage_path, 'w', encoding='utf-8') as file_handle:
+            json.dump(usage, file_handle)
+
+    def _resolve_usage_path(self, override: Optional[str]) -> Path:
+        if override:
+            return Path(override)
+
+        backend_dir = Path(__file__).resolve().parents[2]
+        return backend_dir / 'temp' / 'ocr_usage.json'
+
+    def _build_multipart_form(
+        self,
+        fields: Dict[str, str],
+        files: Dict[str, Any]
+    ) -> Tuple[bytes, str]:
+        boundary = uuid4().hex
+        boundary_bytes = boundary.encode('ascii')
+        body = bytearray()
+
+        for name, value in fields.items():
+            body.extend(b'--' + boundary_bytes + b'\r\n')
+            body.extend(f'Content-Disposition: form-data; name="{name}"'.encode('ascii'))
+            body.extend(b'\r\n\r\n')
+            body.extend(str(value).encode('utf-8'))
+            body.extend(b'\r\n')
+
+        for name, (filename, content, content_type) in files.items():
+            body.extend(b'--' + boundary_bytes + b'\r\n')
+            body.extend(
+                f'Content-Disposition: form-data; name="{name}"; filename="{filename}"'.encode('ascii')
+            )
+            body.extend(b'\r\n')
+            body.extend(f'Content-Type: {content_type}'.encode('ascii'))
+            body.extend(b'\r\n\r\n')
+            body.extend(content)
+            body.extend(b'\r\n')
+
+        body.extend(b'--' + boundary_bytes + b'--\r\n')
+
+        content_type_header = f'multipart/form-data; boundary={boundary}'
+        return bytes(body), content_type_header
     
     def _preprocess_image(self, image: np.ndarray) -> np.ndarray:
         """
@@ -276,3 +469,29 @@ Respond with ONLY the document type, nothing else."""
             confidence += 10.0
         
         return min(100.0, confidence)
+
+    def extract_field(self, text: str, field_name: str) -> Optional[Any]:
+        """
+        Extract field using regex patterns.
+
+        Args:
+            text: Text to extract from
+            field_name: Field name
+
+        Returns:
+            Extracted value or None
+        """
+        import re
+
+        pattern = self.FIELD_PATTERNS.get(field_name)
+        if not pattern:
+            return None
+
+        match = re.search(pattern, text, re.IGNORECASE)
+        if not match:
+            return None
+
+        if field_name == "blood_pressure":
+            return (int(match.group(1)), int(match.group(2)))
+
+        return match.group(1)

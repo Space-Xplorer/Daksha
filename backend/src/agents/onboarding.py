@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from src.schemas.state import ApplicationState
-from src.utils.ocr_service_simple import OCRService
+from src.utils.ocr_service_factory import get_ocr_service
 from src.utils.logging import log_agent_execution, log_error
 from src.utils.error_handling import safe_agent_wrapper
 
@@ -34,7 +34,7 @@ class OnboardingAgent:
         Args:
             groq_api_key: Optional Groq API key for LLM-based classification
         """
-        self.ocr_service = OCRService(groq_api_key=groq_api_key)
+        self.ocr_service = get_ocr_service(groq_api_key=groq_api_key)
     
     def process_documents(self, state: ApplicationState) -> ApplicationState:
         """
@@ -120,8 +120,7 @@ class OnboardingAgent:
                 doc_type = result.get("document_type", doc.get("type", "unknown"))
                 text = result.get("text", "")
                 
-                # Mock confidence score (since we're using mock OCR)
-                confidence = 95.0  # High confidence for mock data
+                confidence = result.get("confidence", 95.0)
                 
                 # Log confidence scores
                 ocr_confidence_scores[doc_type] = confidence

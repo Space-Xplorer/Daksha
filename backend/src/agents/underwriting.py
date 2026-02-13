@@ -62,20 +62,14 @@ class UnderwritingAgent:
                 self.health_encoders is not None
             ])
             
-            if models_loaded:
-                logger.info("All models loaded successfully")
-                self.use_mock_predictions = False
-            else:
-                logger.warning("Models not available. Using mock predictions for demo.")
-                self.use_mock_predictions = True
-            
+            if not models_loaded:
+                raise RuntimeError("Required models not available. Cannot proceed.")
+
+            logger.info("All models loaded successfully")
+
         except Exception as e:
-            logger.warning(f"Model loading failed: {e}. Using mock predictions for demo.")
-            self.credit_model = None
-            self.credit_encoders = None
-            self.health_model = None
-            self.health_encoders = None
-            self.use_mock_predictions = True
+            logger.error(f"Model loading failed: {e}")
+            raise RuntimeError(f"Underwriting agent initialization failed: {e}")
     
     def process_loan(self, state: ApplicationState) -> ApplicationState:
         """
@@ -95,205 +89,38 @@ class UnderwritingAgent:
             if not applicant_data:
                 raise ValueError("No applicant_data found in state")
             
-            # Use mock predictions if models not available
-            if self.use_mock_predictions:
-                return self._mock_loan_prediction(state, applicant_data)
-            
-            try:
-                # Encode features
-                features = self._encode_finance_features(applicant_data)
-                
-                # Get prediction and explanation from EBM
-                prediction_proba = self.credit_model.predict_proba(features)[0]
-                approval_probability = float(prediction_proba[1])  # Probability of class 1 (Approved)
-                
-                # Get local explanation
-                explanation = self.credit_model.explain_local(features)
-                reasoning = self._extract_reasoning(explanation)
-                
-                # Validate monotonicity (log only, don't block)
-                self._validate_loan_monotonicity(applicant_data, approval_probability, reasoning)
-                
-                # Update state
-                state["loan_prediction"] = {
-                    "approved": approval_probability > 0.5,
-                    "probability": approval_probability,
-                    "reasoning": reasoning
-                }
-                
-                logger.info(f"Loan prediction complete: {state['loan_prediction']['approved']} "
-                           f"(probability: {approval_probability:.2%})")
-                
-                return state
-                
-            except Exception as model_error:
-                # Fall back to mock prediction if model fails
-                logger.warning(f"Model prediction failed: {model_error}. Using mock prediction.")
-                return self._mock_loan_prediction(state, applicant_data)
+            # Encode features
+            features = self._encode_finance_features(applicant_data)
+
+            # Get prediction and explanation from EBM
+            prediction_proba = self.credit_model.predict_proba(features)[0]
+            approval_probability = float(prediction_proba[1])  # Probability of class 1 (Approved)
+
+            # Get local explanation
+            explanation = self.credit_model.explain_local(features)
+            reasoning = self._extract_reasoning(explanation)
+
+            # Validate monotonicity (log only, don't block)
+            self._validate_loan_monotonicity(applicant_data, approval_probability, reasoning)
+
+            # Update state
+            state["loan_prediction"] = {
+                "approved": approval_probability > 0.5,
+                "probability": approval_probability,
+                "reasoning": reasoning
+            }
+
+            logger.info(f"Loan prediction complete: {state['loan_prediction']['approved']} "
+                       f"(probability: {approval_probability:.2%})")
+
+            return state
             
         except Exception as e:
             logger.error(f"Loan processing failed: {e}")
             state.setdefault("errors", []).append(f"Underwriting (Loan): {str(e)}")
+            state["rejected"] = True
+            state["rejection_reason"] = "System error during underwriting"
             return state
-    
-    def _mock_loan_prediction(self, state: ApplicationState, applicant_data: Dict[str, Any]) -> ApplicationState:
-        """
-        Generate mock loan prediction for demo purposes.
-        
-        Args:
-            state: Current application state
-            applicant_data: Applicant data
-        
-        Returns:
-            Updated state with mock prediction
-        """
-        logger.info("Using mock loan prediction (models not available)")
-        
-        # Simple rule-based mock prediction
-        cibil = applicant_data.get('cibil_score', 0)
-        income = applicant_data.get('annual_income', 0) or applicant_data.get('income_annum', 0)
-        loan_amount = applicant_data.get('loan_amount', 0)
-        existing_debt = applicant_data.get('existing_debt', 0)
-        
-        # Calculate approval probability based on simple rules
-        score = 0.5  # Base score
-        
-        if cibil >= 750:
-            score += 0.25
-        elif cibil >= 700:
-            score += 0.15
-        elif cibil >= 650:
-            score += 0.05
-        else:
-            score -= 0.2
-        
-        if income > 0 and loan_amount > 0:
-            lti_ratio = loan_amount / income
-            if lti_ratio < 3:
-                score += 0.15
-            elif lti_ratio < 5:
-                score += 0.05
-            else:
-                score -= 0.1
-        
-        if income > 0 and existing_debt > 0:
-            dti_ratio = existing_debt / income
-            if dti_ratio < 0.2:
-                score += 0.1
-            elif dti_ratio < 0.4:
-                score += 0.05
-            else:
-                score -= 0.1
-        
-        # Clamp between 0 and 1
-        approval_probability = max(0.0, min(1.0, score))
-        
-        # Calculate engineered features for mock reasoning (matching real model)
-        lti_ratio = loan_amount / income if income > 0 else 0
-        total_assets = (
-            applicant_data.get('residential_assets_value', 0) +
-            applicant_data.get('commercial_assets_value', 0) +
-            applicant_data.get('luxury_assets_value', 0) +
-            applicant_data.get('bank_asset_value', 0)
-        )
-        asset_to_loan = total_assets / loan_amount if loan_amount > 0 else 0
-        
-        # Mock reasoning (includes engineered features to match real model output)
-        reasoning = {
-            "cibil_score": 5.07 if cibil >= 750 else (2.5 if cibil >= 700 else -2.0),
-            "income_annum": 2.34 if income > 1000000 else 1.0,
-            "loan_amount": -1.5 if loan_amount > 5000000 else -0.5,
-            "loan_to_income_ratio": -2.0 if lti_ratio > 5 else (-1.0 if lti_ratio > 3 else 0.5),
-            "total_assets": 1.8 if total_assets > 2000000 else 0.8,
-            "asset_to_loan_ratio": 2.5 if asset_to_loan > 2 else (1.2 if asset_to_loan > 1 else 0.0),
-            "no_of_dependents": -0.3 * applicant_data.get('no_of_dependents', 0),
-            "employment_years": 0.89,
-            "age": 0.45
-        }
-        
-        state["loan_prediction"] = {
-            "approved": approval_probability > 0.5,
-            "probability": approval_probability,
-            "reasoning": reasoning
-        }
-        
-        logger.info(f"Mock loan prediction: {state['loan_prediction']['approved']} "
-                   f"(probability: {approval_probability:.2%})")
-        
-        return state
-    
-    def _mock_insurance_prediction(self, state: ApplicationState, applicant_data: Dict[str, Any]) -> ApplicationState:
-        """
-        Generate mock insurance prediction for demo purposes.
-        
-        Args:
-            state: Current application state
-            applicant_data: Applicant data
-        
-        Returns:
-            Updated state with mock prediction
-        """
-        logger.info("Using mock insurance prediction (models not available)")
-        
-        # Simple rule-based mock premium calculation
-        age = applicant_data.get('age', 30)
-        bmi = applicant_data.get('bmi', 25)
-        
-        # Base premium
-        base_premium = 15000
-        
-        # Age factor (increases with age)
-        if age < 30:
-            age_factor = 1.0
-        elif age < 40:
-            age_factor = 1.2
-        elif age < 50:
-            age_factor = 1.5
-        else:
-            age_factor = 2.0
-        
-        # BMI factor
-        if bmi < 18.5:
-            bmi_factor = 1.1  # Underweight
-        elif bmi < 25:
-            bmi_factor = 1.0  # Normal
-        elif bmi < 30:
-            bmi_factor = 1.2  # Overweight
-        else:
-            bmi_factor = 1.5  # Obese
-        
-        # Pre-existing conditions
-        condition_factor = 1.0
-        conditions = [
-            'diabetes', 'blood_pressure_problems', 'any_transplants', 
-            'any_chronic_diseases', 'known_allergies'
-        ]
-        
-        for condition in conditions:
-            if applicant_data.get(condition, False) or applicant_data.get(condition, 'No') == 'Yes':
-                condition_factor += 0.3
-        
-        # Calculate premium
-        premium = base_premium * age_factor * bmi_factor * condition_factor
-        
-        # Mock reasoning
-        reasoning = {
-            "age": 3.45 if age > 50 else (1.5 if age > 40 else 0.5),
-            "bmi": 2.1 if bmi > 30 else (0.8 if bmi > 25 else 0.0),
-            "diabetes": 4.2 if applicant_data.get('diabetes', False) else 0.0,
-            "blood_pressure_problems": 3.1 if applicant_data.get('blood_pressure_problems', False) else 0.0,
-            "any_chronic_diseases": 5.0 if applicant_data.get('any_chronic_diseases', False) else 0.0,
-            "known_allergies": 1.2 if applicant_data.get('known_allergies', False) else 0.0
-        }
-        
-        state["insurance_prediction"] = {
-            "premium": round(premium, 2),
-            "reasoning": reasoning
-        }
-        
-        logger.info(f"Mock insurance prediction: premium = ₹{premium:,.2f}")
-        
-        return state
     
     def process_insurance(self, state: ApplicationState) -> ApplicationState:
         """
@@ -313,43 +140,35 @@ class UnderwritingAgent:
             if not applicant_data:
                 raise ValueError("No applicant_data found in state")
             
-            # Use mock predictions if models not available
-            if self.use_mock_predictions:
-                return self._mock_insurance_prediction(state, applicant_data)
-            
-            try:
-                # Encode features
-                features = self._encode_health_features(applicant_data)
-                
-                # Get prediction and explanation from EBM
-                premium = self.health_model.predict(features)[0]
-                premium = float(premium)
-                
-                # Get local explanation
-                explanation = self.health_model.explain_local(features)
-                reasoning = self._extract_reasoning(explanation)
-                
-                # Validate monotonicity (log only, don't block)
-                self._validate_insurance_monotonicity(applicant_data, premium, reasoning)
-                
-                # Update state
-                state["insurance_prediction"] = {
-                    "premium": premium,
-                    "reasoning": reasoning
-                }
-                
-                logger.info(f"Insurance prediction complete: premium = ₹{premium:,.2f}")
-                
-                return state
-                
-            except Exception as model_error:
-                # Fall back to mock prediction if model fails
-                logger.warning(f"Model prediction failed: {model_error}. Using mock prediction.")
-                return self._mock_insurance_prediction(state, applicant_data)
+            # Encode features
+            features = self._encode_health_features(applicant_data)
+
+            # Get prediction and explanation from EBM
+            premium = self.health_model.predict(features)[0]
+            premium = float(premium)
+
+            # Get local explanation
+            explanation = self.health_model.explain_local(features)
+            reasoning = self._extract_reasoning(explanation)
+
+            # Validate monotonicity (log only, don't block)
+            self._validate_insurance_monotonicity(applicant_data, premium, reasoning)
+
+            # Update state
+            state["insurance_prediction"] = {
+                "premium": premium,
+                "reasoning": reasoning
+            }
+
+            logger.info(f"Insurance prediction complete: premium = ₹{premium:,.2f}")
+
+            return state
             
         except Exception as e:
             logger.error(f"Insurance processing failed: {e}")
             state.setdefault("errors", []).append(f"Underwriting (Insurance): {str(e)}")
+            state["rejected"] = True
+            state["rejection_reason"] = "System error during underwriting"
             return state
     
     def _encode_finance_features(self, applicant_data: Dict[str, Any]) -> np.ndarray:

@@ -8,11 +8,11 @@ Includes async support for improved performance.
 
 import asyncio
 import logging
-from typing import Dict, Any, Optional
+import os
+from typing import Dict, Any
 from pydantic import BaseModel, Field, ValidationError
 
 from src.schemas.state import ApplicationState
-from src.utils.llm_helpers import parse_json_response
 
 logger = logging.getLogger(__name__)
 
@@ -42,53 +42,50 @@ class VerificationAgent:
         
         try:
             from langchain_groq import ChatGroq
-            from langchain.output_parsers import PydanticOutputParser
+            from langchain_core.output_parsers import PydanticOutputParser
+
+            api_key = os.getenv("GROQ_API_KEY")
+            if not api_key:
+                raise ValueError("GROQ_API_KEY not found in environment")
             
             self.llm = ChatGroq(
                 model="llama-3.3-70b-versatile",
-                temperature=0.2  # Low temperature for consistent verification
+                temperature=0.2,
+                api_key=api_key
             )
             
             # Initialize Pydantic output parser
             self.parser = PydanticOutputParser(pydantic_object=VerificationResult)
             
             logger.info("VerificationAgent initialized successfully with Pydantic parser")
-        except ImportError:
-            logger.warning("langchain_groq not available, verification will be limited")
-            self.llm = None
-            self.parser = None
+        except ImportError as e:
+            logger.error(f"langchain_groq not available: {e}")
+            raise RuntimeError("Verification agent initialization failed: LLM dependency missing")
         except Exception as e:
-            logger.warning(f"Failed to initialize Groq LLM: {e}")
-            self.llm = None
-            self.parser = None
+            logger.error(f"Failed to initialize Groq LLM: {e}")
+            raise RuntimeError(f"Verification agent initialization failed: {e}")
     
     def verify_decision(self, state: ApplicationState) -> ApplicationState:
         """
         Main verification method that routes to loan or insurance verification.
-        
-        Args:
-            state: Current application state with predictions
-        
-        Returns:
-            Updated state with verification_result field
         """
         try:
             request_type = state.get("request_type", "both")
-            
+
             # Verify loan decision if present
             if request_type in ["loan", "both"] and state.get("loan_prediction"):
                 loan_verification = self._verify_loan_decision(state)
                 state["loan_verification"] = loan_verification
                 logger.info(f"Loan verification: {loan_verification.get('verified', False)}")
-            
+
             # Verify insurance decision if present
             if request_type in ["insurance", "both"] and state.get("insurance_prediction"):
                 insurance_verification = self._verify_insurance_decision(state)
                 state["insurance_verification"] = insurance_verification
                 logger.info(f"Insurance verification: {insurance_verification.get('verified', False)}")
-            
+
             return state
-            
+
         except Exception as e:
             logger.error(f"Verification failed: {e}")
             state.setdefault("errors", []).append(f"Verification: {str(e)}")
@@ -104,10 +101,6 @@ class VerificationAgent:
         Returns:
             Verification result with verified flag, concerns, and confidence
         """
-        if not self.llm or not self.parser:
-            # Fallback verification without LLM
-            return self._fallback_loan_verification(state)
-        
         try:
             prediction = state["loan_prediction"]
             applicant_data = state["applicant_data"]
@@ -151,22 +144,16 @@ Task: Verify if this decision is reasonable. Consider:
                 logger.debug(f"Loan verification result: {result}")
                 return result
             except ValidationError as e:
-                logger.warning(f"Pydantic validation failed, trying manual JSON parse: {e}")
-                verification = parse_json_response(response, default={})
-                if isinstance(verification, dict) and verification:
-                    return verification
-                return self._fallback_loan_verification(state)
+                logger.error(f"Pydantic validation failed: {e}")
+                raise RuntimeError("Loan verification parsing failed") from e
         except Exception as e:
             logger.error(f"Loan verification failed: {e}")
-            return self._fallback_loan_verification(state)
+            raise
     
     async def _verify_loan_decision_async(self, state: ApplicationState) -> Dict[str, Any]:
         """
         Async version: Verify loan decision makes sense given applicant data.
         """
-        if not self.llm or not self.parser:
-            return self._fallback_loan_verification(state)
-        
         try:
             prediction = state["loan_prediction"]
             applicant_data = state["applicant_data"]
@@ -210,14 +197,11 @@ Task: Verify if this decision is reasonable. Consider:
                 logger.debug(f"Loan verification result (async): {result}")
                 return result
             except ValidationError as e:
-                logger.warning(f"Pydantic validation failed (async), trying manual JSON parse: {e}")
-                verification = parse_json_response(response_content, default={})
-                if isinstance(verification, dict) and verification:
-                    return verification
-                return self._fallback_loan_verification(state)
+                logger.error(f"Pydantic validation failed (async): {e}")
+                raise RuntimeError("Loan verification parsing failed (async)") from e
         except Exception as e:
             logger.error(f"Loan verification failed (async): {e}")
-            return self._fallback_loan_verification(state)
+            raise
     
     def _verify_insurance_decision(self, state: ApplicationState) -> Dict[str, Any]:
         """
@@ -229,10 +213,6 @@ Task: Verify if this decision is reasonable. Consider:
         Returns:
             Verification result with verified flag, concerns, and confidence
         """
-        if not self.llm or not self.parser:
-            # Fallback verification without LLM
-            return self._fallback_insurance_verification(state)
-        
         try:
             prediction = state["insurance_prediction"]
             applicant_data = state["applicant_data"]
@@ -275,32 +255,26 @@ Task: Verify if this premium is reasonable. Consider:
                 logger.debug(f"Insurance verification result: {result}")
                 return result
             except ValidationError as e:
-                logger.warning(f"Pydantic validation failed, trying manual JSON parse: {e}")
-                verification = parse_json_response(response, default={})
-                if isinstance(verification, dict) and verification:
-                    return verification
-                return self._fallback_insurance_verification(state)
+                logger.error(f"Pydantic validation failed: {e}")
+                raise RuntimeError("Insurance verification parsing failed") from e
         except Exception as e:
             logger.error(f"Insurance verification failed: {e}")
-            return self._fallback_insurance_verification(state)
+            raise
     
     async def _verify_insurance_decision_async(self, state: ApplicationState) -> Dict[str, Any]:
         """
         Async version: Verify insurance premium makes sense given applicant data.
         """
-        if not self.llm or not self.parser:
-            return self._fallback_insurance_verification(state)
-        
         try:
             prediction = state["insurance_prediction"]
             applicant_data = state["applicant_data"]
-            
+
             # Format reasoning for prompt
             reasoning_text = self._format_reasoning(prediction.get("reasoning", {}))
-            
+
             # Get format instructions from parser
             format_instructions = self.parser.get_format_instructions()
-            
+
             prompt = f"""You are a senior insurance underwriter reviewing an AI premium calculation.
 
 Applicant Profile:
@@ -323,10 +297,10 @@ Task: Verify if this premium is reasonable. Consider:
 3. Are there any concerns about fairness or accuracy?
 
 {format_instructions}"""
-            
+
             response = await self.llm.ainvoke(prompt)
             response_content = response.content
-            
+
             # Parse using Pydantic parser
             try:
                 verification = self.parser.parse(response_content)
@@ -334,14 +308,11 @@ Task: Verify if this premium is reasonable. Consider:
                 logger.debug(f"Insurance verification result (async): {result}")
                 return result
             except ValidationError as e:
-                logger.warning(f"Pydantic validation failed (async), trying manual JSON parse: {e}")
-                verification = parse_json_response(response_content, default={})
-                if isinstance(verification, dict) and verification:
-                    return verification
-                return self._fallback_insurance_verification(state)
+                logger.error(f"Pydantic validation failed (async): {e}")
+                raise RuntimeError("Insurance verification parsing failed (async)") from e
         except Exception as e:
             logger.error(f"Insurance verification failed (async): {e}")
-            return self._fallback_insurance_verification(state)
+            raise
     
     async def verify_decision_async(self, state: ApplicationState) -> ApplicationState:
         """
@@ -406,86 +377,6 @@ Task: Verify if this premium is reasonable. Consider:
         
         return "\n".join(lines)
     
-    def _fallback_loan_verification(self, state: ApplicationState) -> Dict[str, Any]:
-        """
-        Fallback verification for loan decisions without LLM.
-        
-        Uses rule-based logic to verify basic consistency.
-        
-        Args:
-            state: Application state
-        
-        Returns:
-            Basic verification result
-        """
-        prediction = state.get("loan_prediction", {})
-        applicant_data = state.get("applicant_data", {})
-        
-        concerns = []
-        
-        # Check for basic inconsistencies
-        cibil = applicant_data.get('cibil_score', 0)
-        approved = prediction.get('approved', False)
-        probability = prediction.get('probability', 0.5)
-        
-        # Very low CIBIL but approved
-        if cibil < 600 and approved:
-            concerns.append("Low CIBIL score but approved")
-        
-        # Very high CIBIL but rejected
-        if cibil > 800 and not approved:
-            concerns.append("High CIBIL score but rejected")
-        
-        # Low confidence decision
-        if 0.4 < probability < 0.6:
-            concerns.append("Low confidence decision (near threshold)")
-        
-        return {
-            "verified": len(concerns) == 0,
-            "confidence": 0.7 if len(concerns) == 0 else 0.5,
-            "concerns": concerns,
-            "recommendation": "APPROVE" if len(concerns) == 0 else "REVIEW"
-        }
-    
-    def _fallback_insurance_verification(self, state: ApplicationState) -> Dict[str, Any]:
-        """
-        Fallback verification for insurance decisions without LLM.
-        
-        Uses rule-based logic to verify basic consistency.
-        
-        Args:
-            state: Application state
-        
-        Returns:
-            Basic verification result
-        """
-        prediction = state.get("insurance_prediction", {})
-        applicant_data = state.get("applicant_data", {})
-        
-        concerns = []
-        
-        # Check for basic inconsistencies
-        premium = prediction.get('premium', 0)
-        age = applicant_data.get('age', 30)
-        
-        # Unreasonably low premium
-        if premium < 5000:
-            concerns.append("Premium seems unusually low")
-        
-        # Unreasonably high premium
-        if premium > 100000:
-            concerns.append("Premium seems unusually high")
-        
-        # Young person with very high premium
-        if age < 30 and premium > 50000:
-            concerns.append("High premium for young applicant")
-        
-        return {
-            "verified": len(concerns) == 0,
-            "confidence": 0.7 if len(concerns) == 0 else 0.5,
-            "concerns": concerns,
-            "recommendation": "APPROVE" if len(concerns) == 0 else "REVIEW"
-        }
 
 
 def verify_decision(state: ApplicationState) -> ApplicationState:
