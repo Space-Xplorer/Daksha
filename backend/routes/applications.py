@@ -72,7 +72,9 @@ def create_application():
             'loan_type': data.get('loan_type'),
             'submitted_name': data.get('submitted_name', ''),
             'submitted_dob': data.get('submitted_dob', ''),
+            'submitted_aadhaar': data.get('submitted_aadhaar', ''),
             'applicant_data': data.get('applicant_data', {}),
+            'uploaded_documents': data.get('uploaded_documents', []),
             'status': 'draft',
             'created_at': datetime.utcnow().isoformat(),
             'updated_at': datetime.utcnow().isoformat()
@@ -201,6 +203,10 @@ def update_application(app_id):
             application['submitted_name'] = data['submitted_name']
         if 'submitted_dob' in data:
             application['submitted_dob'] = data['submitted_dob']
+        if 'submitted_aadhaar' in data:
+            application['submitted_aadhaar'] = data['submitted_aadhaar']
+        if 'uploaded_documents' in data:
+            application['uploaded_documents'] = data['uploaded_documents']
         
         application['updated_at'] = datetime.utcnow().isoformat()
         

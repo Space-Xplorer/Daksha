@@ -4,3 +4,462 @@
  * Running on http://127.0.0.1:5000
  * Running on http://172.16.9.49:5000
 2026-02-13 19:32:55 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-13 22:10:50 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:10:50 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.9.33:5000
+2026-02-13 22:10:50 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-13 22:11:38 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:11:38] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-13 22:11:38 - routes.auth - INFO - [auth.py:151] - User logged in: admin@daksha.com
+2026-02-13 22:11:38 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:11:38] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-13 22:12:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:12:02] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-13 22:12:02 - routes.applications - INFO - [applications.py:83] - Application created: 36b87c80-0982-4d08-9927-66c95baea70e by admin@daksha.com
+2026-02-13 22:12:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:12:02] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-13 22:12:04 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:12:04] "OPTIONS /api/applications/undefined HTTP/1.1" 200 -
+2026-02-13 22:12:04 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:12:04] "[33mPUT /api/applications/undefined HTTP/1.1[0m" 404 -
+2026-02-13 22:12:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:12:06] "[33mPUT /api/applications/undefined HTTP/1.1[0m" 404 -
+2026-02-13 22:12:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:12:15] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-13 22:12:15 - routes.applications - INFO - [applications.py:83] - Application created: 28fd4abe-76ae-4482-9b4b-758ca06d0465 by admin@daksha.com
+2026-02-13 22:12:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:12:15] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-13 22:12:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:12:16] "OPTIONS /api/applications/undefined HTTP/1.1" 200 -
+2026-02-13 22:12:17 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:12:17] "[33mPUT /api/applications/undefined HTTP/1.1[0m" 404 -
+2026-02-13 22:24:18 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:24:18 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-13 22:24:18 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-13 22:24:18 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:24:18 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:24:18 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:24:18 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langchain_core\\runnables\\__init__.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langchain_core\\runnables\\base.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\__init__.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\errors.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\main.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\networks.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\types.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\deprecated\\tools.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\_internal\\_model_construction.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\fields.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic_core\\__init__.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\aliases.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\_internal\\_internal_dataclass.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\_internal\\_repr.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\_migration.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic_core\\core_schema.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\config.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\annotated_types\\__init__.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langchain_core\\runnables\\utils.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\_internal\\_generate_schema.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\_internal\\_decorators.py', reloading
+2026-02-13 22:24:24 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:24:25 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:24:25 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:24:25 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:24:25 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\numpy\\_typing\\__init__.py', reloading
+2026-02-13 22:24:25 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\numpy\\_typing\\_shape.py', reloading
+2026-02-13 22:24:25 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\numpy\\_typing\\_scalars.py', reloading
+2026-02-13 22:24:25 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\numpy\\_typing\\_nbit.py', reloading
+2026-02-13 22:24:26 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:24:26 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:24:26 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:24:26 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:24:43 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:24:43] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-13 22:24:43 - routes.applications - INFO - [applications.py:83] - Application created: 8e9046f4-928e-47b6-bdc5-d1c1058d1ee0 by admin@daksha.com
+2026-02-13 22:24:43 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:24:43] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-13 22:24:49 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:24:49] "OPTIONS /api/applications/8e9046f4-928e-47b6-bdc5-d1c1058d1ee0 HTTP/1.1" 200 -
+2026-02-13 22:24:50 - routes.applications - INFO - [applications.py:207] - Application updated: 8e9046f4-928e-47b6-bdc5-d1c1058d1ee0
+2026-02-13 22:24:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:24:50] "PUT /api/applications/8e9046f4-928e-47b6-bdc5-d1c1058d1ee0 HTTP/1.1" 200 -
+2026-02-13 22:25:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:25:22] "OPTIONS /api/applications/8e9046f4-928e-47b6-bdc5-d1c1058d1ee0 HTTP/1.1" 200 -
+2026-02-13 22:25:22 - routes.applications - INFO - [applications.py:207] - Application updated: 8e9046f4-928e-47b6-bdc5-d1c1058d1ee0
+2026-02-13 22:25:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 22:25:22] "PUT /api/applications/8e9046f4-928e-47b6-bdc5-d1c1058d1ee0 HTTP/1.1" 200 -
+2026-02-13 22:26:42 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\models\\test_model.py', reloading
+2026-02-13 22:26:43 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:26:43 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:26:43 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:26:43 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:28:01 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\utils\\ocr_service_simple.py', reloading
+2026-02-13 22:28:01 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\utils\\error_handling.py', reloading
+2026-02-13 22:28:02 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:28:03 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:28:03 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:28:03 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\validate_system.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\test_api.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\tests\\test_workflow.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\tests\\test_verification.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\tests\\test_validation.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\tests\\test_underwriting.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\tests\\test_transparency.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\tests\\test_onboarding.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\tests\\test_kyc.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\tests\\test_compliance.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\tests\\test_agents.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\tests\\conftest.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\utils\\__init__.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\utils\\validation.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\schemas\\__init__.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\graph\\__init__.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\agents\\__init__.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\routes\\__init__.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\routes\\workflow.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\routes\\auth.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\routes\\applications.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\routes\\admin.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\models\\train_ebm.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\models\\data.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\middleware\\__init__.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\middleware\\error_handler.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\demo_script_auto.py', reloading
+2026-02-13 22:28:31 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\demo_script.py', reloading
+2026-02-13 22:28:32 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:28:32 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:28:32 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:28:32 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:29:03 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\__init__.py', reloading
+2026-02-13 22:29:03 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\__init__.py', reloading
+2026-02-13 22:29:03 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\__init__.py', reloading
+2026-02-13 22:29:03 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\__init__.py', reloading
+2026-02-13 22:29:03 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:29:04 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:29:04 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\graph\\__init__.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask\\__init__.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask_jwt_extended\\__init__.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask\\json\\__init__.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask\\app.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask\\blueprints.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask\\config.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask\\wrappers.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\werkzeug\\datastructures\\__init__.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\werkzeug\\wrappers\\__init__.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask\\typing.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask\\sansio\\app.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask\\sansio\\scaffold.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\werkzeug\\sansio\\response.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask\\sansio\\blueprints.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\werkzeug\\wrappers\\response.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\flask_jwt_extended\\jwt_manager.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\constants.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\graph\\state.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\cache\\base\\__init__.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\checkpoint\\base\\__init__.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\store\\base\\__init__.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\_internal\\_typing.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\graph\\_node.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\pregel\\__init__.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\types.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\typing.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\runtime.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\_internal\\_retry.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\pregel\\protocol.py', reloading
+2026-02-13 22:29:04 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langgraph\\pregel\\main.py', reloading
+2026-02-13 22:29:05 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:29:05 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:29:05 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:29:05 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:29:13 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\router.py', reloading
+2026-02-13 22:29:13 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:29:14 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:29:14 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:29:14 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:29:14 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\router.py', reloading
+2026-02-13 22:29:14 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\router.py', reloading
+2026-02-13 22:29:14 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\router.py', reloading
+2026-02-13 22:29:15 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:29:15 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:29:15 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:29:15 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:29:43 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\kyc.py', reloading
+2026-02-13 22:29:44 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:29:44 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:29:44 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:29:44 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:29:44 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\kyc.py', reloading
+2026-02-13 22:29:44 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\kyc.py', reloading
+2026-02-13 22:29:44 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\services\\kyc.py', reloading
+2026-02-13 22:29:45 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:29:46 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:29:46 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:29:46 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:29:46 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\agents\\router.py', reloading
+2026-02-13 22:29:47 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:29:47 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:29:47 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:29:47 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:29:49 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\agents\\kyc.py', reloading
+2026-02-13 22:29:49 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:29:50 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:29:50 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:29:50 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 22:29:59 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\utils\\llm_helpers.py', reloading
+2026-02-13 22:30:00 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\utils\\llm_helpers.py', reloading
+2026-02-13 22:30:00 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\utils\\llm_helpers.py', reloading
+2026-02-13 22:30:00 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 22:30:00 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 22:30:00 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 22:30:00 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 23:07:00 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 23:07:00 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-13 23:07:00 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-13 23:07:00 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 23:07:00 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 23:07:00 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 23:07:00 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 23:07:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:07:06] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-13 23:07:07 - routes.applications - INFO - [applications.py:85] - Application created: abdda348-db84-4ef8-914d-06efe8fff299 by admin@daksha.com
+2026-02-13 23:07:07 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:07:07] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-13 23:07:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:07:19] "OPTIONS /api/applications/abdda348-db84-4ef8-914d-06efe8fff299 HTTP/1.1" 200 -
+2026-02-13 23:07:19 - routes.applications - INFO - [applications.py:213] - Application updated: abdda348-db84-4ef8-914d-06efe8fff299
+2026-02-13 23:07:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:07:19] "PUT /api/applications/abdda348-db84-4ef8-914d-06efe8fff299 HTTP/1.1" 200 -
+2026-02-13 23:07:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:07:39] "OPTIONS /api/applications/abdda348-db84-4ef8-914d-06efe8fff299 HTTP/1.1" 200 -
+2026-02-13 23:07:39 - routes.applications - INFO - [applications.py:213] - Application updated: abdda348-db84-4ef8-914d-06efe8fff299
+2026-02-13 23:07:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:07:39] "PUT /api/applications/abdda348-db84-4ef8-914d-06efe8fff299 HTTP/1.1" 200 -
+2026-02-13 23:11:07 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:11:07] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-13 23:11:08 - routes.applications - INFO - [applications.py:85] - Application created: 38b2b63e-c035-43b3-af0a-076262d736cd by admin@daksha.com
+2026-02-13 23:11:08 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:11:08] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-13 23:11:09 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:11:09] "OPTIONS /api/applications/38b2b63e-c035-43b3-af0a-076262d736cd HTTP/1.1" 200 -
+2026-02-13 23:11:09 - routes.applications - INFO - [applications.py:213] - Application updated: 38b2b63e-c035-43b3-af0a-076262d736cd
+2026-02-13 23:11:09 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:11:09] "PUT /api/applications/38b2b63e-c035-43b3-af0a-076262d736cd HTTP/1.1" 200 -
+2026-02-13 23:11:25 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:11:25] "OPTIONS /api/applications/38b2b63e-c035-43b3-af0a-076262d736cd HTTP/1.1" 200 -
+2026-02-13 23:11:26 - routes.applications - INFO - [applications.py:213] - Application updated: 38b2b63e-c035-43b3-af0a-076262d736cd
+2026-02-13 23:11:26 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:11:26] "PUT /api/applications/38b2b63e-c035-43b3-af0a-076262d736cd HTTP/1.1" 200 -
+2026-02-13 23:12:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:12:20] "OPTIONS /api/workflow/submit/38b2b63e-c035-43b3-af0a-076262d736cd HTTP/1.1" 200 -
+2026-02-13 23:12:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:12:20] "[31m[1mPOST /api/workflow/submit/38b2b63e-c035-43b3-af0a-076262d736cd HTTP/1.1[0m" 401 -
+2026-02-13 23:12:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:12:21] "OPTIONS /api/auth/refresh HTTP/1.1" 200 -
+2026-02-13 23:12:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:12:21] "[31m[1mPOST /api/auth/refresh HTTP/1.1[0m" 401 -
+2026-02-13 23:14:42 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\agents\\supervisor.py', reloading
+2026-02-13 23:14:43 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 23:14:44 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 23:14:44 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 23:14:44 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 23:14:49 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\utils\\logging.py', reloading
+2026-02-13 23:14:49 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\numpy\\typing\\__init__.py', reloading
+2026-02-13 23:14:49 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\numpy\\_typing\\_array_like.py', reloading
+2026-02-13 23:14:50 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 23:14:50 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 23:14:50 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 23:14:50 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 23:17:10 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:17:10] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-13 23:17:11 - routes.auth - INFO - [auth.py:151] - User logged in: admin@daksha.com
+2026-02-13 23:17:11 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:17:11] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-13 23:17:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:17:16] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-13 23:17:16 - routes.applications - INFO - [applications.py:85] - Application created: b0b7f857-0d61-4a0a-b6b8-f407bd94a017 by admin@daksha.com
+2026-02-13 23:17:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:17:16] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-13 23:17:17 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:17:17] "OPTIONS /api/applications/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:17:18 - routes.applications - INFO - [applications.py:213] - Application updated: b0b7f857-0d61-4a0a-b6b8-f407bd94a017
+2026-02-13 23:17:18 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:17:18] "PUT /api/applications/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:17:26 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:17:26] "OPTIONS /api/applications/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:17:27 - routes.applications - INFO - [applications.py:213] - Application updated: b0b7f857-0d61-4a0a-b6b8-f407bd94a017
+2026-02-13 23:17:27 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:17:27] "PUT /api/applications/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:18:01 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:18:01] "OPTIONS /api/applications/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:18:01 - routes.applications - INFO - [applications.py:213] - Application updated: b0b7f857-0d61-4a0a-b6b8-f407bd94a017
+2026-02-13 23:18:01 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:18:01] "PUT /api/applications/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:18:01 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:18:01] "OPTIONS /api/workflow/submit/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:18:02 - routes.workflow - INFO - [workflow.py:183] - Workflow started for application: b0b7f857-0d61-4a0a-b6b8-f407bd94a017
+2026-02-13 23:18:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:18:02] "[35m[1mPOST /api/workflow/submit/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1[0m" 202 -
+2026-02-13 23:18:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:18:02] "OPTIONS /api/workflow/status/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:18:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:18:02] "GET /api/workflow/status/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:18:04 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:18:04] "GET /api/workflow/status/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:18:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:18:16] "GET /api/workflow/status/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\torch\\cuda\\__init__.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\torch\\__init__.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\transformers\\utils\\generic.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\transformers\\utils\\auto_docstring.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\transformers\\utils\\__init__.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\transformers\\dependency_versions_check.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\transformers\\__init__.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langchain_core\\language_models\\base.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\importlib\\__init__.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langchain_core\\_import_utils.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langchain_core\\language_models\\__init__.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langchain_groq\\chat_models.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\langchain_groq\\__init__.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\concurrent\\futures\\thread.py', reloading
+2026-02-13 23:18:17 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\threading.py', reloading
+2026-02-13 23:18:18 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\torch\\nn\\functional.py', reloading
+2026-02-13 23:18:18 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\torch\\nn\\modules\\rnn.py', reloading
+2026-02-13 23:18:18 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\torch\\functional.py', reloading
+2026-02-13 23:18:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:18:19] "OPTIONS /api/workflow/status/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1" 200 -
+2026-02-13 23:18:21 - root - WARNING - [compliance.py:28] - RAG dependencies not available. Compliance agent will use rule-based checking.
+2026-02-13 23:18:22 - src.utils.ocr_service_simple - INFO - [ocr_service_simple.py:23] - OCR service initialized in mock mode
+2026-02-13 23:18:22 - src.agents.underwriting - INFO - [underwriting.py:36] - Initializing UnderwritingAgent
+2026-02-13 23:18:22 - src.utils.model_loader - INFO - [model_loader.py:31] - ModelLoader initialized with directory: models/innovathon
+2026-02-13 23:18:22 - src.utils.model_loader - ERROR - [model_loader.py:63] - Model file not found: models\innovathon\ebm_finance.pkl
+2026-02-13 23:18:22 - src.utils.model_loader - ERROR - [model_loader.py:63] - Model file not found: models\innovathon\fin_encoders.pkl
+2026-02-13 23:18:22 - src.utils.model_loader - ERROR - [model_loader.py:63] - Model file not found: models\innovathon\ebm_health.pkl
+2026-02-13 23:18:22 - src.utils.model_loader - ERROR - [model_loader.py:63] - Model file not found: models\innovathon\health_encoders.pkl
+2026-02-13 23:18:22 - src.agents.underwriting - WARNING - [underwriting.py:69] - Models not available. Using mock predictions for demo.
+2026-02-13 23:18:22 - src.agents.underwriting - INFO - [underwriting.py:44] - UnderwritingAgent initialized successfully
+2026-02-13 23:18:22 - src.agents.verification - INFO - [verification.py:41] - Initializing VerificationAgent
+2026-02-13 23:18:22 - src.agents.verification - WARNING - [verification.py:57] - langchain_groq not available, verification will be limited
+2026-02-13 23:18:22 - src.agents.supervisor - INFO - [supervisor.py:29] - Initializing SupervisorAgent
+2026-02-13 23:18:22 - src.agents.supervisor - INFO - [supervisor.py:42] - SupervisorAgent initialized successfully
+2026-02-13 23:18:22 - src.utils.logging - INFO - [logging.py:79] - Request req_1ed200659320: type=both, timestamp=2026-02-13T17:48:22.939031, metadata={}
+2026-02-13 23:18:22 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_1ed200659320]: started
+2026-02-13 23:18:24 - src.utils.logging - ERROR - [logging.py:132] - Error [req_1ed200659320]: type=kyc, message=Data mismatch with DigiLocker record. Please verify your Aadhaar number., context={}
+2026-02-13 23:18:24 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_1ed200659320]: failed (duration: 1500.73ms)
+2026-02-13 23:18:24 - routes.workflow - INFO - [workflow.py:174] - Workflow completed for application: b0b7f857-0d61-4a0a-b6b8-f407bd94a017
+2026-02-13 23:18:25 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 23:18:25 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 23:18:25 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 23:18:25 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 23:18:25 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:18:25] "[33mGET /api/workflow/status/b0b7f857-0d61-4a0a-b6b8-f407bd94a017 HTTP/1.1[0m" 404 -
+2026-02-13 23:20:12 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\models\\accuracy.py', reloading
+2026-02-13 23:20:12 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 23:20:13 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 23:20:13 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 23:20:13 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 23:20:43 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\agents\\onboarding.py', reloading
+2026-02-13 23:20:43 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\src\\agents\\onboarding.py', reloading
+2026-02-13 23:20:44 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 23:20:44 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 23:20:44 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 23:20:44 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 23:20:57 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\main.py', reloading
+2026-02-13 23:20:57 - werkzeug - INFO - [_internal.py:97] -  * Detected change in 'C:\\Users\\mahes\\OneDrive\\Desktop\\Projects\\Projects_Personal\\Innovathon\\Innovathon-Project\\backend\\main.py', reloading
+2026-02-13 23:20:58 - werkzeug - INFO - [_internal.py:97] -  * Restarting with watchdog (windowsapi)
+2026-02-13 23:20:58 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 23:20:58 - werkzeug - WARNING - [_internal.py:97] -  * Debugger is active!
+2026-02-13 23:20:58 - werkzeug - INFO - [_internal.py:97] -  * Debugger PIN: 128-565-394
+2026-02-13 23:48:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:48:30] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-13 23:48:30 - routes.applications - INFO - [applications.py:85] - Application created: 4aa2594c-6586-478d-b37c-90209c7b9b6a by admin@daksha.com
+2026-02-13 23:48:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:48:30] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-13 23:48:47 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:48:47] "OPTIONS /api/applications/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:48:47 - routes.applications - INFO - [applications.py:213] - Application updated: 4aa2594c-6586-478d-b37c-90209c7b9b6a
+2026-02-13 23:48:47 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:48:47] "PUT /api/applications/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:36] "OPTIONS /api/applications/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:36 - routes.applications - INFO - [applications.py:213] - Application updated: 4aa2594c-6586-478d-b37c-90209c7b9b6a
+2026-02-13 23:50:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:36] "PUT /api/applications/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:40 - routes.applications - INFO - [applications.py:213] - Application updated: 4aa2594c-6586-478d-b37c-90209c7b9b6a
+2026-02-13 23:50:40 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:40] "PUT /api/applications/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:40 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:40] "OPTIONS /api/workflow/submit/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:40 - routes.workflow - INFO - [workflow.py:183] - Workflow started for application: 4aa2594c-6586-478d-b37c-90209c7b9b6a
+2026-02-13 23:50:40 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:40] "[35m[1mPOST /api/workflow/submit/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1[0m" 202 -
+2026-02-13 23:50:41 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:41] "OPTIONS /api/workflow/status/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:41 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:41] "GET /api/workflow/status/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:43 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:43] "GET /api/workflow/status/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:45 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:45] "GET /api/workflow/status/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:47 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:47] "OPTIONS /api/workflow/status/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:47 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:47] "GET /api/workflow/status/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:48 - root - WARNING - [compliance.py:28] - RAG dependencies not available. Compliance agent will use rule-based checking.
+2026-02-13 23:50:49 - src.utils.ocr_service_simple - INFO - [ocr_service_simple.py:23] - OCR service initialized in mock mode
+2026-02-13 23:50:49 - src.agents.underwriting - INFO - [underwriting.py:36] - Initializing UnderwritingAgent
+2026-02-13 23:50:49 - src.utils.model_loader - INFO - [model_loader.py:31] - ModelLoader initialized with directory: models/innovathon
+2026-02-13 23:50:49 - src.utils.model_loader - ERROR - [model_loader.py:63] - Model file not found: models\innovathon\ebm_finance.pkl
+2026-02-13 23:50:49 - src.utils.model_loader - ERROR - [model_loader.py:63] - Model file not found: models\innovathon\fin_encoders.pkl
+2026-02-13 23:50:49 - src.utils.model_loader - ERROR - [model_loader.py:63] - Model file not found: models\innovathon\ebm_health.pkl
+2026-02-13 23:50:49 - src.utils.model_loader - ERROR - [model_loader.py:63] - Model file not found: models\innovathon\health_encoders.pkl
+2026-02-13 23:50:49 - src.agents.underwriting - WARNING - [underwriting.py:69] - Models not available. Using mock predictions for demo.
+2026-02-13 23:50:49 - src.agents.underwriting - INFO - [underwriting.py:44] - UnderwritingAgent initialized successfully
+2026-02-13 23:50:49 - src.agents.verification - INFO - [verification.py:41] - Initializing VerificationAgent
+2026-02-13 23:50:49 - src.agents.verification - WARNING - [verification.py:57] - langchain_groq not available, verification will be limited
+2026-02-13 23:50:49 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:49] "GET /api/workflow/status/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:50 - src.agents.supervisor - INFO - [supervisor.py:29] - Initializing SupervisorAgent
+2026-02-13 23:50:50 - src.agents.supervisor - INFO - [supervisor.py:42] - SupervisorAgent initialized successfully
+2026-02-13 23:50:50 - src.utils.logging - INFO - [logging.py:79] - Request req_2e2e1c66a56f: type=both, timestamp=2026-02-13T18:20:50.101303, metadata={}
+2026-02-13 23:50:50 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_2e2e1c66a56f]: started
+2026-02-13 23:50:51 - src.utils.logging - ERROR - [logging.py:132] - Error [req_2e2e1c66a56f]: type=kyc, message=Data mismatch with DigiLocker record. Please verify your Aadhaar number., context={}
+2026-02-13 23:50:51 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_2e2e1c66a56f]: failed (duration: 1500.90ms)
+2026-02-13 23:50:51 - routes.workflow - INFO - [workflow.py:174] - Workflow completed for application: 4aa2594c-6586-478d-b37c-90209c7b9b6a
+2026-02-13 23:50:52 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:52] "GET /api/workflow/status/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:52 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:52] "OPTIONS /api/workflow/results/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:50:52 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:50:52] "GET /api/workflow/results/4aa2594c-6586-478d-b37c-90209c7b9b6a HTTP/1.1" 200 -
+2026-02-13 23:52:45 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:45] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-13 23:52:45 - routes.applications - INFO - [applications.py:85] - Application created: c799db04-14a4-4afe-a405-1b25fd0b17fb by admin@daksha.com
+2026-02-13 23:52:45 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:45] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-13 23:52:46 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:46] "OPTIONS /api/applications/c799db04-14a4-4afe-a405-1b25fd0b17fb HTTP/1.1" 200 -
+2026-02-13 23:52:47 - routes.applications - INFO - [applications.py:213] - Application updated: c799db04-14a4-4afe-a405-1b25fd0b17fb
+2026-02-13 23:52:47 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:47] "PUT /api/applications/c799db04-14a4-4afe-a405-1b25fd0b17fb HTTP/1.1" 200 -
+2026-02-13 23:52:48 - routes.applications - INFO - [applications.py:213] - Application updated: c799db04-14a4-4afe-a405-1b25fd0b17fb
+2026-02-13 23:52:48 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:48] "PUT /api/applications/c799db04-14a4-4afe-a405-1b25fd0b17fb HTTP/1.1" 200 -
+2026-02-13 23:52:50 - routes.applications - INFO - [applications.py:213] - Application updated: c799db04-14a4-4afe-a405-1b25fd0b17fb
+2026-02-13 23:52:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:50] "PUT /api/applications/c799db04-14a4-4afe-a405-1b25fd0b17fb HTTP/1.1" 200 -
+2026-02-13 23:52:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:50] "OPTIONS /api/workflow/submit/c799db04-14a4-4afe-a405-1b25fd0b17fb HTTP/1.1" 200 -
+2026-02-13 23:52:51 - routes.workflow - INFO - [workflow.py:183] - Workflow started for application: c799db04-14a4-4afe-a405-1b25fd0b17fb
+2026-02-13 23:52:51 - src.utils.logging - INFO - [logging.py:79] - Request req_7f8a32a1c878: type=both, timestamp=2026-02-13T18:22:51.235736, metadata={}
+2026-02-13 23:52:51 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:51] "[35m[1mPOST /api/workflow/submit/c799db04-14a4-4afe-a405-1b25fd0b17fb HTTP/1.1[0m" 202 -
+2026-02-13 23:52:51 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_7f8a32a1c878]: started
+2026-02-13 23:52:51 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:51] "OPTIONS /api/workflow/status/c799db04-14a4-4afe-a405-1b25fd0b17fb HTTP/1.1" 200 -
+2026-02-13 23:52:51 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:51] "GET /api/workflow/status/c799db04-14a4-4afe-a405-1b25fd0b17fb HTTP/1.1" 200 -
+2026-02-13 23:52:52 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_7f8a32a1c878]: completed (duration: 1500.60ms)
+2026-02-13 23:52:52 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_7f8a32a1c878]: started
+2026-02-13 23:52:52 - src.utils.logging - ERROR - [logging.py:132] - Error [req_7f8a32a1c878]: type=onboarding, message=Onboarding processing error: OCRService.process_document() got an unexpected keyword argument 'include_confidence', context={}
+2026-02-13 23:52:52 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_7f8a32a1c878]: failed (duration: 0.38ms)
+2026-02-13 23:52:52 - src.utils.logging - INFO - [logging.py:103] - Agent ComplianceAgent [req_7f8a32a1c878]: started
+2026-02-13 23:52:52 - src.utils.logging - INFO - [logging.py:99] - Agent ComplianceAgent [req_7f8a32a1c878]: completed (duration: 0.27ms)
+2026-02-13 23:52:52 - src.agents.supervisor - INFO - [supervisor.py:89] - Supervisor decision: proceed - Continue workflow
+2026-02-13 23:52:52 - routes.workflow - INFO - [workflow.py:174] - Workflow completed for application: c799db04-14a4-4afe-a405-1b25fd0b17fb
+2026-02-13 23:52:53 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:53] "GET /api/workflow/status/c799db04-14a4-4afe-a405-1b25fd0b17fb HTTP/1.1" 200 -
+2026-02-13 23:52:53 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:53] "OPTIONS /api/workflow/results/c799db04-14a4-4afe-a405-1b25fd0b17fb HTTP/1.1" 200 -
+2026-02-13 23:52:54 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [13/Feb/2026 23:52:54] "GET /api/workflow/results/c799db04-14a4-4afe-a405-1b25fd0b17fb HTTP/1.1" 200 -
+2026-02-14 00:09:32 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 00:09:32 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 00:09:32 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 00:12:30 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 00:12:30 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 00:12:30 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 00:12:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:12:42] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 00:12:42 - routes.applications - INFO - [applications.py:85] - Application created: fc8b820c-1424-49c5-bb23-e8618f2af57c by admin@daksha.com
+2026-02-14 00:12:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:12:42] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 00:13:10 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:10] "OPTIONS /api/applications/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:10 - routes.applications - INFO - [applications.py:213] - Application updated: fc8b820c-1424-49c5-bb23-e8618f2af57c
+2026-02-14 00:13:10 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:10] "PUT /api/applications/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:12 - routes.applications - INFO - [applications.py:213] - Application updated: fc8b820c-1424-49c5-bb23-e8618f2af57c
+2026-02-14 00:13:12 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:12] "PUT /api/applications/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:15] "OPTIONS /api/applications/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:15 - routes.applications - INFO - [applications.py:213] - Application updated: fc8b820c-1424-49c5-bb23-e8618f2af57c
+2026-02-14 00:13:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:15] "PUT /api/applications/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:15] "OPTIONS /api/workflow/submit/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:16 - routes.workflow - INFO - [workflow.py:183] - Workflow started for application: fc8b820c-1424-49c5-bb23-e8618f2af57c
+2026-02-14 00:13:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:16] "[35m[1mPOST /api/workflow/submit/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1[0m" 202 -
+2026-02-14 00:13:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:16] "OPTIONS /api/workflow/status/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:16] "GET /api/workflow/status/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:18 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:18] "GET /api/workflow/status/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:22] "OPTIONS /api/workflow/status/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:22] "GET /api/workflow/status/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:23 - root - WARNING - [compliance.py:28] - RAG dependencies not available. Compliance agent will use rule-based checking.
+2026-02-14 00:13:23 - src.utils.ocr_service_simple - INFO - [ocr_service_simple.py:23] - OCR service initialized in mock mode
+2026-02-14 00:13:23 - src.agents.underwriting - INFO - [underwriting.py:36] - Initializing UnderwritingAgent
+2026-02-14 00:13:23 - src.utils.model_loader - INFO - [model_loader.py:31] - ModelLoader initialized with directory: models
+2026-02-14 00:13:24 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:24] "GET /api/workflow/status/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:25 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_finance loaded successfully
+2026-02-14 00:13:25 - src.utils.model_loader - INFO - [model_loader.py:71] - Model fin_encoders loaded successfully
+2026-02-14 00:13:25 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_health loaded successfully
+2026-02-14 00:13:25 - src.utils.model_loader - INFO - [model_loader.py:71] - Model health_encoders loaded successfully
+2026-02-14 00:13:25 - src.agents.underwriting - INFO - [underwriting.py:66] - All models loaded successfully
+2026-02-14 00:13:25 - src.agents.underwriting - INFO - [underwriting.py:44] - UnderwritingAgent initialized successfully
+2026-02-14 00:13:25 - src.agents.verification - INFO - [verification.py:41] - Initializing VerificationAgent
+2026-02-14 00:13:25 - src.agents.verification - WARNING - [verification.py:57] - langchain_groq not available, verification will be limited
+2026-02-14 00:13:26 - src.agents.supervisor - INFO - [supervisor.py:29] - Initializing SupervisorAgent
+2026-02-14 00:13:26 - src.agents.supervisor - INFO - [supervisor.py:42] - SupervisorAgent initialized successfully
+2026-02-14 00:13:26 - src.utils.logging - INFO - [logging.py:79] - Request req_dfd88f588302: type=both, timestamp=2026-02-13T18:43:26.030842, metadata={}
+2026-02-14 00:13:26 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_dfd88f588302]: started
+2026-02-14 00:13:27 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_dfd88f588302]: completed (duration: 1501.03ms)
+2026-02-14 00:13:27 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_dfd88f588302]: started
+2026-02-14 00:13:27 - src.agents.onboarding - INFO - [onboarding.py:130] - OCR confidence for bank_statement: 95.0%
+2026-02-14 00:13:27 - src.agents.onboarding - INFO - [onboarding.py:130] - OCR confidence for salary_slip: 95.0%
+2026-02-14 00:13:27 - src.agents.onboarding - INFO - [onboarding.py:130] - OCR confidence for itr_form16: 95.0%
+2026-02-14 00:13:27 - src.agents.onboarding - INFO - [onboarding.py:130] - OCR confidence for unknown: 95.0%
+2026-02-14 00:13:27 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_dfd88f588302]: completed (duration: 1.13ms)
+2026-02-14 00:13:27 - src.utils.logging - INFO - [logging.py:103] - Agent ComplianceAgent [req_dfd88f588302]: started
+2026-02-14 00:13:27 - src.utils.logging - INFO - [logging.py:99] - Agent ComplianceAgent [req_dfd88f588302]: completed (duration: 0.22ms)
+2026-02-14 00:13:27 - src.agents.supervisor - INFO - [supervisor.py:89] - Supervisor decision: proceed - Continue workflow
+2026-02-14 00:13:27 - routes.workflow - INFO - [workflow.py:174] - Workflow completed for application: fc8b820c-1424-49c5-bb23-e8618f2af57c
+2026-02-14 00:13:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:28] "OPTIONS /api/workflow/status/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:28] "GET /api/workflow/status/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:28] "OPTIONS /api/workflow/results/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -
+2026-02-14 00:13:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 00:13:28] "GET /api/workflow/results/fc8b820c-1424-49c5-bb23-e8618f2af57c HTTP/1.1" 200 -

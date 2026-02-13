@@ -14,7 +14,7 @@ import pytest
 ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT_DIR))
 
-from src.agents.router import RouterAgent
+from src.services.router import RouterAgent
 from src.utils.model_loader import ModelLoader
 
 

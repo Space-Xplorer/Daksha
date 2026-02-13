@@ -6,8 +6,12 @@
       "dob": "19900515",
       "gender": "Male",
       "address": "123 MG Road, Bangalore, Karnataka 560001",
-      "aadhaar_last4": "5678",
-      "pan": "ABCDE1234F"
+      "aadhaar_number": "123456789012",
+      "aadhaar_last4": "9012",
+      "pan": "ABCDE1234F",
+      "pan_number": "ABCDE1234F",
+      "passport_number": "P1234567",
+      "voter_id_number": "ABC1234567"
     },
     "user_7788": {
       "digilockerid": "DL7788EFGH5678",
@@ -15,8 +19,12 @@
       "dob": "19850320",
       "gender": "Female",
       "address": "456 Park Street, Mumbai, Maharashtra 400001",
-      "aadhaar_last4": "9012",
-      "pan": "FGHIJ5678K"
+      "aadhaar_number": "234567890123",
+      "aadhaar_last4": "0123",
+      "pan": "FGHIJ5678K",
+      "pan_number": "FGHIJ5678K",
+      "passport_number": "N7654321",
+      "voter_id_number": "DEF2345678"
     },
     "user_6677": {
       "digilockerid": "DL6677IJKL9012",
@@ -24,8 +32,12 @@
       "dob": "19920710",
       "gender": "Male",
       "address": "789 Anna Salai, Chennai, Tamil Nadu 600002",
-      "aadhaar_last4": "3456",
-      "pan": "KLMNO9012P"
+      "aadhaar_number": "345678901234",
+      "aadhaar_last4": "1234",
+      "pan": "KLMNO9012P",
+      "pan_number": "KLMNO9012P",
+      "passport_number": "T3456789",
+      "voter_id_number": "GHI3456789"
     },
     "user_5566": {
       "digilockerid": "DL5566MNOP3456",
@@ -33,8 +45,12 @@
       "dob": "19880925",
       "gender": "Female",
       "address": "321 Jubilee Hills, Hyderabad, Telangana 500033",
-      "aadhaar_last4": "7890",
-      "pan": "PQRST3456U"
+      "aadhaar_number": "456789012345",
+      "aadhaar_last4": "2345",
+      "pan": "PQRST3456U",
+      "pan_number": "PQRST3456U",
+      "passport_number": "M2345678",
+      "voter_id_number": "JKL4567890"
     },
     "user_4455": {
       "digilockerid": "DL4455QRST7890",
@@ -42,8 +58,12 @@
       "dob": "19950112",
       "gender": "Male",
       "address": "654 Civil Lines, Delhi 110054",
-      "aadhaar_last4": "1234",
-      "pan": "UVWXY7890Z"
+      "aadhaar_number": "567890123456",
+      "aadhaar_last4": "3456",
+      "pan": "UVWXY7890Z",
+      "pan_number": "UVWXY7890Z",
+      "passport_number": "R9876543",
+      "voter_id_number": "MNO5678901"
     }
   },
   "metadata": {

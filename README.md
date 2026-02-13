@@ -16,19 +16,20 @@ cp .env.example .env
 # Edit .env with your GROQ_API_KEY and other settings
 ```
 
-### 3. Validate System
+### 3. Start Backend (Default: API Server)
 ```bash
-python daksha.py validate
+python main.py              # Starts API server on port 8000
 ```
 
-### 4. Run Demo
-```bash
-python daksha.py demo --auto
-```
+**That's it!** The API server is now running at http://localhost:8000
 
-### 5. Start API Server
+### Other Commands
 ```bash
-python daksha.py api
+python main.py validate     # Validate system
+python main.py demo --auto  # Run automated demo
+python main.py test         # Run tests
+python main.py info         # Show system info
+python main.py --help       # Show all commands
 ```
 
 ## 📋 Features
@@ -333,7 +334,7 @@ This project is part of the Daksha Orchestration System.
 
 - **Documentation**: See `backend/docs/`
 - **Issues**: GitHub Issues
-- **API Health**: `http://localhost:5000/api/health`
+- **API Health**: `http://localhost:8000/api/health`
 
 ---
 

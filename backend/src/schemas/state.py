@@ -29,8 +29,14 @@ class ApplicationState(TypedDict, total=False):
     verified_name: Optional[str]
     verified_dob: Optional[str]
     verified_gender: Optional[str]
+    verified_aadhaar: Optional[str]
+    verified_pan: Optional[str]
+    verified_passport: Optional[str]
+    verified_voter_id: Optional[str]
+    verified_address: Optional[str]
     submitted_name: Optional[str]
     submitted_dob: Optional[str]
+    submitted_aadhaar: Optional[str]
     
     # Uploaded documents
     uploaded_documents: List[Dict[str, Any]]  # [{type, file_path, content}, ...]
@@ -100,6 +106,7 @@ def create_initial_state(
     loan_type: Optional[str] = None,
     submitted_name: Optional[str] = None,
     submitted_dob: Optional[str] = None,
+    submitted_aadhaar: Optional[str] = None,
     uploaded_documents: Optional[List[Dict[str, Any]]] = None
 ) -> ApplicationState:
     """
@@ -129,6 +136,7 @@ def create_initial_state(
         "kyc_attempted": False,
         "submitted_name": submitted_name,
         "submitted_dob": submitted_dob,
+        "submitted_aadhaar": submitted_aadhaar,
         
         # Documents
         "uploaded_documents": uploaded_documents or [],
@@ -204,7 +212,13 @@ LOAN_FIELDS = {
     "commercial_ assets_value": float,
     "luxury_assets_value": float,
     "gender": str,
-    "name": str
+    "name": str,
+    "aadhaar_number": str,
+    "pan_number": str,
+    "passport_number": str,
+    "voter_id_number": str,
+    "address_proof_type": str,
+    "business_proof_type": str
 }
 
 # Field mappings for insurance applications
@@ -228,7 +242,12 @@ INSURANCE_FIELDS = {
     "blood_sugar": float,
     "creatinine": float,
     "gender": str,
-    "name": str
+    "name": str,
+    "aadhaar_number": str,
+    "pan_number": str,
+    "passport_number": str,
+    "voter_id_number": str,
+    "address_proof_type": str
 }
 
 # Document type enums
@@ -236,11 +255,19 @@ LOAN_DOCUMENT_TYPES = [
     "cibil_report",
     "salary_slip",
     "itr_form16",
+    "itr",
+    "form_16",
+    "tds_certificate",
     "bank_statement",
     "property_document",
     "vehicle_registration",
     "aadhaar_card",
-    "pan_card"
+    "pan_card",
+    "passport",
+    "voter_id",
+    "utility_bill",
+    "gst_certificate",
+    "trade_license"
 ]
 
 INSURANCE_DOCUMENT_TYPES = [
@@ -252,7 +279,13 @@ INSURANCE_DOCUMENT_TYPES = [
     "prescription_history",
     "discharge_summary",
     "aadhaar_card",
-    "pan_card"
+    "pan_card",
+    "passport",
+    "voter_id",
+    "utility_bill",
+    "medical_history",
+    "birth_certificate",
+    "tenth_marksheet"
 ]
 
 # Loan type enum

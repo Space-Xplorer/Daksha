@@ -14,7 +14,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 SRC_DIR = ROOT_DIR / "src"
 sys.path.insert(0, str(ROOT_DIR))
 
-from src.agents.kyc import KYCAgent
+from src.services.kyc import KYCAgent
 
 
 @pytest.fixture
@@ -33,12 +33,11 @@ def _base_state():
 
 def test_kyc_success(agent, monkeypatch):
 	"""Valid name and DOB should verify successfully."""
-	monkeypatch.setattr("src.agents.kyc.time.sleep", lambda *_: None)
+	monkeypatch.setattr("src.services.kyc.time.sleep", lambda *_: None)
 
 	state = _base_state()
 	state.update({
-		"submitted_name": "Rajesh Kumar",
-		"submitted_dob": "1990-05-15"
+		"submitted_aadhaar": "123456789012"
 	})
 
 	result = agent.verify_identity(state)
@@ -52,12 +51,11 @@ def test_kyc_success(agent, monkeypatch):
 
 def test_kyc_success_with_whitespace(agent, monkeypatch):
 	"""Name normalization should handle extra whitespace and casing."""
-	monkeypatch.setattr("src.agents.kyc.time.sleep", lambda *_: None)
+	monkeypatch.setattr("src.services.kyc.time.sleep", lambda *_: None)
 
 	state = _base_state()
 	state.update({
-		"submitted_name": "  rAjEsH   kuMaR ",
-		"submitted_dob": "1990/05/15"
+		"submitted_aadhaar": "1234 5678 9012"
 	})
 
 	result = agent.verify_identity(state)
@@ -68,12 +66,11 @@ def test_kyc_success_with_whitespace(agent, monkeypatch):
 
 def test_kyc_failure_invalid_name(agent, monkeypatch):
 	"""Invalid name should fail KYC verification."""
-	monkeypatch.setattr("src.agents.kyc.time.sleep", lambda *_: None)
+	monkeypatch.setattr("src.services.kyc.time.sleep", lambda *_: None)
 
 	state = _base_state()
 	state.update({
-		"submitted_name": "John Doe",
-		"submitted_dob": "1990-05-15"
+		"submitted_aadhaar": "999999999999"
 	})
 
 	result = agent.verify_identity(state)

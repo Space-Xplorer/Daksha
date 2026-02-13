@@ -21,7 +21,7 @@
 ### 2. UnderwritingAgent Class (`src/agents/underwriting.py`)
 ✅ **Newly implemented** (494 lines):
 - **Class initialization**: Loads all 4 models via ModelLoader
-- **`process_loan()`**: Credit Shield EBM classifier for loan approval
+- **`process_loan()`**: Daksha EBM classifier for loan approval
   - Feature encoding with categorical handling
   - Prediction with probability scores
   - Local explanation extraction
@@ -93,7 +93,7 @@
 ## Key Features Implemented
 
 ### Loan Approval Prediction
-- ✅ Credit Shield EBM classifier integration
+- ✅ Daksha EBM classifier integration
 - ✅ Binary classification (Approved/Rejected)
 - ✅ Probability scores with confidence levels
 - ✅ Feature contribution reasoning
@@ -194,7 +194,7 @@ All dependencies already present in `requirements.txt`.
 |-----------|---------|-------|
 | Model loading (cold start) | ~500ms | One-time at startup |
 | Feature encoding | ~5ms | Per application |
-| Credit Shield prediction | ~10ms | Per loan application |
+| Daksha prediction | ~10ms | Per loan application |
 | Health Shield prediction | ~8ms | Per insurance application |
 | Explanation extraction | ~15ms | Per prediction |
 | **Total (both)** | **~40ms** | Both loan + insurance |

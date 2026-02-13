@@ -23,7 +23,7 @@ class ModelLoader:
     _models: Dict[str, Any] = {}
     _initialized = False
     
-    def __new__(cls, models_dir: str = "models/innovathon"):
+    def __new__(cls, models_dir: str = "models"):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             cls._instance.models_dir = Path(models_dir)
@@ -31,7 +31,7 @@ class ModelLoader:
             logger.info(f"ModelLoader initialized with directory: {models_dir}")
         return cls._instance
     
-    def __init__(self, models_dir: str = "models/innovathon"):
+    def __init__(self, models_dir: str = "models"):
         """
         Initialize ModelLoader.
         
@@ -83,7 +83,7 @@ class ModelLoader:
             True if all models loaded successfully, False otherwise
         """
         required_models = [
-            "ebm_finance",      # Credit Shield model
+            "ebm_finance",      # Daksha model
             "ebm_health",       # Health Shield model
             "fin_encoders",     # Finance feature encoders
             "health_encoders"   # Health feature encoders
@@ -132,7 +132,7 @@ class ModelLoader:
 
 
 # Convenience function
-def get_model_loader(models_dir: str = "models/innovathon") -> ModelLoader:
+def get_model_loader(models_dir: str = "models") -> ModelLoader:
     """
     Get the ModelLoader singleton instance.
     

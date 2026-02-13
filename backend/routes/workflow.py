@@ -4,8 +4,10 @@ Workflow execution routes for Daksha API.
 This module handles workflow execution, status tracking, and HITL interactions.
 """
 
+import base64
 import logging
 import asyncio
+from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -51,6 +53,53 @@ def run_workflow_async(state):
         raise
 
 
+def _materialize_uploaded_documents(app_id: str, uploaded_documents):
+    if not uploaded_documents:
+        return []
+
+    output_dir = Path("temp") / "uploads" / app_id
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    mime_extensions = {
+        "application/pdf": ".pdf",
+        "image/jpeg": ".jpg",
+        "image/jpg": ".jpg",
+        "image/png": ".png"
+    }
+
+    materialized = []
+    for index, doc in enumerate(uploaded_documents, start=1):
+        doc_type = doc.get("type") or doc.get("document_type") or "unknown"
+        name = doc.get("name") or f"{doc_type}_{index}"
+        content_base64 = doc.get("content_base64")
+        file_path = doc.get("file_path")
+
+        if content_base64:
+            ext = Path(name).suffix
+            if not ext:
+                ext = mime_extensions.get(doc.get("mime_type"), ".pdf")
+
+            safe_name = f"{doc_type}_{index}{ext}"
+            target_path = output_dir / safe_name
+
+            try:
+                decoded = base64.b64decode(content_base64)
+                target_path.write_bytes(decoded)
+                file_path = str(target_path)
+            except Exception as exc:
+                logger.error(f"Failed to write uploaded document {name}: {exc}")
+                continue
+
+        if file_path:
+            materialized.append({
+                "type": doc_type,
+                "file_path": file_path,
+                "name": name
+            })
+
+    return materialized
+
+
 @bp.route('/submit/<app_id>', methods=['POST'])
 @jwt_required()
 def submit_application(app_id):
@@ -83,12 +132,19 @@ def submit_application(app_id):
             return jsonify({'error': 'Application already submitted'}), 400
         
         # Create initial state
+        uploaded_documents = _materialize_uploaded_documents(
+            app_id,
+            application.get("uploaded_documents", [])
+        )
+
         state = create_initial_state(
             request_type=application['request_type'],
             applicant_data=application['applicant_data'],
             loan_type=application.get('loan_type'),
-            submitted_name=application['submitted_name'],
-            submitted_dob=application['submitted_dob']
+            submitted_name=application.get('submitted_name'),
+            submitted_dob=application.get('submitted_dob'),
+            submitted_aadhaar=application.get('submitted_aadhaar'),
+            uploaded_documents=uploaded_documents
         )
         
         # Update application status

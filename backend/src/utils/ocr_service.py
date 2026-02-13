@@ -49,11 +49,19 @@ class OCRService:
             "cibil_report",
             "salary_slip",
             "itr_form16",
+            "itr",
+            "form_16",
+            "tds_certificate",
             "bank_statement",
             "property_document",
             "vehicle_registration",
             "aadhaar_card",
-            "pan_card"
+            "pan_card",
+            "passport",
+            "voter_id",
+            "utility_bill",
+            "gst_certificate",
+            "trade_license"
         ],
         "insurance": [
             "diagnostic_report",
@@ -64,7 +72,13 @@ class OCRService:
             "prescription_history",
             "discharge_summary",
             "aadhaar_card",
-            "pan_card"
+            "pan_card",
+            "passport",
+            "voter_id",
+            "utility_bill",
+            "medical_history",
+            "birth_certificate",
+            "tenth_marksheet"
         ]
     }
 
@@ -83,6 +97,14 @@ class OCRService:
         "aadhaar_number": [
             r"(?:Aadhaar|Aadhar)[:\s]*(\d{4}\s*\d{4}\s*\d{4})",
             r"\b(\d{4}\s*\d{4}\s*\d{4})\b"
+        ],
+        "passport_number": [
+            r"(?:Passport\s*(?:No|Number))[:\s]*([A-Z0-9]{6,9})",
+            r"\b([A-Z]{1}[0-9]{7})\b"
+        ],
+        "voter_id_number": [
+            r"(?:EPIC|Voter\s*ID)[:\s]*([A-Z]{3}\d{7})",
+            r"\b([A-Z]{3}\d{7})\b"
         ],
         "annual_income": [
             r"(?:Annual|Gross|Total)\s*Income[:\s]*₹?\s*([\d,]+)",
@@ -419,18 +441,29 @@ class OCRService:
             "cibil_report": ["cibil", "credit score", "credit report", "credit information"],
             "salary_slip": ["salary slip", "pay slip", "payslip", "salary statement", "earnings"],
             "itr_form16": ["itr", "form 16", "income tax", "tax return", "assessment year"],
+            "itr": ["itr", "income tax return"],
+            "form_16": ["form 16", "tds"],
+            "tds_certificate": ["tds certificate", "tax deducted at source"],
             "bank_statement": ["bank statement", "account statement", "transaction history"],
             "property_document": ["property", "deed", "registry", "land", "apartment"],
             "vehicle_registration": ["vehicle", "registration", "rc book", "registration certificate"],
             "aadhaar_card": ["aadhaar", "aadhar", "uid", "uidai"],
             "pan_card": ["pan card", "permanent account", "income tax department"],
+            "passport": ["passport", "passport no", "passport number"],
+            "voter_id": ["voter id", "epic", "election commission"],
+            "utility_bill": ["utility bill", "electricity bill", "water bill", "gas bill"],
+            "gst_certificate": ["gst", "gstin", "goods and services tax"],
+            "trade_license": ["trade license", "trade licence"],
             "diagnostic_report": ["diagnostic", "blood report", "lab report", "pathology", "hba1c", "cholesterol"],
             "physical_exam": ["physical exam", "medical examination", "height", "weight", "bmi", "blood pressure"],
             "medical_declaration": ["medical declaration", "health questionnaire", "medical history"],
             "family_medical_records": ["family history", "hereditary", "family medical"],
             "ecg_report": ["ecg", "electrocardiogram", "ekg", "heart"],
             "prescription_history": ["prescription", "medication", "rx"],
-            "discharge_summary": ["discharge", "hospital", "admission", "treatment"]
+            "discharge_summary": ["discharge", "hospital", "admission", "treatment"],
+            "medical_history": ["medical history", "past prescription", "chronic"],
+            "birth_certificate": ["birth certificate", "date of birth"],
+            "tenth_marksheet": ["10th", "tenth", "marksheet", "ssc"]
         }
 
         # Score each document type

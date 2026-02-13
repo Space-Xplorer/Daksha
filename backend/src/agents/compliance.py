@@ -12,6 +12,7 @@ from pathlib import Path
 import logging
 
 from src.schemas.state import ApplicationState
+from src.utils.llm_helpers import parse_json_response
 from src.utils.logging import log_agent_execution, log_error
 
 # Try to import RAG dependencies
@@ -355,18 +356,11 @@ IMPORTANT: Only flag actual violations. If data is "Not provided", do not flag a
             
             response = self.llm.invoke(prompt).content
             
-            # Parse JSON response
-            import json
-            import re
-            
-            # Extract JSON from response
-            json_match = re.search(r'\[.*\]', response, re.DOTALL)
-            if json_match:
-                violations_data = json.loads(json_match.group())
+            violations_data = parse_json_response(response, default=[])
+            if isinstance(violations_data, list):
                 return violations_data
-            else:
-                logging.warning(f"Could not parse LLM response: {response[:100]}")
-                return []
+            logging.warning(f"Could not parse LLM response: {response[:100]}")
+            return []
         
         except Exception as e:
             logging.error(f"RAG compliance check failed: {e}")
@@ -422,18 +416,11 @@ IMPORTANT: Only flag actual violations. If data is "Not provided", do not flag a
             response = await self.llm.ainvoke(prompt)
             response_content = response.content
             
-            # Parse JSON response
-            import json
-            import re
-            
-            # Extract JSON from response
-            json_match = re.search(r'\[.*\]', response_content, re.DOTALL)
-            if json_match:
-                violations_data = json.loads(json_match.group())
+            violations_data = parse_json_response(response_content, default=[])
+            if isinstance(violations_data, list):
                 return violations_data
-            else:
-                logging.warning(f"Could not parse LLM response: {response_content[:100]}")
-                return []
+            logging.warning(f"Could not parse LLM response: {response_content[:100]}")
+            return []
         
         except Exception as e:
             logging.error(f"Async RAG compliance check failed: {e}")
@@ -568,18 +555,11 @@ IMPORTANT: Only flag actual violations. If data is "Not provided", do not flag a
             
             response = self.llm.invoke(prompt).content
             
-            # Parse JSON response
-            import json
-            import re
-            
-            # Extract JSON from response
-            json_match = re.search(r'\[.*\]', response, re.DOTALL)
-            if json_match:
-                violations_data = json.loads(json_match.group())
+            violations_data = parse_json_response(response, default=[])
+            if isinstance(violations_data, list):
                 return violations_data
-            else:
-                logging.warning(f"Could not parse LLM response: {response[:100]}")
-                return []
+            logging.warning(f"Could not parse LLM response: {response[:100]}")
+            return []
         
         except Exception as e:
             logging.error(f"RAG compliance check failed: {e}")
@@ -633,18 +613,11 @@ IMPORTANT: Only flag actual violations. If data is "Not provided", do not flag a
             response = await self.llm.ainvoke(prompt)
             response_content = response.content
             
-            # Parse JSON response
-            import json
-            import re
-            
-            # Extract JSON from response
-            json_match = re.search(r'\[.*\]', response_content, re.DOTALL)
-            if json_match:
-                violations_data = json.loads(json_match.group())
+            violations_data = parse_json_response(response_content, default=[])
+            if isinstance(violations_data, list):
                 return violations_data
-            else:
-                logging.warning(f"Could not parse LLM response: {response_content[:100]}")
-                return []
+            logging.warning(f"Could not parse LLM response: {response_content[:100]}")
+            return []
         
         except Exception as e:
             logging.error(f"Async RAG compliance check failed: {e}")

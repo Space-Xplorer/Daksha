@@ -1,18 +1,18 @@
 """
 Verification Agent with LLM-based sanity checking.
 
-This module implements a final verification layer that uses Groq LLM to validate
+This module implements a final verification layer that uses LLM to validate
 ML model outputs and reasoning before sending results to the frontend.
 Includes async support for improved performance.
 """
 
 import asyncio
 import logging
-import json
 from typing import Dict, Any, Optional
 from pydantic import BaseModel, Field, ValidationError
 
 from src.schemas.state import ApplicationState
+from src.utils.llm_helpers import parse_json_response
 
 logger = logging.getLogger(__name__)
 
@@ -152,19 +152,10 @@ Task: Verify if this decision is reasonable. Consider:
                 return result
             except ValidationError as e:
                 logger.warning(f"Pydantic validation failed, trying manual JSON parse: {e}")
-                # Fallback to manual JSON parsing
-                response = response.strip()
-                if response.startswith("```"):
-                    response = response.split("```")[1]
-                    if response.startswith("json"):
-                        response = response[4:]
-                response = response.strip()
-                verification = json.loads(response)
-                return verification
-            
-        except json.JSONDecodeError as e:
-            logger.error(f"Failed to parse LLM response: {e}")
-            return self._fallback_loan_verification(state)
+                verification = parse_json_response(response, default={})
+                if isinstance(verification, dict) and verification:
+                    return verification
+                return self._fallback_loan_verification(state)
         except Exception as e:
             logger.error(f"Loan verification failed: {e}")
             return self._fallback_loan_verification(state)
@@ -220,19 +211,10 @@ Task: Verify if this decision is reasonable. Consider:
                 return result
             except ValidationError as e:
                 logger.warning(f"Pydantic validation failed (async), trying manual JSON parse: {e}")
-                # Fallback to manual JSON parsing
-                response_content = response_content.strip()
-                if response_content.startswith("```"):
-                    response_content = response_content.split("```")[1]
-                    if response_content.startswith("json"):
-                        response_content = response_content[4:]
-                response_content = response_content.strip()
-                verification = json.loads(response_content)
-                return verification
-            
-        except json.JSONDecodeError as e:
-            logger.error(f"Failed to parse LLM response (async): {e}")
-            return self._fallback_loan_verification(state)
+                verification = parse_json_response(response_content, default={})
+                if isinstance(verification, dict) and verification:
+                    return verification
+                return self._fallback_loan_verification(state)
         except Exception as e:
             logger.error(f"Loan verification failed (async): {e}")
             return self._fallback_loan_verification(state)
@@ -294,19 +276,10 @@ Task: Verify if this premium is reasonable. Consider:
                 return result
             except ValidationError as e:
                 logger.warning(f"Pydantic validation failed, trying manual JSON parse: {e}")
-                # Fallback to manual JSON parsing
-                response = response.strip()
-                if response.startswith("```"):
-                    response = response.split("```")[1]
-                    if response.startswith("json"):
-                        response = response[4:]
-                response = response.strip()
-                verification = json.loads(response)
-                return verification
-            
-        except json.JSONDecodeError as e:
-            logger.error(f"Failed to parse LLM response: {e}")
-            return self._fallback_insurance_verification(state)
+                verification = parse_json_response(response, default={})
+                if isinstance(verification, dict) and verification:
+                    return verification
+                return self._fallback_insurance_verification(state)
         except Exception as e:
             logger.error(f"Insurance verification failed: {e}")
             return self._fallback_insurance_verification(state)
@@ -362,19 +335,10 @@ Task: Verify if this premium is reasonable. Consider:
                 return result
             except ValidationError as e:
                 logger.warning(f"Pydantic validation failed (async), trying manual JSON parse: {e}")
-                # Fallback to manual JSON parsing
-                response_content = response_content.strip()
-                if response_content.startswith("```"):
-                    response_content = response_content.split("```")[1]
-                    if response_content.startswith("json"):
-                        response_content = response_content[4:]
-                response_content = response_content.strip()
-                verification = json.loads(response_content)
-                return verification
-            
-        except json.JSONDecodeError as e:
-            logger.error(f"Failed to parse LLM response (async): {e}")
-            return self._fallback_insurance_verification(state)
+                verification = parse_json_response(response_content, default={})
+                if isinstance(verification, dict) and verification:
+                    return verification
+                return self._fallback_insurance_verification(state)
         except Exception as e:
             logger.error(f"Insurance verification failed (async): {e}")
             return self._fallback_insurance_verification(state)

@@ -142,7 +142,7 @@ The Daksha system uses LangGraph to orchestrate a multi-agent workflow for proce
 - **Output**: 
   - Loan: approved, probability, reasoning
   - Insurance: premium, reasoning
-- **Models**: Credit Shield (loan), Health Shield (insurance)
+- **Models**: Daksha (loan), Health Shield (insurance)
 - **Status**: Stub implementation (TODO)
 
 ### 6. Verification Agents (Loan & Insurance)

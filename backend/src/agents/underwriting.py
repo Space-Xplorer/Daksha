@@ -2,7 +2,7 @@
 Underwriting Agent with ML model loading.
 
 This module implements loan and insurance underwriting using pre-trained EBM models.
-The agent uses Credit Shield (EBM classifier) for loan approval and Health Shield 
+The agent uses Daksha (EBM classifier) for loan approval and Health Shield 
 (EBM regressor) for insurance premium prediction.
 """
 
@@ -25,7 +25,7 @@ class UnderwritingAgent:
     This agent:
     - Loads EBM models via ModelLoader singleton
     - Encodes applicant features using pre-trained encoders
-    - Invokes Credit Shield for loan approval prediction
+    - Invokes Daksha for loan approval prediction
     - Invokes Health Shield for insurance premium prediction
     - Extracts reasoning from EBM explanations
     - Validates monotonicity constraints (logs warnings only)
@@ -79,7 +79,7 @@ class UnderwritingAgent:
     
     def process_loan(self, state: ApplicationState) -> ApplicationState:
         """
-        Process loan application using Credit Shield EBM model.
+        Process loan application using Daksha EBM model.
         
         Args:
             state: Current application state with applicant_data
@@ -188,11 +188,25 @@ class UnderwritingAgent:
         # Clamp between 0 and 1
         approval_probability = max(0.0, min(1.0, score))
         
-        # Mock reasoning
+        # Calculate engineered features for mock reasoning (matching real model)
+        lti_ratio = loan_amount / income if income > 0 else 0
+        total_assets = (
+            applicant_data.get('residential_assets_value', 0) +
+            applicant_data.get('commercial_assets_value', 0) +
+            applicant_data.get('luxury_assets_value', 0) +
+            applicant_data.get('bank_asset_value', 0)
+        )
+        asset_to_loan = total_assets / loan_amount if loan_amount > 0 else 0
+        
+        # Mock reasoning (includes engineered features to match real model output)
         reasoning = {
             "cibil_score": 5.07 if cibil >= 750 else (2.5 if cibil >= 700 else -2.0),
-            "annual_income": 2.34 if income > 1000000 else 1.0,
-            "existing_debt": -1.23 if existing_debt < 200000 else -3.0,
+            "income_annum": 2.34 if income > 1000000 else 1.0,
+            "loan_amount": -1.5 if loan_amount > 5000000 else -0.5,
+            "loan_to_income_ratio": -2.0 if lti_ratio > 5 else (-1.0 if lti_ratio > 3 else 0.5),
+            "total_assets": 1.8 if total_assets > 2000000 else 0.8,
+            "asset_to_loan_ratio": 2.5 if asset_to_loan > 2 else (1.2 if asset_to_loan > 1 else 0.0),
+            "no_of_dependents": -0.3 * applicant_data.get('no_of_dependents', 0),
             "employment_years": 0.89,
             "age": 0.45
         }
@@ -352,6 +366,34 @@ class UnderwritingAgent:
             # Create DataFrame from applicant data
             df = pd.DataFrame([applicant_data])
             
+            # Normalize field names (handle both 'annual_income' and 'income_annum')
+            if 'annual_income' in df.columns and 'income_annum' not in df.columns:
+                df['income_annum'] = df['annual_income']
+            
+            # Ensure required fields exist with defaults
+            required_fields = ['loan_amount', 'income_annum', 'residential_assets_value', 
+                             'commercial_assets_value', 'luxury_assets_value', 'bank_asset_value']
+            for field in required_fields:
+                if field not in df.columns:
+                    df[field] = 0
+                    
+            # Feature Engineering (CRITICAL: Must match training pipeline)
+            # These engineered features MUST be created before encoding
+            df['loan_to_income_ratio'] = df['loan_amount'] / (df['income_annum'] + 1)
+            
+            df['total_assets'] = (
+                df['residential_assets_value'].fillna(0) +
+                df['commercial_assets_value'].fillna(0) +
+                df['luxury_assets_value'].fillna(0) +
+                df['bank_asset_value'].fillna(0)
+            )
+            
+            df['asset_to_loan_ratio'] = df['total_assets'] / (df['loan_amount'] + 1)
+            
+            logger.debug(f"Engineered features: loan_to_income_ratio={df['loan_to_income_ratio'].iloc[0]:.3f}, "
+                        f"total_assets={df['total_assets'].iloc[0]:.0f}, "
+                        f"asset_to_loan_ratio={df['asset_to_loan_ratio'].iloc[0]:.3f}")
+            
             # Apply categorical encoding using pre-trained encoders
             for col, encoder in self.credit_encoders.items():
                 if col in df.columns:
@@ -443,9 +485,8 @@ class UnderwritingAgent:
         """
         Extract feature contributions from EBM explanation object.
         
-        The EBM explanation object contains:
-        - feature_names: list of feature names
-        - values: list of contribution values (Shapley-like scores)
+        The EBM explanation object from interpret library's explain_local() method
+        contains contribution scores for each feature (Shapley-like values).
         
         Args:
             ebm_explanation: EBM local explanation object from explain_local()
@@ -458,8 +499,9 @@ class UnderwritingAgent:
             
             # Extract feature names and values
             if hasattr(ebm_explanation, 'data'):
-                # interpret library structure: explanation.data() returns dict
-                explanation_data = ebm_explanation.data()
+                # interpret library structure: explanation.data(0) returns dict for first sample
+                # This is the correct method as shown in test_model.py
+                explanation_data = ebm_explanation.data(0)
                 
                 if 'names' in explanation_data and 'scores' in explanation_data:
                     feature_names = explanation_data['names']
@@ -467,6 +509,8 @@ class UnderwritingAgent:
                     
                     for name, score in zip(feature_names, feature_scores):
                         reasoning[name] = float(score)
+                    
+                    logger.debug(f"Extracted reasoning with {len(reasoning)} features using .data(0) method")
                 
             else:
                 # Fallback: try direct attribute access
@@ -475,12 +519,15 @@ class UnderwritingAgent:
                     for name, value in zip(ebm_explanation.feature_names, ebm_explanation.values):
                         reasoning[name] = float(value)
             
-            logger.debug(f"Extracted reasoning with {len(reasoning)} features")
+            if not reasoning:
+                logger.warning("No reasoning extracted, returning empty dict")
+            
             return reasoning
             
         except Exception as e:
             logger.error(f"Reasoning extraction failed: {e}")
-            return {"error": "Failed to extract reasoning", "details": str(e)}
+            # Return empty dict instead of error dict to avoid breaking downstream processing
+            return {}
     
     def _validate_loan_monotonicity(
         self, 

@@ -14,9 +14,14 @@ class DocumentType(Enum):
     CIBIL_REPORT = "cibil_report"
     SALARY_SLIP = "salary_slip"
     ITR_FORM16 = "itr_form16"
+    ITR = "itr"
+    FORM_16 = "form_16"
+    TDS_CERTIFICATE = "tds_certificate"
     BANK_STATEMENT = "bank_statement"
     PROPERTY_DOCUMENT = "property_document"
     VEHICLE_REGISTRATION = "vehicle_registration"
+    GST_CERTIFICATE = "gst_certificate"
+    TRADE_LICENSE = "trade_license"
     
     # Insurance documents
     DIAGNOSTIC_REPORT = "diagnostic_report"
@@ -26,10 +31,16 @@ class DocumentType(Enum):
     ECG_REPORT = "ecg_report"
     PRESCRIPTION_HISTORY = "prescription_history"
     DISCHARGE_SUMMARY = "discharge_summary"
+    MEDICAL_HISTORY = "medical_history"
+    BIRTH_CERTIFICATE = "birth_certificate"
+    TENTH_MARKSHEET = "tenth_marksheet"
     
     # Common documents
     AADHAAR_CARD = "aadhaar_card"
     PAN_CARD = "pan_card"
+    PASSPORT = "passport"
+    VOTER_ID = "voter_id"
+    UTILITY_BILL = "utility_bill"
 
 
 class LoanType(Enum):

@@ -10,7 +10,7 @@ The **UnderwritingAgent** is a critical component responsible for loan approval 
 
 1. **ModelLoader Singleton** (`src/utils/model_loader.py`)
    - Loads and caches 4 pre-trained models:
-     - `ebm_finance.pkl`: Credit Shield (EBM Classifier for loan approval)
+     - `ebm_finance.pkl`: Daksha (EBM Classifier for loan approval)
      - `ebm_health.pkl`: Health Shield (EBM Regressor for insurance premium)
      - `fin_encoders.pkl`: Finance feature encoders (LabelEncoder dictionaries)
      - `health_encoders.pkl`: Health feature encoders (LabelEncoder dictionaries)
@@ -20,7 +20,7 @@ The **UnderwritingAgent** is a critical component responsible for loan approval 
 
 2. **UnderwritingAgent** (`src/agents/underwriting.py`)
    - Loads models via ModelLoader singleton
-   - Processes loan applications → Credit Shield prediction
+   - Processes loan applications → Daksha prediction
    - Processes insurance applications → Health Shield prediction
    - Extracts reasoning from EBM local explanations
    - Validates monotonicity constraints (log warnings only)
@@ -54,7 +54,7 @@ The **UnderwritingAgent** is a critical component responsible for loan approval 
 
 **Process**:
 1. Encode features using `fin_encoders`
-2. Invoke Credit Shield EBM model → `predict_proba()`
+2. Invoke Daksha EBM model → `predict_proba()`
 3. Extract local explanation → `explain_local()`
 4. Parse reasoning from explanation object
 5. Validate monotonicity constraints:
@@ -251,13 +251,13 @@ logger.error(f"Loan processing failed: {e}")
 
 ### Performance
 - Feature encoding: ~5ms per application
-- Credit Shield prediction: ~10ms per application
+- Daksha prediction: ~10ms per application
 - Health Shield prediction: ~8ms per application
 - Explanation extraction: ~15ms per application
 - **Total latency**: ~40ms per application (both loan + insurance)
 
 ### Memory Usage
-- EBM models: ~50MB (Credit Shield) + ~35MB (Health Shield)
+- EBM models: ~50MB (Daksha) + ~35MB (Health Shield)
 - Encoders: ~1MB (finance) + ~800KB (health)
 - **Total**: ~87MB per agent instance
 

@@ -15,6 +15,7 @@ pytesseract>=0.3.10       # Tesseract OCR wrapper
 Pillow>=10.4.0            # Image processing
 opencv-python>=4.10.0.84  # Computer vision for preprocessing
 pdf2image>=1.17.0         # PDF to image conversion
+PyPDF2>=3.0.1             # PDF metadata extraction for fraud detection
 google-cloud-vision>=3.7.0  # Optional: Cloud Vision API
 
 # RAG for compliance rules
@@ -24,6 +25,8 @@ pypdf>=3.17.0             # PDF loading
 # API and utilities (for future integration)
 pydantic>=2.7.1
 python-dotenv>=1.0.0
+tenacity>=8.2.3           # Retry logic for API calls
+Faker>=24.0.0             # Generate realistic mock data
 
 # Flask API
 Flask>=3.0.0

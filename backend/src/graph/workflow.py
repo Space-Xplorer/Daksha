@@ -8,13 +8,13 @@ from typing import Literal
 from langgraph.graph import StateGraph, END
 
 from src.schemas.state import ApplicationState
-from src.agents.kyc import KYCAgent
+from src.services.kyc import KYCAgent
 from src.agents.onboarding import OnboardingAgent
 from src.agents.compliance import ComplianceAgent
 from src.agents.underwriting import UnderwritingAgent
 from src.agents.verification import VerificationAgent
 from src.agents.transparency import TransparencyAgent
-from src.agents.router import RouterAgent
+from src.services.router import RouterAgent
 from src.agents.supervisor import SupervisorAgent
 from src.utils.error_handling import safe_agent_wrapper
 from src.utils.logging import log_request, log_agent_execution
