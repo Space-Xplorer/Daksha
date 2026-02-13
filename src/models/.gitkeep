@@ -1,0 +1,6 @@
+# This directory contains pre-trained ML models (.pkl files)
+# Expected files:
+# - credit_shield.pkl
+# - health_shield.pkl
+# - credit_encoder.pkl
+# - health_encoder.pkl

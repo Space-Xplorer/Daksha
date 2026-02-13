@@ -1,0 +1,10 @@
+2026-02-13 13:18:02 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-13 13:18:02 - src.utils.logging - INFO - [logging.py:79] - Request req_d2f4da7890d6: type=loan, timestamp=2026-02-13T07:48:02.562649, metadata={}
+2026-02-13 13:18:02 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_d2f4da7890d6]: started
+2026-02-13 13:18:04 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_d2f4da7890d6]: completed (duration: 1500.92ms)
+2026-02-13 13:18:04 - src.utils.logging - INFO - [logging.py:79] - Request req_b0471978eedf: type=insurance, timestamp=2026-02-13T07:48:04.098728, metadata={}
+2026-02-13 13:18:04 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_b0471978eedf]: started
+2026-02-13 13:18:05 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_b0471978eedf]: completed (duration: 1500.71ms)
+2026-02-13 13:18:05 - src.utils.logging - INFO - [logging.py:79] - Request req_9aff70d1b681: type=both, timestamp=2026-02-13T07:48:05.626472, metadata={}
+2026-02-13 13:18:05 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_9aff70d1b681]: started
+2026-02-13 13:18:07 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_9aff70d1b681]: completed (duration: 1500.71ms)

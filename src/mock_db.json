@@ -1,0 +1,85 @@
+{
+  "users": {
+    "user_8899": {
+      "digilockerid": "DL8899ABCD1234",
+      "name": "Rajesh Kumar",
+      "dob": "19900515",
+      "gender": "Male",
+      "address": "123 MG Road, Bangalore, Karnataka 560001",
+      "aadhaar_last4": "5678",
+      "pan": "ABCDE1234F"
+    },
+    "user_7788": {
+      "digilockerid": "DL7788EFGH5678",
+      "name": "Priya Sharma",
+      "dob": "19850320",
+      "gender": "Female",
+      "address": "456 Park Street, Mumbai, Maharashtra 400001",
+      "aadhaar_last4": "9012",
+      "pan": "FGHIJ5678K"
+    },
+    "user_6677": {
+      "digilockerid": "DL6677IJKL9012",
+      "name": "Amit Patel",
+      "dob": "19920710",
+      "gender": "Male",
+      "address": "789 Anna Salai, Chennai, Tamil Nadu 600002",
+      "aadhaar_last4": "3456",
+      "pan": "KLMNO9012P"
+    },
+    "user_5566": {
+      "digilockerid": "DL5566MNOP3456",
+      "name": "Sneha Reddy",
+      "dob": "19880925",
+      "gender": "Female",
+      "address": "321 Jubilee Hills, Hyderabad, Telangana 500033",
+      "aadhaar_last4": "7890",
+      "pan": "PQRST3456U"
+    },
+    "user_4455": {
+      "digilockerid": "DL4455QRST7890",
+      "name": "Vikram Singh",
+      "dob": "19950112",
+      "gender": "Male",
+      "address": "654 Civil Lines, Delhi 110054",
+      "aadhaar_last4": "1234",
+      "pan": "UVWXY7890Z"
+    }
+  },
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2026-02-13",
+    "description": "Mock DigiLocker database for testing KYC verification",
+    "notes": [
+      "DOB format: YYYYMMDD (e.g., 19900515 for May 15, 1990)",
+      "Names should match exactly (case-insensitive)",
+      "This is for testing purposes only - not a real DigiLocker API"
+    ]
+  },
+  "test_scenarios": {
+    "valid_kyc": {
+      "name": "Rajesh Kumar",
+      "dob": "1990-05-15",
+      "expected_result": "SUCCESS",
+      "digilocker_id": "DL8899ABCD1234"
+    },
+    "invalid_name": {
+      "name": "John Doe",
+      "dob": "1990-05-15",
+      "expected_result": "FAILED",
+      "reason": "Name mismatch"
+    },
+    "invalid_dob": {
+      "name": "Rajesh Kumar",
+      "dob": "1990-05-16",
+      "expected_result": "FAILED",
+      "reason": "DOB mismatch"
+    },
+    "valid_kyc_female": {
+      "name": "Priya Sharma",
+      "dob": "1985-03-20",
+      "expected_result": "SUCCESS",
+      "digilocker_id": "DL7788EFGH5678"
+    }
+  }
+}
