@@ -1,5 +1,5 @@
 """
-Automated Demo script for Agentic Shield - No user interaction required
+Automated Demo script for Daksha - No user interaction required
 
 This script demonstrates the complete workflow with Rajesh Kumar's application
 without requiring user input (for automated testing).
@@ -51,7 +51,7 @@ def demo_rajesh_kumar():
     """
     Main demo function for Rajesh Kumar's application.
     """
-    print_section("AGENTIC SHIELD - AUTOMATED DEMO", "95")
+    print_section("DAKSHA - AUTOMATED DEMO", "95")
     print("Demonstrating: Rajesh Kumar's Loan + Insurance Application")
     print("Scenario: 32-year-old software engineer applying for home loan and health insurance\n")
     
@@ -269,7 +269,7 @@ def demo_rajesh_kumar():
 
 if __name__ == "__main__":
     print("\n" + "🚀 " * 40)
-    print("AGENTIC SHIELD - AUTOMATED DEMO".center(80))
+    print("DAKSHA - AUTOMATED DEMO".center(80))
     print("🚀 " * 40 + "\n")
     
     print("Running automated demo (no user interaction required)...\n")

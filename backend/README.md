@@ -1,6 +1,6 @@
-# Agentic Shield Backend
+# Daksha Backend
 
-Python backend for the Agentic Shield Orchestration System using LangGraph.
+Python backend for the Daksha Orchestration System using LangGraph.
 
 ## Setup
 

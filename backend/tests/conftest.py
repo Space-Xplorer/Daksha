@@ -1,7 +1,7 @@
 """
 Pytest configuration and shared fixtures.
 
-This module provides fixtures for testing the Agentic Shield system.
+This module provides fixtures for testing the Daksha system.
 """
 
 import pytest

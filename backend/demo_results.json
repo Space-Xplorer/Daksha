@@ -1,8 +1,8 @@
 {
-  "request_id": "req_9ee52f3a459e",
+  "request_id": "req_ed6af8153ccd",
   "request_type": "both",
   "loan_type": "home",
-  "timestamp": "2026-02-13T11:00:50.554586",
+  "timestamp": "2026-02-13T11:13:11.423261",
   "kyc_verified": true,
   "kyc_attempted": true,
   "digilocker_id": "DL8899ABCD1234",
@@ -40,15 +40,45 @@
   "compliance_checked": true,
   "compliance_passed": true,
   "compliance_violations": [],
-  "loan_prediction": null,
-  "insurance_prediction": null,
+  "loan_prediction": {
+    "approved": true,
+    "probability": 1.0,
+    "reasoning": {
+      "cibil_score": 5.07,
+      "annual_income": 2.34,
+      "existing_debt": -1.23,
+      "employment_years": 0.89,
+      "age": 0.45
+    }
+  },
+  "insurance_prediction": {
+    "premium": 18000.0,
+    "reasoning": {
+      "age": 0.5,
+      "bmi": 0.0,
+      "diabetes": 0.0,
+      "blood_pressure_problems": 0.0,
+      "any_chronic_diseases": 0.0,
+      "known_allergies": 0.0
+    }
+  },
   "loan_verified": true,
   "insurance_verified": true,
-  "loan_verification": null,
-  "insurance_verification": null,
+  "loan_verification": {
+    "verified": true,
+    "confidence": 0.7,
+    "concerns": [],
+    "recommendation": "APPROVE"
+  },
+  "insurance_verification": {
+    "verified": true,
+    "confidence": 0.7,
+    "concerns": [],
+    "recommendation": "APPROVE"
+  },
   "verification_result": null,
-  "loan_explanation": "Your loan request was not approved based on the information provided. The model's confidence was 0.00%. Key factors considered were:\n- No strong factors were identified.",
-  "insurance_explanation": "Your estimated premium is Rs 0.00 based on the information provided. Key factors considered were:\n- No strong factors were identified.",
+  "loan_explanation": "We're pleased to inform you that your application has been approved. The main reasons for this decision are your strong credit history and stable annual income, which demonstrate your ability to manage finances effectively. Your years of employment and age also contributed positively to the approval. Although your existing debt was considered, it didn't outweigh the other positive factors in your application.",
+  "insurance_explanation": "Your health insurance premium is Rs 18,000.00. The main factor affecting your premium is your age, which has a moderate impact. Fortunately, your body mass index (BMI) and health history, including diabetes, blood pressure, and chronic diseases, do not significantly contribute to your premium. This suggests that you're in relatively good health, aside from the natural effects of aging. Overall, your premium reflects a balanced assessment of your overall health profile.",
   "supervisor_decision": {
     "action": "proceed",
     "reason": "Continue workflow",
@@ -67,10 +97,7 @@
   "error_category": null,
   "error_routing": null,
   "current_agent": "underwriting_insurance",
-  "errors": [
-    "Underwriting (Loan): The model has 13 features, but X has 20 columns",
-    "Underwriting (Insurance): The model has 12 features, but X has 20 columns"
-  ],
+  "errors": [],
   "completed": true,
   "rejected": false,
   "rejection_reason": null

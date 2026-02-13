@@ -1,5 +1,5 @@
 """
-Agents module for the Agentic Shield Orchestration System.
+Agents module for the Daksha Orchestration System.
 
 This module contains all agent implementations:
 - KYC Agent: Mock DigiLocker verification

@@ -1,14 +1,14 @@
-# Agentic Shield Orchestration System - Workflow Documentation
+# Daksha Orchestration System - Workflow Documentation
 
 ## Overview
 
-The Shield system uses LangGraph to orchestrate a multi-agent workflow for processing loan and insurance applications. The workflow ensures proper validation, compliance checking, and decision-making with full traceability.
+The Daksha system uses LangGraph to orchestrate a multi-agent workflow for processing loan and insurance applications. The workflow ensures proper validation, compliance checking, and decision-making with full traceability.
 
 ## Workflow Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    SHIELD WORKFLOW                               │
+│                    DAKSHA WORKFLOW                               │
 └─────────────────────────────────────────────────────────────────┘
 
                          ┌──────────┐

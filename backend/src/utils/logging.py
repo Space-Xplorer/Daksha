@@ -1,7 +1,7 @@
 """
 Logging configuration.
 
-This module configures structured logging for the Shield system.
+This module configures structured logging for the Daksha system.
 """
 
 import logging
@@ -13,11 +13,11 @@ from typing import Optional
 
 def setup_logging(
     log_level: str = "INFO",
-    log_file: Optional[str] = "shield_system.log",
+    log_file: Optional[str] = "daksha_system.log",
     log_to_console: bool = True
 ) -> None:
     """
-    Configure structured logging for the Shield system.
+    Configure structured logging for the Daksha system.
     
     Args:
         log_level: Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)

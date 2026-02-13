@@ -1,5 +1,5 @@
 """
-Main entry point for the Agentic Shield Orchestration System.
+Main entry point for the Daksha Orchestration System.
 
 This module provides example usage and testing functionality.
 """
@@ -18,13 +18,13 @@ from src.utils.logging import setup_logging
 
 
 def main():
-    """Main entry point for testing the Shield system."""
+    """Main entry point for testing the Daksha system."""
     
     # Setup logging
-    setup_logging("INFO", "shield_system.log", True)
+    setup_logging("INFO", "daksha_system.log", True)
     
     print("=" * 70)
-    print("Agentic Shield Orchestration System")
+    print("Daksha Orchestration System")
     print("=" * 70)
     print()
     

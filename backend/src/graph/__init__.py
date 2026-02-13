@@ -1,5 +1,5 @@
 """
-Graph module for the Agentic Shield Orchestration System.
+Graph module for the Daksha Orchestration System.
 
 This module contains the LangGraph workflow definition.
 """

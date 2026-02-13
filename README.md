@@ -1,4 +1,4 @@
-# Agentic Shield Orchestration System
+# Daksha Orchestration System
 
 A multi-agent platform for financial services that provides automated loan approval decisions and health insurance premium recommendations using LangGraph and pre-trained EBM models.
 

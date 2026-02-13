@@ -1,7 +1,7 @@
 """
 LangGraph workflow definition.
 
-This module defines the main LangGraph workflow for the Shield system.
+This module defines the main LangGraph workflow for the Daksha system.
 """
 
 from typing import Literal
@@ -289,9 +289,9 @@ def finalize_state(state: ApplicationState) -> ApplicationState:
     return state
 
 
-def create_shield_workflow() -> StateGraph:
+def create_daksha_workflow() -> StateGraph:
     """
-    Create the main LangGraph workflow for the Shield system.
+    Create the main LangGraph workflow for the Daksha system.
     
     The workflow follows this path:
     1. KYC verification (can reject)
@@ -427,7 +427,7 @@ def create_shield_workflow() -> StateGraph:
 
 def run_workflow(state: ApplicationState) -> ApplicationState:
     """
-    Run the Shield workflow with logging.
+    Run the Daksha workflow with logging.
     
     Args:
         state: Initial application state
@@ -442,7 +442,7 @@ def run_workflow(state: ApplicationState) -> ApplicationState:
     log_request(request_id, request_type)
     
     # Create and run workflow
-    workflow = create_shield_workflow()
+    workflow = create_daksha_workflow()
     
     try:
         final_state = workflow.invoke(state)

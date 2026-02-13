@@ -1,5 +1,5 @@
 """
-Demo script for Agentic Shield - Jury Presentation
+Demo script for Daksha - Jury Presentation
 
 This script demonstrates the complete workflow with Rajesh Kumar's application.
 """
@@ -50,7 +50,7 @@ def demo_rajesh_kumar():
     """
     Main demo function for Rajesh Kumar's application.
     """
-    print_section("AGENTIC SHIELD - JURY DEMONSTRATION", "95")
+    print_section("DAKSHA - DEMONSTRATION", "95")
     print("Demonstrating: Rajesh Kumar's Loan + Insurance Application")
     print("Scenario: 32-year-old software engineer applying for home loan and health insurance")
     print("\nPress Enter to begin...")
@@ -323,7 +323,7 @@ def demo_rejection_case():
 
 if __name__ == "__main__":
     print("\n" + "🚀 " * 40)
-    print("AGENTIC SHIELD - JURY DEMONSTRATION SCRIPT".center(80))
+    print("DAKSHA - DEMONSTRATION SCRIPT".center(80))
     print("🚀 " * 40 + "\n")
     
     print("This demo will showcase:")
@@ -341,7 +341,7 @@ if __name__ == "__main__":
             demo_rejection_case()
     
     print_section("DEMO COMPLETE", "92")
-    print("Thank you for watching the Agentic Shield demonstration!")
+    print("Thank you for watching the Daksha demonstration!")
     print("\n📄 Full documentation: backend/DEMO_USE_CASE.md")
     print("📊 Results saved: demo_results.json")
     print("\n" + "🎯 " * 40 + "\n")

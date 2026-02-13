@@ -1,5 +1,5 @@
 """
-Schemas module for the Agentic Shield Orchestration System.
+Schemas module for the Daksha Orchestration System.
 
 This module contains state definitions and data models.
 """
