@@ -38,7 +38,7 @@ class TransparencyAgent:
 	)
 
 	def __init__(self) -> None:
-		self.llm = ChatGroq(model="llama-3.1-70b-versatile", temperature=0.2)
+		self.llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0.2)
 
 	def explain_loan_decision(self, state: ApplicationState) -> ApplicationState:
 		"""Generate explanation for loan decision."""

@@ -43,7 +43,7 @@ class VerificationAgent:
             from langchain.output_parsers import PydanticOutputParser
             
             self.llm = ChatGroq(
-                model="llama-3.1-70b-versatile",
+                model="llama-3.3-70b-versatile",
                 temperature=0.2  # Low temperature for consistent verification
             )
             

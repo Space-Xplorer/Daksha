@@ -4,10 +4,17 @@ Main entry point for the Agentic Shield Orchestration System.
 This module provides example usage and testing functionality.
 """
 
+import json
+import sys
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parents[2]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 from src.schemas.state import create_initial_state
 from src.graph.workflow import run_workflow
 from src.utils.logging import setup_logging
-import json
 
 
 def main():

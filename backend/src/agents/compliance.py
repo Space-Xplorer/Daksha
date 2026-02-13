@@ -51,7 +51,7 @@ class ComplianceAgent:
         if self.groq_api_key and RAG_AVAILABLE:
             try:
                 self.llm = ChatGroq(
-                    model="llama-3.1-70b-versatile",
+                    model="llama-3.3-70b-versatile",
                     temperature=0.1,  # Very low for strict rule interpretation
                     api_key=self.groq_api_key
                 )
