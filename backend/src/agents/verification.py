@@ -3,8 +3,10 @@ Verification Agent with LLM-based sanity checking.
 
 This module implements a final verification layer that uses Groq LLM to validate
 ML model outputs and reasoning before sending results to the frontend.
+Includes async support for improved performance.
 """
 
+import asyncio
 import logging
 import json
 from typing import Dict, Any, Optional
@@ -167,6 +169,74 @@ Task: Verify if this decision is reasonable. Consider:
             logger.error(f"Loan verification failed: {e}")
             return self._fallback_loan_verification(state)
     
+    async def _verify_loan_decision_async(self, state: ApplicationState) -> Dict[str, Any]:
+        """
+        Async version: Verify loan decision makes sense given applicant data.
+        """
+        if not self.llm or not self.parser:
+            return self._fallback_loan_verification(state)
+        
+        try:
+            prediction = state["loan_prediction"]
+            applicant_data = state["applicant_data"]
+            
+            # Format reasoning for prompt
+            reasoning_text = self._format_reasoning(prediction.get("reasoning", {}))
+            
+            # Get format instructions from parser
+            format_instructions = self.parser.get_format_instructions()
+            
+            prompt = f"""You are a senior loan underwriter reviewing an AI loan decision.
+
+Applicant Profile:
+- CIBIL Score: {applicant_data.get('cibil_score', 'N/A')}
+- Annual Income: ₹{applicant_data.get('annual_income', applicant_data.get('income_annum', 0)):,.2f}
+- Loan Amount: ₹{applicant_data.get('loan_amount', 0):,.2f}
+- Existing Debt: ₹{applicant_data.get('existing_debt', 0):,.2f}
+- Employment: {applicant_data.get('employment_type', 'N/A')}
+- Work Experience: {applicant_data.get('employment_years', 'N/A')} years
+
+AI Decision: {"APPROVED" if prediction['approved'] else "REJECTED"}
+Confidence: {prediction['probability']:.1%}
+
+Top Contributing Factors:
+{reasoning_text}
+
+Task: Verify if this decision is reasonable. Consider:
+1. Does the decision align with the applicant's profile?
+2. Are the contributing factors logical?
+3. Are there any red flags or concerns?
+
+{format_instructions}"""
+            
+            response = await self.llm.ainvoke(prompt)
+            response_content = response.content
+            
+            # Parse using Pydantic parser
+            try:
+                verification = self.parser.parse(response_content)
+                result = verification.model_dump()
+                logger.debug(f"Loan verification result (async): {result}")
+                return result
+            except ValidationError as e:
+                logger.warning(f"Pydantic validation failed (async), trying manual JSON parse: {e}")
+                # Fallback to manual JSON parsing
+                response_content = response_content.strip()
+                if response_content.startswith("```"):
+                    response_content = response_content.split("```")[1]
+                    if response_content.startswith("json"):
+                        response_content = response_content[4:]
+                response_content = response_content.strip()
+                verification = json.loads(response_content)
+                return verification
+            
+        except json.JSONDecodeError as e:
+            logger.error(f"Failed to parse LLM response (async): {e}")
+            return self._fallback_loan_verification(state)
+        except Exception as e:
+            logger.error(f"Loan verification failed (async): {e}")
+            return self._fallback_loan_verification(state)
+    
     def _verify_insurance_decision(self, state: ApplicationState) -> Dict[str, Any]:
         """
         Verify insurance premium makes sense given applicant data.
@@ -240,6 +310,110 @@ Task: Verify if this premium is reasonable. Consider:
         except Exception as e:
             logger.error(f"Insurance verification failed: {e}")
             return self._fallback_insurance_verification(state)
+    
+    async def _verify_insurance_decision_async(self, state: ApplicationState) -> Dict[str, Any]:
+        """
+        Async version: Verify insurance premium makes sense given applicant data.
+        """
+        if not self.llm or not self.parser:
+            return self._fallback_insurance_verification(state)
+        
+        try:
+            prediction = state["insurance_prediction"]
+            applicant_data = state["applicant_data"]
+            
+            # Format reasoning for prompt
+            reasoning_text = self._format_reasoning(prediction.get("reasoning", {}))
+            
+            # Get format instructions from parser
+            format_instructions = self.parser.get_format_instructions()
+            
+            prompt = f"""You are a senior insurance underwriter reviewing an AI premium calculation.
+
+Applicant Profile:
+- Age: {applicant_data.get('age', 'N/A')}
+- BMI: {applicant_data.get('bmi', 'N/A')}
+- Smoker: {applicant_data.get('smoker', 'N/A')}
+- Pre-existing Conditions: {applicant_data.get('pre_existing_conditions', [])}
+- Blood Pressure: {"High" if applicant_data.get('bloodpressure') else "Normal"}
+- Diabetes: {"Yes" if applicant_data.get('diabetes') else "No"}
+- Occupation Risk: {applicant_data.get('occupation_risk', 'N/A')}
+
+AI Premium: ₹{prediction['premium']:,.2f}
+
+Top Contributing Factors:
+{reasoning_text}
+
+Task: Verify if this premium is reasonable. Consider:
+1. Is the premium appropriate for the risk profile?
+2. Are the contributing factors logical?
+3. Are there any concerns about fairness or accuracy?
+
+{format_instructions}"""
+            
+            response = await self.llm.ainvoke(prompt)
+            response_content = response.content
+            
+            # Parse using Pydantic parser
+            try:
+                verification = self.parser.parse(response_content)
+                result = verification.model_dump()
+                logger.debug(f"Insurance verification result (async): {result}")
+                return result
+            except ValidationError as e:
+                logger.warning(f"Pydantic validation failed (async), trying manual JSON parse: {e}")
+                # Fallback to manual JSON parsing
+                response_content = response_content.strip()
+                if response_content.startswith("```"):
+                    response_content = response_content.split("```")[1]
+                    if response_content.startswith("json"):
+                        response_content = response_content[4:]
+                response_content = response_content.strip()
+                verification = json.loads(response_content)
+                return verification
+            
+        except json.JSONDecodeError as e:
+            logger.error(f"Failed to parse LLM response (async): {e}")
+            return self._fallback_insurance_verification(state)
+        except Exception as e:
+            logger.error(f"Insurance verification failed (async): {e}")
+            return self._fallback_insurance_verification(state)
+    
+    async def verify_decision_async(self, state: ApplicationState) -> ApplicationState:
+        """
+        Async version: Main verification method with parallel loan/insurance verification.
+        """
+        try:
+            request_type = state.get("request_type", "both")
+            
+            tasks = []
+            
+            # Prepare verification tasks
+            if request_type in ["loan", "both"] and state.get("loan_prediction"):
+                tasks.append(("loan", self._verify_loan_decision_async(state)))
+            
+            if request_type in ["insurance", "both"] and state.get("insurance_prediction"):
+                tasks.append(("insurance", self._verify_insurance_decision_async(state)))
+            
+            # Run verifications in parallel
+            if tasks:
+                task_types, task_coroutines = zip(*tasks)
+                results = await asyncio.gather(*task_coroutines)
+                
+                for task_type, result in zip(task_types, results):
+                    if task_type == "loan":
+                        state["loan_verification"] = result
+                        logger.info(f"Loan verification (async): {result.get('verified', False)}")
+                    elif task_type == "insurance":
+                        state["insurance_verification"] = result
+                        logger.info(f"Insurance verification (async): {result.get('verified', False)}")
+            
+            return state
+            
+        except Exception as e:
+            logger.error(f"Verification processing failed (async): {e}")
+            state.setdefault("errors", []).append(f"Verification: {str(e)}")
+            return state
     
     def _format_reasoning(self, reasoning: Dict[str, float]) -> str:
         """

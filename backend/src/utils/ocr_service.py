@@ -3,11 +3,13 @@ OCR service wrapper for document processing.
 
 This module provides OCR functionality using Tesseract with image preprocessing,
 document classification using LLM, and field extraction using regex patterns.
+Includes confidence scoring and async LLM support.
 """
 
 import os
 import re
 import json
+import asyncio
 from typing import Dict, Any, Optional, List, Tuple
 from pathlib import Path
 import logging
@@ -273,6 +275,72 @@ class OCRService:
         except Exception as e:
             logger.error(f"Failed to extract text from image {image_path}: {e}")
             return ""
+    
+    def extract_text_with_confidence(self, image_path: str, preprocess: bool = True) -> Tuple[str, float, List[Dict[str, Any]]]:
+        """
+        Extract text from image with confidence scores using Tesseract OCR.
+
+        Args:
+            image_path: Path to image file
+            preprocess: Whether to apply preprocessing
+
+        Returns:
+            Tuple of (extracted_text, average_confidence, word_details)
+            where word_details is a list of dicts with text, confidence, and bbox
+        """
+        try:
+            # Load image
+            image = Image.open(image_path)
+
+            # Preprocess if requested
+            if preprocess:
+                image = self.preprocess_image(image)
+
+            # Extract text with confidence data using Tesseract
+            data = pytesseract.image_to_data(image, lang='eng', output_type=pytesseract.Output.DICT)
+            
+            # Build text and collect confidence scores
+            words = []
+            word_details = []
+            confidences = []
+            
+            n_boxes = len(data['text'])
+            for i in range(n_boxes):
+                text_item = data['text'][i].strip()
+                conf = int(data['conf'][i])
+                
+                # Filter out empty text and low confidence (<= 0)
+                if text_item and conf > 0:
+                    words.append(text_item)
+                    confidences.append(conf)
+                    
+                    word_details.append({
+                        'text': text_item,
+                        'confidence': conf,
+                        'bbox': {
+                            'left': data['left'][i],
+                            'top': data['top'][i],
+                            'width': data['width'][i],
+                            'height': data['height'][i]
+                        }
+                    })
+            
+            # Combine words into full text
+            full_text = ' '.join(words)
+            
+            # Calculate average confidence
+            avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
+            
+            logger.info(
+                f"Extracted {len(words)} words from {Path(image_path).name} "
+                f"with average confidence {avg_confidence:.1f}%"
+            )
+            
+            return full_text, avg_confidence, word_details
+
+        except Exception as e:
+            logger.error(f"Failed to extract text with confidence from {image_path}: {e}")
+            return "", 0.0, []
 
     def extract_text_from_pdf(self, pdf_path: str, preprocess: bool = True) -> str:
         """
@@ -438,6 +506,63 @@ Document Type:"""
             logger.error(f"LLM classification failed: {e}")
             return self.classify_document_rule_based(text, filename)
 
+    async def classify_document_llm_async(self, text: str, filename: str = "") -> str:
+        """
+        Classify document type using LLM asynchronously.
+
+        Args:
+            text: Extracted text
+            filename: Original filename for hints
+
+        Returns:
+            Document type
+        """
+        if not self.llm:
+            logger.warning("LLM not available, falling back to rule-based classification")
+            return self.classify_document_rule_based(text, filename)
+
+        # Truncate text for efficiency
+        text_sample = text[:2000] if len(text) > 2000 else text
+
+        # Get all possible document types
+        all_doc_types = list(set(
+            self.DOCUMENT_TYPES["loan"] + self.DOCUMENT_TYPES["insurance"]
+        ))
+
+        prompt = f"""You are a document classification expert. Analyze the following text extracted from a document and classify it into one of these types:
+
+{', '.join(all_doc_types)}
+
+Filename: {filename}
+
+Document Text:
+{text_sample}
+
+Return ONLY the document type from the list above. If you cannot determine the type, return "unknown".
+
+Document Type:"""
+
+        try:
+            response = await self.llm.ainvoke(prompt)
+            response_text = response.content.strip().lower()
+
+            # Clean up response
+            response_text = response_text.replace("_", " ").strip()
+
+            # Find best match from valid types
+            for doc_type in all_doc_types:
+                if doc_type.replace("_", " ") in response_text or response_text in doc_type.replace("_", " "):
+                    logger.info(f"LLM async classification: {doc_type}")
+                    return doc_type
+
+            # If no match, fall back to rule-based
+            logger.warning(f"LLM returned unclear classification: {response_text}, falling back to rule-based")
+            return self.classify_document_rule_based(text, filename)
+
+        except Exception as e:
+            logger.error(f"LLM async classification failed: {e}")
+            return self.classify_document_rule_based(text, filename)
+
     def classify_document(self, text: str, filename: str = "", use_llm: bool = True) -> str:
         """
         Classify document type.
@@ -523,7 +648,8 @@ Document Type:"""
         file_path: str,
         preprocess: bool = True,
         classify: bool = True,
-        extract_fields: Optional[List[str]] = None
+        extract_fields: Optional[List[str]] = None,
+        include_confidence: bool = False
     ) -> Dict[str, Any]:
         """
         Complete document processing pipeline.
@@ -533,19 +659,38 @@ Document Type:"""
             preprocess: Whether to apply image preprocessing
             classify: Whether to classify document type
             extract_fields: Optional list of fields to extract
+            include_confidence: Whether to include OCR confidence scores
 
         Returns:
             Dictionary with:
             - text: Extracted text
             - document_type: Classified document type (if classify=True)
             - fields: Extracted fields (if extract_fields provided)
+            - confidence: Average confidence score (if include_confidence=True)
+            - word_details: Per-word confidence details (if include_confidence=True)
         """
         result = {}
 
-        # Extract text
-        text = self.extract_text(file_path, preprocess)
-        result['text'] = text
-        result['text_length'] = len(text)
+        # Extract text with optional confidence
+        if include_confidence:
+            file_path_obj = Path(file_path)
+            if file_path_obj.suffix.lower() in ['.jpg', '.jpeg', '.png', '.tiff', '.bmp']:
+                text, avg_conf, word_details = self.extract_text_with_confidence(file_path, preprocess)
+                result['text'] = text
+                result['confidence'] = avg_conf
+                result['word_details'] = word_details
+                result['text_length'] = len(text)
+            else:
+                # For PDFs, fall back to regular extraction
+                text = self.extract_text(file_path, preprocess)
+                result['text'] = text
+                result['text_length'] = len(text)
+                result['confidence'] = None
+                result['word_details'] = []
+        else:
+            text = self.extract_text(file_path, preprocess)
+            result['text'] = text
+            result['text_length'] = len(text)
 
         if not text:
             logger.warning(f"No text extracted from {file_path}")

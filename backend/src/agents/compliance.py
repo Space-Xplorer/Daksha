@@ -4,6 +4,7 @@ Compliance Agent with RAG for regulatory rules.
 This module implements regulatory compliance checking using RAG over USDA/IRDAI PDFs.
 """
 
+import asyncio
 import os
 import time
 from typing import Dict, Any, List, Optional
@@ -193,6 +194,97 @@ class ComplianceAgent:
         
         return state
     
+    async def check_compliance_async(self, state: ApplicationState) -> ApplicationState:
+        """
+        Check application compliance against regulatory rules asynchronously.
+        
+        Args:
+            state: Current application state
+            
+        Returns:
+            Updated application state with compliance results
+        """
+        request_id = state.get("request_id", "unknown")
+        start_time = time.time()
+        
+        log_agent_execution("ComplianceAgent", request_id, "started (async)")
+        
+        try:
+            # Check if compliance is bypassed
+            if self.bypass_compliance:
+                logging.info(f"Compliance check bypassed for {request_id}")
+                state["compliance_checked"] = True
+                state["compliance_passed"] = True
+                state["compliance_violations"] = []
+                
+                duration_ms = (time.time() - start_time) * 1000
+                log_agent_execution("ComplianceAgent", request_id, "completed (async)", duration_ms)
+                return state
+            
+            request_type = state["request_type"]
+            applicant_data = state["applicant_data"]
+            loan_type = state.get("loan_type")
+            
+            violations = []
+            
+            # Check if we can use RAG for async checks
+            if self.llm and self.rules_db:
+                # For "both" request type, run checks in parallel
+                if request_type == "both":
+                    loan_task = self._check_loan_compliance_rag_async(applicant_data, loan_type)
+                    insurance_task = self._check_insurance_compliance_rag_async(applicant_data)
+                    
+                    loan_violations, insurance_violations = await asyncio.gather(loan_task, insurance_task)
+                    violations.extend(loan_violations)
+                    violations.extend(insurance_violations)
+                elif request_type == "loan":
+                    loan_violations = await self._check_loan_compliance_rag_async(applicant_data, loan_type)
+                    violations.extend(loan_violations)
+                elif request_type == "insurance":
+                    insurance_violations = await self._check_insurance_compliance_rag_async(applicant_data)
+                    violations.extend(insurance_violations)
+            else:
+                # Fall back to sync rule-based checking
+                if request_type in ["loan", "both"]:
+                    loan_violations = self._check_loan_compliance_rules(applicant_data, loan_type)
+                    violations.extend(loan_violations)
+                
+                if request_type in ["insurance", "both"]:
+                    insurance_violations = self._check_insurance_compliance_rules(applicant_data)
+                    violations.extend(insurance_violations)
+            
+            # Update state
+            state["compliance_checked"] = True
+            state["compliance_violations"] = violations
+            
+            # Determine if compliance passed (only CRITICAL violations cause rejection)
+            critical_violations = [v for v in violations if v.get("severity") == "CRITICAL"]
+            
+            if critical_violations:
+                state["compliance_passed"] = False
+                state["rejected"] = True
+                state["rejection_reason"] = self._format_rejection_reason(critical_violations)
+            else:
+                state["compliance_passed"] = True
+            
+            duration_ms = (time.time() - start_time) * 1000
+            log_agent_execution("ComplianceAgent", request_id, "completed (async)", duration_ms)
+        
+        except Exception as e:
+            error_msg = f"Async compliance check error: {str(e)}"
+            state["errors"].append(error_msg)
+            log_error("compliance", error_msg, request_id)
+            
+            # Default to passing on error (fail-open for availability)
+            state["compliance_checked"] = True
+            state["compliance_passed"] = True
+            state["compliance_violations"] = []
+            
+            duration_ms = (time.time() - start_time) * 1000
+            log_agent_execution("ComplianceAgent", request_id, "failed (async)", duration_ms)
+        
+        return state
+    
     def _check_loan_compliance(self, data: Dict[str, Any], loan_type: str) -> List[Dict[str, str]]:
         """
         Check loan application against USDA/banking rules.
@@ -278,6 +370,73 @@ IMPORTANT: Only flag actual violations. If data is "Not provided", do not flag a
         
         except Exception as e:
             logging.error(f"RAG compliance check failed: {e}")
+            return []
+    
+    async def _check_loan_compliance_rag_async(self, data: Dict[str, Any], loan_type: str) -> List[Dict[str, str]]:
+        """
+        Check loan compliance using RAG asynchronously.
+        
+        Args:
+            data: Applicant data
+            loan_type: Type of loan
+            
+        Returns:
+            List of violations
+        """
+        try:
+            # Retrieve relevant rules
+            query = f"What are the eligibility requirements for {loan_type} loan approval? Include credit score, income, debt, age requirements."
+            relevant_docs = self.rules_db.similarity_search(query, k=5)
+            
+            # Format rules for prompt
+            rules_text = "\n\n".join([doc.page_content for doc in relevant_docs])
+            
+            # Create prompt for LLM
+            prompt = f"""You are a regulatory compliance officer checking a loan application against USDA rules.
+
+Loan Type: {loan_type}
+
+Applicant Data:
+- CIBIL Score: {data.get('cibil_score', 'Not provided')}
+- Annual Income: ₹{data.get('annual_income', data.get('income_annum', 'Not provided'))}
+- Loan Amount: ₹{data.get('loan_amount', 'Not provided')}
+- Existing Debt: ₹{data.get('existing_debt', 'Not provided')}
+- Age: {data.get('age', 'Not provided')}
+- Employment Type: {data.get('employment_type', 'Not provided')}
+- Employment Years: {data.get('employment_years', 'Not provided')}
+
+Relevant Regulatory Rules:
+{rules_text}
+
+Task: Identify any CRITICAL or HIGH severity violations. For each violation, provide:
+1. Rule violated (exact rule number if available)
+2. Reason for violation (be specific)
+3. Severity (CRITICAL or HIGH only)
+
+Return as JSON array: [{{"rule": "...", "reason": "...", "severity": "CRITICAL|HIGH"}}]
+If no CRITICAL or HIGH violations, return empty array: []
+
+IMPORTANT: Only flag actual violations. If data is "Not provided", do not flag as violation unless the rule explicitly requires it.
+"""
+            
+            response = await self.llm.ainvoke(prompt)
+            response_content = response.content
+            
+            # Parse JSON response
+            import json
+            import re
+            
+            # Extract JSON from response
+            json_match = re.search(r'\[.*\]', response_content, re.DOTALL)
+            if json_match:
+                violations_data = json.loads(json_match.group())
+                return violations_data
+            else:
+                logging.warning(f"Could not parse LLM response: {response_content[:100]}")
+                return []
+        
+        except Exception as e:
+            logging.error(f"Async RAG compliance check failed: {e}")
             return []
     
     def _check_loan_compliance_rules(self, data: Dict[str, Any], loan_type: str) -> List[Dict[str, str]]:
@@ -424,6 +583,71 @@ IMPORTANT: Only flag actual violations. If data is "Not provided", do not flag a
         
         except Exception as e:
             logging.error(f"RAG compliance check failed: {e}")
+            return []
+    
+    async def _check_insurance_compliance_rag_async(self, data: Dict[str, Any]) -> List[Dict[str, str]]:
+        """
+        Check insurance compliance using RAG asynchronously.
+        
+        Args:
+            data: Applicant data
+            
+        Returns:
+            List of violations
+        """
+        try:
+            # Retrieve relevant rules
+            query = "What are the eligibility requirements for health insurance? Include age, BMI, pre-existing conditions, smoking status."
+            relevant_docs = self.rules_db.similarity_search(query, k=5)
+            
+            # Format rules for prompt
+            rules_text = "\n\n".join([doc.page_content for doc in relevant_docs])
+            
+            # Create prompt for LLM
+            prompt = f"""You are an IRDAI compliance officer checking a health insurance application.
+
+Applicant Data:
+- Age: {data.get('age', 'Not provided')}
+- BMI: {data.get('bmi', 'Not provided')}
+- Smoker: {data.get('smoker', 'Not provided')}
+- Pre-existing Conditions: {data.get('pre_existing_conditions', 'Not provided')}
+- Blood Pressure: {'High' if data.get('bloodpressure') == 1 else 'Normal' if data.get('bloodpressure') == 0 else 'Not provided'}
+- Diabetes: {'Yes' if data.get('diabetes') == 1 else 'No' if data.get('diabetes') == 0 else 'Not provided'}
+- HbA1c: {data.get('hba1c', 'Not provided')}%
+- Coverage Amount: ₹{data.get('coverage_amount', 'Not provided')}
+
+Relevant IRDAI Rules:
+{rules_text}
+
+Task: Identify any CRITICAL or HIGH severity violations. For each violation, provide:
+1. Rule violated (exact rule number if available)
+2. Reason for violation (be specific)
+3. Severity (CRITICAL or HIGH only)
+
+Return as JSON array: [{{"rule": "...", "reason": "...", "severity": "CRITICAL|HIGH"}}]
+If no CRITICAL or HIGH violations, return empty array: []
+
+IMPORTANT: Only flag actual violations. If data is "Not provided", do not flag as violation unless the rule explicitly requires it.
+"""
+            
+            response = await self.llm.ainvoke(prompt)
+            response_content = response.content
+            
+            # Parse JSON response
+            import json
+            import re
+            
+            # Extract JSON from response
+            json_match = re.search(r'\[.*\]', response_content, re.DOTALL)
+            if json_match:
+                violations_data = json.loads(json_match.group())
+                return violations_data
+            else:
+                logging.warning(f"Could not parse LLM response: {response_content[:100]}")
+                return []
+        
+        except Exception as e:
+            logging.error(f"Async RAG compliance check failed: {e}")
             return []
     
     def _check_insurance_compliance_rules(self, data: Dict[str, Any]) -> List[Dict[str, str]]:

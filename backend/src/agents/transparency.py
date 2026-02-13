@@ -3,8 +3,10 @@ Transparency Agent with Groq integration.
 
 This module implements explanation generation using Groq LLM and
 deterministic fallbacks based on feature contributions.
+Includes async support for improved performance.
 """
 
+import asyncio
 from typing import Dict, Any, List, Tuple
 import logging
 
@@ -97,6 +99,64 @@ class TransparencyAgent:
 		except Exception as exc:
 			logger.warning(f"Transparency LLM failed, using fallback: {exc}")
 			return fallback
+	
+	async def _run_llm_or_fallback_async(self, prompt: str, fallback: str) -> str:
+		"""Async version: Invoke LLM, fallback to deterministic explanation on failure."""
+		try:
+			response = await self.llm.ainvoke(prompt)
+			content = getattr(response, "content", "") if response is not None else ""
+			return content.strip() or fallback
+		except Exception as exc:
+			logger.warning(f"Transparency LLM failed (async), using fallback: {exc}")
+			return fallback
+	
+	async def explain_loan_decision_async(self, state: ApplicationState) -> ApplicationState:
+		"""Async version: Generate explanation for loan decision."""
+		prediction = state.get("loan_prediction") or {}
+		reasoning = prediction.get("reasoning") or {}
+
+		approved = bool(prediction.get("approved"))
+		probability = float(prediction.get("probability", 0.0))
+
+		top_factors = self._format_top_factors(reasoning)
+		decision_text = "APPROVED" if approved else "REJECTED"
+
+		prompt = self.LOAN_PROMPT.format(
+			decision=decision_text,
+			probability=f"{probability:.2%}",
+			factors=top_factors
+		)
+
+		explanation = await self._run_llm_or_fallback_async(
+			prompt,
+			fallback=self._fallback_loan_explanation(approved, probability, top_factors)
+		)
+
+		explanation = self._validate_explanation(explanation)
+		state["loan_explanation"] = explanation
+		return state
+	
+	async def explain_insurance_premium_async(self, state: ApplicationState) -> ApplicationState:
+		"""Async version: Generate explanation for insurance premium."""
+		prediction = state.get("insurance_prediction") or {}
+		reasoning = prediction.get("reasoning") or {}
+
+		premium = float(prediction.get("premium", 0.0))
+		top_factors = self._format_top_factors(reasoning)
+
+		prompt = self.INSURANCE_PROMPT.format(
+			premium=f"Rs {premium:,.2f}",
+			factors=top_factors
+		)
+
+		explanation = await self._run_llm_or_fallback_async(
+			prompt,
+			fallback=self._fallback_insurance_explanation(premium, top_factors)
+		)
+
+		explanation = self._validate_explanation(explanation)
+		state["insurance_explanation"] = explanation
+		return state
 
 	def _format_top_factors(self, reasoning: Dict[str, float]) -> str:
 		"""Sort and format top feature contributions for prompting."""
@@ -152,4 +212,32 @@ def generate_transparency(state: ApplicationState) -> ApplicationState:
 	if request_type in ["insurance", "both"] and state.get("insurance_prediction"):
 		state = agent.explain_insurance_premium(state)
 
+	return state
+
+
+async def generate_transparency_async(state: ApplicationState) -> ApplicationState:
+	"""
+	Async convenience function for workflow integration with parallel LLM calls.
+	"""
+	agent = TransparencyAgent()
+	request_type = state.get("request_type", "both")
+
+	tasks = []
+	
+	if request_type in ["loan", "both"] and state.get("loan_prediction"):
+		tasks.append(agent.explain_loan_decision_async(state.copy()))
+	
+	if request_type in ["insurance", "both"] and state.get("insurance_prediction"):
+		tasks.append(agent.explain_insurance_premium_async(state.copy()))
+	
+	if tasks:
+		# Run explanations in parallel
+		results = await asyncio.gather(*tasks)
+		# Merge results back into state
+		for result in results:
+			if "loan_explanation" in result:
+				state["loan_explanation"] = result["loan_explanation"]
+			if "insurance_explanation" in result:
+				state["insurance_explanation"] = result["insurance_explanation"]
+	
 	return state

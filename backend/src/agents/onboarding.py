@@ -67,6 +67,7 @@ class OnboardingAgent:
             
             extracted_data = {}
             verification_status = {}
+            ocr_confidence_scores = {}  # Track OCR confidence per document
             
             # Process each document
             for doc in uploaded_docs:
@@ -74,15 +75,28 @@ class OnboardingAgent:
                 if not doc_path:
                     continue
                 
-                # Extract text and classify
+                # Extract text and classify with confidence scoring
                 result = self.ocr_service.process_document(
                     doc_path,
                     preprocess=True,
-                    classify=True
+                    classify=True,
+                    include_confidence=True  # Enable confidence scoring
                 )
                 
                 doc_type = result.get("document_type", "unknown")
                 text = result.get("text", "")
+                confidence = result.get("confidence")
+                
+                # Log confidence scores
+                if confidence is not None:
+                    ocr_confidence_scores[doc_type] = confidence
+                    if confidence < 60:
+                        logger.warning(
+                            f"Low OCR confidence for {doc_type}: {confidence:.1f}% - "
+                            f"extracted data may be inaccurate"
+                        )
+                    else:
+                        logger.info(f"OCR confidence for {doc_type}: {confidence:.1f}%")
                 
                 # Extract fields based on request type
                 if request_type in ["loan", "both"]:
@@ -98,9 +112,10 @@ class OnboardingAgent:
                     doc_type, text
                 )
             
-            # Update state with extracted data
+            # Update state with extracted data and confidence scores
             state["extracted_data"] = extracted_data
             state["document_verification"] = verification_status
+            state["ocr_confidence_scores"] = ocr_confidence_scores  # Add confidence tracking
             
             # Merge extracted data with applicant_data (don't overwrite existing)
             for key, value in extracted_data.items():
