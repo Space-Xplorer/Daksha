@@ -554,6 +554,9 @@ def get_workflow_results(app_id):
             # Supervisor Decision
             'supervisor': final_state.get('supervisor_decision'),
             
+            # OCR Confidence Scores
+            'ocr_confidence_scores': final_state.get('ocr_confidence_scores', {}),
+            
             # Errors
             'errors': final_state.get('errors', []),
 

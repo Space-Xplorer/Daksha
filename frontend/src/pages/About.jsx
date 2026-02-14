@@ -25,26 +25,26 @@ const About = () => {
   ];
 
   return (
-    <div className="px-12 py-20 max-w-6xl mx-auto animate-in fade-in duration-1000">
+    <div className="px-8 py-10 max-w-6xl mx-auto animate-in fade-in duration-1000">
       
       {/* --- HERO SECTION --- */}
-      <div className="text-center mb-32 relative">
+      <div className="text-center mb-20 relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-[#F4C2C2]/10 blur-[100px] -z-10" />
         <span className="text-[10px] font-black text-[#4B0082] bg-[#F4C2C2] px-4 py-1 rounded-full uppercase tracking-[0.3em] mb-8 inline-block shadow-sm">
           The Genesis
         </span>
-        <h2 className="text-[7vw] lg:text-[5vw] font-black text-[#4B0082] tracking-tighter italic leading-none mb-8">
+        <h2 className="text-[6.5vw] lg:text-[4.5vw] font-black text-[#4B0082] tracking-tighter italic leading-none mb-6">
           TRUST THROUGH<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4B0082] via-[#6A0DAD] to-[#4B0082] bg-[length:200%_auto] animate-[shine_3s_linear_infinite]">EXPLAINABILITY.</span>
         </h2>
-        <p className="text-xl text-slate-500 font-medium max-w-3xl mx-auto leading-relaxed">
+        <p className="text-lg text-slate-500 font-medium max-w-3xl mx-auto leading-relaxed">
           Daksha started as a challenge: Could we make AI as transparent as a human auditor? Today, it’s a multi-agent framework designed to protect and empower the Indian consumer.
         </p>
       </div>
 
       {/* --- MISSION CORE --- */}
-      <div className="grid lg:grid-cols-3 gap-8 mb-40">
+      <div className="grid lg:grid-cols-3 gap-8 mb-24">
         {values.map((val, i) => (
-          <GlassCard key={i} className="p-10 border-b-8 border-[#4B0082]/10 hover:border-[#4B0082] transition-all duration-500 group">
+          <GlassCard key={i} className="p-8 border-b-8 border-[#4B0082]/10 hover:border-[#4B0082] transition-all duration-500 group">
             <div className="w-14 h-14 bg-[#4B0082] rounded-2xl flex items-center justify-center mb-8 shadow-lg group-hover:rotate-6 transition-transform">
               {val.icon}
             </div>
@@ -57,13 +57,13 @@ const About = () => {
       </div>
 
       {/* --- THE STUDENT VISION (Personal Touch) --- */}
-      <div className="grid lg:grid-cols-2 gap-20 items-center mb-40">
+      <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
         <div className="relative">
            <div className="absolute -inset-4 bg-[#F4C2C2]/20 rounded-[4rem] blur-2xl rotate-3" />
-           <div className="brinjal-gradient rounded-[3.5rem] p-12 text-[#F4C2C2] relative overflow-hidden">
+           <div className="brinjal-gradient rounded-[3.5rem] p-8 text-[#F4C2C2] relative overflow-hidden">
               <Code2 size={40} className="mb-8 opacity-50" />
-              <h3 className="text-3xl font-black italic mb-6 text-white">Built by Engineers,<br />for the People.</h3>
-              <p className="text-lg font-medium leading-relaxed opacity-90 text-pink-50 mb-8">
+              <h3 className="text-2xl font-black italic mb-4 text-white">Built by Engineers,<br />for the People.</h3>
+              <p className="text-base font-medium leading-relaxed opacity-90 text-pink-50 mb-6">
                 "We didn't just want to build another model. We wanted to build a 'Guardian' (Daksha) that stands between the user and the complexities of modern underwriting."
               </p>
               <div className="flex items-center gap-4">
@@ -76,8 +76,8 @@ const About = () => {
            </div>
         </div>
         <div>
-           <h3 className="text-4xl font-black text-[#4B0082] italic tracking-tighter mb-8 underline decoration-[#F4C2C2] underline-offset-8">Why EBM?</h3>
-           <p className="text-slate-500 font-medium mb-8 leading-relaxed">
+            <h3 className="text-3xl font-black text-[#4B0082] italic tracking-tighter mb-6 underline decoration-[#F4C2C2] underline-offset-8">Why EBM?</h3>
+            <p className="text-slate-500 font-medium mb-6 leading-relaxed">
               Standard neural networks are 'Black Boxes'. If they reject you, nobody knows why. We chose **Explainable Boosting Machines (EBM)** because they are 'Glass Boxes' by nature. 
            </p>
            <ul className="space-y-4">
@@ -96,8 +96,8 @@ const About = () => {
       </div>
 
       {/* --- ROADMAP / TIMELINE --- */}
-      <div className="text-center mb-20">
-        <h3 className="text-3xl font-black text-[#4B0082] italic mb-16 uppercase tracking-widest">Our Evolution</h3>
+      <div className="text-center mb-16">
+        <h3 className="text-3xl font-black text-[#4B0082] italic mb-10 uppercase tracking-widest">Our Evolution</h3>
         <div className="grid md:grid-cols-4 gap-4 relative">
           <div className="absolute top-1/2 left-0 w-full h-0.5 bg-slate-100 -z-10 hidden md:block" />
           {[
@@ -106,7 +106,7 @@ const About = () => {
             { label: "Agentic Integration", date: "Phase 3" },
             { label: "Nexus Launch", date: "Current" }
           ].map((item, i) => (
-            <div key={i} className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+            <div key={i} className="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                <p className="text-[9px] font-black text-[#F4C2C2] uppercase mb-2">{item.date}</p>
                <p className="text-xs font-black text-[#4B0082] uppercase">{item.label}</p>
             </div>
@@ -115,11 +115,11 @@ const About = () => {
       </div>
 
       {/* --- CALL TO ACTION --- */}
-      <GlassCard className="p-16 text-center border-t-8 border-[#F4C2C2]">
+      <GlassCard className="p-10 text-center border-t-8 border-[#F4C2C2]">
          <Heart className="text-[#4B0082] mx-auto mb-8 animate-pulse" fill="#F4C2C2" size={40} />
-         <h3 className="text-4xl font-black text-[#4B0082] italic tracking-tighter mb-6 uppercase">Ready to join the Mission?</h3>
+        <h3 className="text-3xl font-black text-[#4B0082] italic tracking-tighter mb-4 uppercase">Ready to join the Mission?</h3>
          <div className="flex justify-center gap-6">
-            <button onClick={() => window.scrollTo(0,0)} className="brinjal-gradient text-[#F4C2C2] border-2 border-[#4B0082] px-10 py-5 rounded-full font-black uppercase tracking-widest text-xs shadow-xl">
+          <button onClick={() => window.scrollTo(0,0)} className="brinjal-gradient text-[#F4C2C2] border-2 border-[#4B0082] px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs shadow-xl">
                Back to Top
             </button>
             <button className="text-[10px] font-black uppercase tracking-[0.4em] text-[#4B0082] flex items-center gap-2 hover:gap-4 transition-all">

@@ -71,8 +71,8 @@ const Upload = () => {
     .every((doc) => uploadedDocs[doc.label]);
 
   return (
-    <div className="max-w-3xl mx-auto py-10 px-6 animate-in fade-in">
-      <div className="flex items-center gap-4 mb-10">
+    <div className="max-w-3xl mx-auto py-6 px-6 animate-in fade-in">
+      <div className="flex items-center gap-4 mb-6">
         <button onClick={() => setView('selection')} className="p-3 bg-white rounded-2xl text-[#4B0082] shadow-sm"><ArrowLeft size={20} /></button>
         <h2 className="text-3xl font-black text-[#4B0082] italic tracking-tighter">Vault: {service === 'loan' ? 'Loan Quest' : 'Life Quest'}</h2>
       </div>
@@ -84,9 +84,9 @@ const Upload = () => {
         </div>
       ) : null}
 
-      <div className="space-y-4 mb-12">
+      <div className="space-y-4 mb-8">
         {currentDocs.map((doc, i) => (
-          <div key={i} className="flex items-center justify-between p-6 glass-card rounded-3xl">
+          <div key={i} className="flex items-center justify-between p-4 glass-card rounded-3xl">
             <div className="flex items-center gap-4">
               <FileText className="text-[#4B0082]" size={20} />
               <div>
@@ -146,7 +146,7 @@ const Upload = () => {
           }
         }}
         disabled={!isComplete || ocrLoading}
-        className={`w-full py-8 brinjal-gradient text-white rounded-[2.5rem] font-black uppercase tracking-widest shadow-2xl flex items-center justify-center gap-3 ${
+        className={`w-full py-6 brinjal-gradient text-white rounded-[2.5rem] font-black uppercase tracking-widest shadow-2xl flex items-center justify-center gap-3 ${
           ocrLoading ? 'opacity-100' : 'disabled:opacity-30'
         }`}
       >

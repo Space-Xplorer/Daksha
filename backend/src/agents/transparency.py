@@ -22,121 +22,120 @@ class TransparencyAgent:
 	Generates user-friendly explanations for loan and insurance decisions.
 	"""
 
-	LOAN_PROMPT = (
-		"You are a finance underwriter writing a clear, empathetic explanation.\n"
-		"Use the provided top factors. Avoid policy, legal, or sensitive attributes.\n\n"
+	# Advisor = Friendly LLM explanation
+	LOAN_ADVISOR_PROMPT = (
+		"You are Daksha, a friendly AI financial advisor. Provide helpful, actionable guidance.\n\n"
 		"Decision: {decision}\n"
 		"Approval Probability: {probability}\n"
-		"Top Factors (name: contribution):\n{factors}\n\n"
-		"Write 3-5 short sentences in plain language."
+		"Top Contributing Factor: {insight}\n\n"
+		"Write 3-5 conversational sentences that:\n"
+		"- If probability < 70%: Give 2-3 specific improvement tips (e.g., 'Boost your credit score to 750+', 'Lower debt-to-income below 40%')\n"
+		"- If probability >= 70%: Congratulate and explain what made the application strong\n"
+		"Be warm, empathetic, and actionable. Avoid jargon."
 	)
 
-	LOAN_DESCRIPTION_PROMPT = (
-		"You are Daksha, an AI financial advisor. Provide a concise, actionable summary.\n"
-		"Decision: {decision}\n"
-		"Approval Probability: {probability}\n"
-		"Key Factor: {insight}\n\n"
-		"If probability < 70%, provide 2-3 specific improvement suggestions (e.g., 'Consider improving credit score to 750+' or 'Reduce loan-to-income ratio below 40%').\n"
-		"If probability >= 70%, explain what made this application strong in 2-3 sentences.\n"
-		"Be conversational and actionable."
+	# Description = Simple factual model output (deterministic)
+	# This is generated deterministically, not via LLM
+
+	# Advisor = Friendly LLM explanation
+	INSURANCE_ADVISOR_PROMPT = (
+		"You are Daksha, a friendly AI health advisor. Provide helpful, actionable guidance.\n\n"
+		"Premium: Rs {premium}\n"
+		"Top Contributing Factor: {insight}\n\n"
+		"Write 3-5 conversational sentences that:\n"
+		"- Start with a friendly tone like 'Great news!' or 'Your premium has been calculated'\n"
+		"- Explain the key factor affecting the premium in simple terms\n"
+		"- Give 1-2 actionable tips to reduce future premiums (e.g., 'Regular checkups', 'Exercise 3x/week', 'Quit smoking')\n"
+		"Be warm, empathetic, and encouraging. Avoid medical jargon."
 	)
 
-	INSURANCE_PROMPT = (
-		"You are a health insurance underwriter writing a clear, empathetic explanation.\n"
-		"Use the provided top factors. Avoid policy, legal, or sensitive attributes.\n\n"
-		"Premium: {premium}\n"
-		"Top Factors (name: contribution):\n{factors}\n\n"
-		"Write 3-5 short sentences in plain language."
-	)
-
-	INSURANCE_DESCRIPTION_PROMPT = (
-		"You are Daksha, an AI health advisor. Provide a concise premium summary.\n"
-		"Premium Amount: Rs {premium}\n"
-		"Key Factor: {insight}\n\n"
-		"Start by clearly stating 'Your premium is Rs {premium}' then explain in 2-3 sentences why this premium was calculated.\n"
-		"Include actionable tips to potentially reduce premiums (e.g., 'Regular health checkups could reduce future premiums by 10-15%').\n"
-		"Be conversational and helpful."
-	)
+	# Description = Simple factual model output (deterministic)
+	# This is generated deterministically, not via LLM
 
 	def __init__(self) -> None:
-		self.llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0.2)
+		# Use lighter model for faster processing and higher rate limits
+		self.llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.3)
 
 	def explain_loan_decision(self, state: ApplicationState) -> ApplicationState:
-		"""Generate explanation for loan decision."""
+		"""Generate explanation and description for loan decision."""
 		prediction = state.get("loan_prediction") or {}
 		model_output = (state.get("model_output") or {}).get("loan", {})
 		reasoning = model_output.get("feature_contributions") or prediction.get("reasoning") or {}
 
 		approved = bool(prediction.get("approved"))
 		probability = float(prediction.get("probability", 0.0))
-
-		top_factors = self._format_top_factors(reasoning)
 		decision_text = "APPROVED" if approved else "REJECTED"
+		
+		top_factors = self._format_top_factors(reasoning, top_k=3)
+		top_factor_names = self._top_contributors(reasoning, top_k=1)
+		insight = top_factor_names[0][0] if top_factor_names else "overall financial profile"
 
-		prompt = self.LOAN_PROMPT.format(
+		# EXPLANATION = Friendly LLM advisory (for Daksha Advisor)
+		advisor_prompt = self.LOAN_ADVISOR_PROMPT.format(
 			decision=decision_text,
-			probability=f"{probability:.2%}",
-			factors=top_factors
-		)
-
-		explanation = self._run_llm_or_fallback(
-			prompt,
-			fallback=self._fallback_loan_explanation(approved, probability, top_factors)
-		)
-
-		explanation = self._validate_explanation(explanation)
-		state["loan_explanation"] = explanation
-
-		# Generate description (separate from explanation)
-		top_factor_name = self._top_contributors(reasoning, top_k=1)
-		insight = top_factor_name[0][0] if top_factor_name else "overall financial profile"
-		description_prompt = self.LOAN_DESCRIPTION_PROMPT.format(
-			decision=decision_text,
-			probability=f"{probability:.2%}",
+			probability=f"{probability:.1%}",
 			insight=insight
 		)
-		description = self._run_llm_or_fallback(
-			description_prompt,
-			fallback=f"This {decision_text.lower()} decision is primarily influenced by {insight} with {probability:.0%} confidence."
+		explanation = self._run_llm_or_fallback(
+			advisor_prompt,
+			fallback=self._fallback_loan_advisor(approved, probability, insight)
 		)
-		state["loan_description"] = self._validate_explanation(description)
+		validated = self._sanitize_advisor_text(self._validate_explanation(explanation))
+		state["loan_explanation"] = validated
+		state["loan_description"] = validated
+		
 		return state
+	
+	def _generate_loan_description(self, decision: str, probability: float, factors: str) -> str:
+		"""Generate deterministic factual description of model decision."""
+		return (
+			f"Model Decision: {decision} with {probability:.1%} confidence.\\n\\n"
+			f"Top Contributing Factors:\\n{factors}"
+		)
+
+	def _sanitize_advisor_text(self, text: str) -> str:
+		"""Remove question-style sentences and keep the tone declarative."""
+		if not text:
+			return text
+		sentences = [s.strip() for s in text.replace("\n", " ").split(".") if s.strip()]
+		filtered = [s for s in sentences if not s.endswith("?")]
+		if not filtered:
+			return text
+		return ". ".join(filtered).strip() + "."
 
 	def explain_insurance_premium(self, state: ApplicationState) -> ApplicationState:
-		"""Generate explanation for insurance premium."""
+		"""Generate explanation and description for insurance premium."""
 		prediction = state.get("insurance_prediction") or {}
 		model_output = (state.get("model_output") or {}).get("insurance", {})
 		reasoning = model_output.get("feature_contributions") or prediction.get("reasoning") or {}
 
 		premium = float(prediction.get("premium", 0.0))
-		top_factors = self._format_top_factors(reasoning)
+		
+		top_factors = self._format_top_factors(reasoning, top_k=3)
+		top_factor_names = self._top_contributors(reasoning, top_k=1)
+		insight = top_factor_names[0][0] if top_factor_names else "overall health profile"
 
-		prompt = self.INSURANCE_PROMPT.format(
-			premium=f"Rs {premium:,.2f}",
-			factors=top_factors
-		)
-
-		explanation = self._run_llm_or_fallback(
-			prompt,
-			fallback=self._fallback_insurance_explanation(premium, top_factors)
-		)
-
-		explanation = self._validate_explanation(explanation)
-		state["insurance_explanation"] = explanation
-
-		# Generate description (separate from explanation)
-		top_factor_name = self._top_contributors(reasoning, top_k=1)
-		insight = top_factor_name[0][0] if top_factor_name else "overall health profile"
-		description_prompt = self.INSURANCE_DESCRIPTION_PROMPT.format(
-			premium=f"Rs {premium:,.2f}",
+		# EXPLANATION = Friendly LLM advisory (for Daksha Advisor)
+		advisor_prompt = self.INSURANCE_ADVISOR_PROMPT.format(
+			premium=f"{premium:,.0f}",
 			insight=insight
 		)
-		description = self._run_llm_or_fallback(
-			description_prompt,
-			fallback=f"Your premium of Rs {premium:,.2f} is primarily based on {insight}."
+		explanation = self._run_llm_or_fallback(
+			advisor_prompt,
+			fallback=self._fallback_insurance_advisor(premium, insight)
 		)
-		state["insurance_description"] = self._validate_explanation(description)
+		validated = self._sanitize_advisor_text(self._validate_explanation(explanation))
+		state["insurance_explanation"] = validated
+		state["insurance_description"] = validated
+		
 		return state
+	
+	def _generate_insurance_description(self, premium: float, factors: str) -> str:
+		"""Generate deterministic factual description of premium calculation."""
+		return (
+			f"Estimated Premium: Rs {premium:,.0f}\\n\\n"
+			f"Top Contributing Factors:\\n{factors}"
+		)
 
 	def _run_llm_or_fallback(self, prompt: str, fallback: str) -> str:
 		"""Invoke LLM, fallback to deterministic explanation on failure."""
@@ -159,83 +158,65 @@ class TransparencyAgent:
 			return fallback
 	
 	async def explain_loan_decision_async(self, state: ApplicationState) -> ApplicationState:
-		"""Async version: Generate explanation for loan decision."""
+		"""Async version: Generate explanation and description for loan decision."""
 		prediction = state.get("loan_prediction") or {}
-		reasoning = prediction.get("reasoning") or {}
+		model_output = (state.get("model_output") or {}).get("loan", {})
+		reasoning = model_output.get("feature_contributions") or prediction.get("reasoning") or {}
 
 		approved = bool(prediction.get("approved"))
 		probability = float(prediction.get("probability", 0.0))
-
-		top_factors = self._format_top_factors(reasoning)
 		decision_text = "APPROVED" if approved else "REJECTED"
+		
+		top_factors = self._format_top_factors(reasoning, top_k=3)
+		top_factor_names = self._top_contributors(reasoning, top_k=1)
+		insight = top_factor_names[0][0] if top_factor_names else "overall financial profile"
 
-		prompt = self.LOAN_PROMPT.format(
+		# EXPLANATION = Friendly LLM advisory (for Daksha Advisor)
+		advisor_prompt = self.LOAN_ADVISOR_PROMPT.format(
 			decision=decision_text,
-			probability=f"{probability:.2%}",
-			factors=top_factors
-		)
-
-		explanation = await self._run_llm_or_fallback_async(
-			prompt,
-			fallback=self._fallback_loan_explanation(approved, probability, top_factors)
-		)
-
-		explanation = self._validate_explanation(explanation)
-		state["loan_explanation"] = explanation
-
-		# Generate description (separate from explanation)
-		top_factor_name = self._top_contributors(reasoning, top_k=1)
-		insight = top_factor_name[0][0] if top_factor_name else "overall financial profile"
-		description_prompt = self.LOAN_DESCRIPTION_PROMPT.format(
-			decision=decision_text,
-			probability=f"{probability:.2%}",
+			probability=f"{probability:.1%}",
 			insight=insight
 		)
-		description = await self._run_llm_or_fallback_async(
-			description_prompt,
-			fallback=f"This {decision_text.lower()} decision is primarily influenced by {insight} with {probability:.0%} confidence."
+		explanation = await self._run_llm_or_fallback_async(
+			advisor_prompt,
+			fallback=self._fallback_loan_advisor(approved, probability, insight)
 		)
-		state["loan_description"] = self._validate_explanation(description)
+		validated = self._sanitize_advisor_text(self._validate_explanation(explanation))
+		state["loan_explanation"] = validated
+		state["loan_description"] = validated
+		
 		return state
 	
 	async def explain_insurance_premium_async(self, state: ApplicationState) -> ApplicationState:
-		"""Async version: Generate explanation for insurance premium."""
+		"""Async version: Generate explanation and description for insurance premium."""
 		prediction = state.get("insurance_prediction") or {}
-		reasoning = prediction.get("reasoning") or {}
+		model_output = (state.get("model_output") or {}).get("insurance", {})
+		reasoning = model_output.get("feature_contributions") or prediction.get("reasoning") or {}
 
 		premium = float(prediction.get("premium", 0.0))
-		top_factors = self._format_top_factors(reasoning)
+		
+		top_factors = self._format_top_factors(reasoning, top_k=3)
+		top_factor_names = self._top_contributors(reasoning, top_k=1)
+		insight = top_factor_names[0][0] if top_factor_names else "overall health profile"
 
-		prompt = self.INSURANCE_PROMPT.format(
-			premium=f"Rs {premium:,.2f}",
-			factors=top_factors
-		)
-
-		explanation = await self._run_llm_or_fallback_async(
-			prompt,
-			fallback=self._fallback_insurance_explanation(premium, top_factors)
-		)
-
-		explanation = self._validate_explanation(explanation)
-		state["insurance_explanation"] = explanation
-
-		# Generate description (separate from explanation)
-		top_factor_name = self._top_contributors(reasoning, top_k=1)
-		insight = top_factor_name[0][0] if top_factor_name else "overall health profile"
-		description_prompt = self.INSURANCE_DESCRIPTION_PROMPT.format(
-			premium=f"Rs {premium:,.2f}",
+		# EXPLANATION = Friendly LLM advisory (for Daksha Advisor)
+		advisor_prompt = self.INSURANCE_ADVISOR_PROMPT.format(
+			premium=f"{premium:,.0f}",
 			insight=insight
 		)
-		description = await self._run_llm_or_fallback_async(
-			description_prompt,
-			fallback=f"Your premium of Rs {premium:,.2f} is primarily based on {insight}."
+		explanation = await self._run_llm_or_fallback_async(
+			advisor_prompt,
+			fallback=self._fallback_insurance_advisor(premium, insight)
 		)
-		state["insurance_description"] = self._validate_explanation(description)
+		validated = self._sanitize_advisor_text(self._validate_explanation(explanation))
+		state["insurance_explanation"] = validated
+		state["insurance_description"] = validated
+		
 		return state
 
-	def _format_top_factors(self, reasoning: Dict[str, float]) -> str:
+	def _format_top_factors(self, reasoning: Dict[str, float], top_k: int = 5) -> str:
 		"""Sort and format top feature contributions for prompting."""
-		top_items = self._top_contributors(reasoning, top_k=5)
+		top_items = self._top_contributors(reasoning, top_k=top_k)
 		if not top_items:
 			return "- No strong factors were identified."
 
@@ -248,20 +229,29 @@ class TransparencyAgent:
 		items.sort(key=lambda x: abs(x[1]), reverse=True)
 		return items[:top_k]
 
-	def _fallback_loan_explanation(self, approved: bool, probability: float, factors: str) -> str:
-		"""Deterministic fallback for loan explanations."""
-		status = "approved" if approved else "not approved"
-		return (
-			f"Your loan request was {status} based on the information provided. "
-			f"The model's confidence was {probability:.2%}. "
-			f"Key factors considered were:\n{factors}"
-		)
+	def _fallback_loan_advisor(self, approved: bool, probability: float, insight: str) -> str:
+		"""Friendly fallback for loan advisory when LLM fails."""
+		if approved and probability >= 0.7:
+			return (
+				f"Congratulations! Your application looks strong with {probability:.0%} approval probability. "
+				f"The main positive factor is your {insight}. Keep up the good financial habits!"
+			)
+		elif probability < 0.5:
+			return (
+				f"Your application needs improvement for better chances. The key area to focus on is {insight}. "
+				f"Consider building this up over the next few months and reapplying."
+			)
+		else:
+			return (
+				f"Your application is borderline with {probability:.0%} approval probability. "
+				f"Strengthening your {insight} could tip the decision in your favor."
+			)
 
-	def _fallback_insurance_explanation(self, premium: float, factors: str) -> str:
-		"""Deterministic fallback for insurance explanations."""
+	def _fallback_insurance_advisor(self, premium: float, insight: str) -> str:
+		"""Friendly fallback for insurance advisory when LLM fails."""
 		return (
-			f"Your estimated premium is Rs {premium:,.2f} based on the information provided. "
-			f"Key factors considered were:\n{factors}"
+			f"Your premium is Rs {premium:,.0f}. The main factor influencing this is your {insight}. "
+			f"To potentially reduce future premiums, consider regular health checkups and maintaining a healthy lifestyle."
 		)
 
 	def _validate_explanation(self, text: str) -> str:

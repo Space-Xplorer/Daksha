@@ -208,7 +208,7 @@ class OCRService:
         if self.groq_api_key:
             try:
                 self.llm = ChatGroq(
-                    model="llama-3.3-70b-versatile",
+                    model="openai/gpt-oss-20b",
                     temperature=0.1,
                     api_key=self.groq_api_key
                 )

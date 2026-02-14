@@ -43,8 +43,8 @@ const Preliminary = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-10 px-6 animate-in slide-in-from-bottom-10">
-      <div className="flex items-center gap-4 mb-10">
+    <div className="max-w-3xl mx-auto py-6 px-6 animate-in slide-in-from-bottom-10">
+      <div className="flex items-center gap-4 mb-6">
         <button onClick={() => setView('selection')} className="p-3 bg-white rounded-2xl text-[#4B0082] shadow-sm">
           <ArrowLeft size={20} />
         </button>
@@ -53,15 +53,15 @@ const Preliminary = () => {
         </h2>
       </div>
 
-      <GlassCard className="p-12">
-        <div className="space-y-8">
+      <GlassCard className="p-8">
+        <div className="space-y-6">
           {service === 'loan' ? (
             <div className="grid md:grid-cols-2 gap-6">
               <Field label="Loan Type" required>
                 <select
                   value={formData.loan_type || 'home'}
                   onChange={(e) => updateField('loan_type', e.target.value)}
-                  className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                  className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                 >
                   <option value="home">Home</option>
                   <option value="personal">Personal</option>
@@ -72,7 +72,7 @@ const Preliminary = () => {
                   type="number"
                   value={formData.loan_amount_requested || ''}
                   onChange={(e) => updateField('loan_amount_requested', Number(e.target.value) || '')}
-                  className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                  className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                 />
               </Field>
               <Field label="Tenure (months)" required>
@@ -80,7 +80,7 @@ const Preliminary = () => {
                   type="number"
                   value={formData.tenure_months || ''}
                   onChange={(e) => updateField('tenure_months', Number(e.target.value) || '')}
-                  className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                  className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                 />
               </Field>
               {formData.loan_type === 'home' ? (
@@ -89,7 +89,7 @@ const Preliminary = () => {
                     type="number"
                     value={formData.property_value || ''}
                     onChange={(e) => updateField('property_value', Number(e.target.value) || '')}
-                    className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                    className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                   />
                 </Field>
               ) : null}
@@ -101,7 +101,7 @@ const Preliminary = () => {
                   type="number"
                   value={formData.age || ''}
                   onChange={(e) => updateField('age', Number(e.target.value) || '')}
-                  className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                  className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                 />
               </Field>
               <Field label="City" required>
@@ -109,7 +109,7 @@ const Preliminary = () => {
                   type="text"
                   value={formData.city || ''}
                   onChange={(e) => updateField('city', e.target.value)}
-                  className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                  className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                 />
               </Field>
               <Field label="Sum Insured" required>
@@ -117,7 +117,7 @@ const Preliminary = () => {
                   type="number"
                   value={formData.sum_insured || ''}
                   onChange={(e) => updateField('sum_insured', Number(e.target.value) || '')}
-                  className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                  className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                 />
               </Field>
             </div>
@@ -131,7 +131,7 @@ const Preliminary = () => {
 
           <button
             onClick={handleContinue}
-            className="w-full py-8 brinjal-gradient text-[#533377] drop-shadow-sm rounded-4xl font-black uppercase tracking-widest shadow-xl hover:scale-[1.01] transition-all"
+            className="w-full py-6 brinjal-gradient text-[#533377] drop-shadow-sm rounded-4xl font-black uppercase tracking-widest shadow-xl hover:scale-[1.01] transition-all"
           >
             Continue to Upload
           </button>

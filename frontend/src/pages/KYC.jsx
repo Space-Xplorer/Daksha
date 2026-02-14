@@ -76,12 +76,12 @@ const KYC = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto py-20 text-center px-6 animate-in zoom-in-95">
-      <div className="w-24 h-24 bg-[#4B0082] rounded-[2.5rem] flex items-center justify-center mx-auto mb-10 pink-glow rotate-6">
+    <div className="max-w-xl mx-auto py-10 text-center px-6 animate-in zoom-in-95">
+      <div className="w-20 h-20 bg-[#4B0082] rounded-[2.5rem] flex items-center justify-center mx-auto mb-6 pink-glow rotate-6">
         <Fingerprint className="text-[#F4C2C2]" size={48} />
       </div>
-      <h2 className="text-4xl font-black text-[#4B0082] tracking-tighter mb-4 italic">Identity Quest</h2>
-      <p className="text-slate-400 mb-12 font-medium">Verify your Aadhaar to enter the Daksha Nexus.</p>
+      <h2 className="text-3xl font-black text-[#4B0082] tracking-tighter mb-3 italic">Identity Quest</h2>
+      <p className="text-slate-400 mb-8 font-medium">Verify your Aadhaar to enter the Daksha Nexus.</p>
       
       <div className="space-y-4 mb-8">
         <input
@@ -89,7 +89,7 @@ const KYC = () => {
           placeholder="Full name"
           value={userData.name}
           onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-          className="w-full bg-white/50 border-4 border-white p-5 rounded-4xl text-center text-lg font-black text-[#4B0082] outline-none focus:border-[#F4C2C2] transition-all shadow-inner"
+          className="w-full bg-white/50 border-4 border-white p-4 rounded-4xl text-center text-lg font-black text-[#4B0082] outline-none focus:border-[#F4C2C2] transition-all shadow-inner"
         />
         <input 
           type="text" 
@@ -97,7 +97,7 @@ const KYC = () => {
           maxLength="12" 
           value={userData.aadhaar}
           onChange={(e) => setUserData({ ...userData, aadhaar: e.target.value.replace(/\D/g, '') })}
-          className="w-full bg-white/50 border-4 border-white p-8 rounded-[2.5rem] text-center text-4xl font-black text-[#4B0082] outline-none focus:border-[#F4C2C2] transition-all shadow-inner" 
+          className="w-full bg-white/50 border-4 border-white p-6 rounded-[2.5rem] text-center text-3xl font-black text-[#4B0082] outline-none focus:border-[#F4C2C2] transition-all shadow-inner" 
         />
       </div>
 
@@ -112,7 +112,7 @@ const KYC = () => {
           userData.aadhaar.length < 12 ||
           !userData.name
         }
-        className="w-full py-8 brinjal-gradient text-[#533377] drop-shadow-sm rounded-4xl font-black uppercase tracking-widest shadow-xl hover:scale-[1.01] transition-all disabled:opacity-40"
+        className="w-full py-6 brinjal-gradient text-[#533377] drop-shadow-sm rounded-4xl font-black uppercase tracking-widest shadow-xl hover:scale-[1.01] transition-all disabled:opacity-40"
       >
         {isSubmitting ? 'Validating...' : 'Validate Identity'}
       </button>

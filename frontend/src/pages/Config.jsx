@@ -64,7 +64,7 @@ const Config = () => {
     setFormError('');
 
     if (service === 'loan') {
-      const requiredFields = ['age', 'gender', 'city', 'loan_type', 'loan_amount_requested', 'tenure_months', 'declared_monthly_income'];
+      const requiredFields = ['age', 'gender', 'city', 'loan_type', 'loan_amount_requested', 'tenure_months', 'declared_monthly_income', 'declared_existing_emi'];
       const missing = requiredFields.filter((field) => !formData[field] && formData[field] !== 0);
       if (missing.length) {
         setFormError('Please complete all required fields before continuing.');
@@ -90,8 +90,8 @@ const Config = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-6 animate-in slide-in-from-bottom-10">
-      <div className="flex items-center gap-4 mb-10">
+    <div className="max-w-4xl mx-auto py-6 px-6 animate-in slide-in-from-bottom-10">
+      <div className="flex items-center gap-4 mb-6">
         <button onClick={() => setView('upload')} className="p-3 bg-white rounded-2xl text-[#4B0082] shadow-sm">
           <ArrowLeft size={20} />
         </button>
@@ -100,26 +100,26 @@ const Config = () => {
         </h2>
       </div>
 
-      <GlassCard className="p-12">
-        <div className="space-y-12">
+      <GlassCard className="p-8">
+        <div className="space-y-8">
           {service === 'loan' ? (
-            <div className="space-y-10">
+            <div className="space-y-8">
               <div>
-                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-6">Personal Profile</h3>
-                <div className="grid md:grid-cols-2 gap-6">
+                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Personal Profile</h3>
+                <div className="grid md:grid-cols-2 gap-4">
                   <Field label="Age" required>
                     <input
                       type="number"
                       value={formData.age || ''}
                       onChange={(e) => updateField('age', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Gender" required>
                     <select
                       value={formData.gender || ''}
                       onChange={(e) => updateField('gender', e.target.value)}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     >
                       <option value="">Select gender</option>
                       <option value="Male">Male</option>
@@ -132,7 +132,7 @@ const Config = () => {
                       type="text"
                       value={formData.city || ''}
                       onChange={(e) => updateField('city', e.target.value)}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Marital Status">
@@ -140,14 +140,14 @@ const Config = () => {
                       type="text"
                       value={formData.marital_status || ''}
                       onChange={(e) => updateField('marital_status', e.target.value)}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Employment Type">
                     <select
                       value={formData.employment_type || 'Salaried'}
                       onChange={(e) => updateField('employment_type', e.target.value)}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     >
                       <option value="Salaried">Salaried</option>
                       <option value="Self-employed">Self-employed</option>
@@ -157,7 +157,7 @@ const Config = () => {
                     <select
                       value={formData.employer_category || 'MNC'}
                       onChange={(e) => updateField('employer_category', e.target.value)}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     >
                       <option value="Govt">Govt</option>
                       <option value="MNC">MNC</option>
@@ -170,7 +170,7 @@ const Config = () => {
                       type="number"
                       value={formData.total_work_experience || ''}
                       onChange={(e) => updateField('total_work_experience', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Current Company Tenure (years)">
@@ -178,7 +178,7 @@ const Config = () => {
                       type="number"
                       value={formData.current_company_tenure || ''}
                       onChange={(e) => updateField('current_company_tenure', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Residential Status">
@@ -186,20 +186,20 @@ const Config = () => {
                       type="text"
                       value={formData.residential_status || ''}
                       onChange={(e) => updateField('residential_status', e.target.value)}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-6">Loan Details</h3>
-                <div className="grid md:grid-cols-2 gap-6">
+                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Loan Details</h3>
+                <div className="grid md:grid-cols-2 gap-4">
                   <Field label="Loan Type" required>
                     <select
                       value={formData.loan_type || 'home'}
                       onChange={(e) => updateField('loan_type', e.target.value)}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     >
                       <option value="home">Home</option>
                       <option value="personal">Personal</option>
@@ -210,7 +210,7 @@ const Config = () => {
                       type="number"
                       value={formData.loan_amount_requested || ''}
                       onChange={(e) => updateField('loan_amount_requested', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Tenure (months)" required>
@@ -218,7 +218,7 @@ const Config = () => {
                       type="number"
                       value={formData.tenure_months || ''}
                       onChange={(e) => updateField('tenure_months', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   {formData.loan_type === 'home' ? (
@@ -253,22 +253,22 @@ const Config = () => {
               </div>
 
               <div>
-                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-6">Financial Declaration</h3>
-                <div className="grid md:grid-cols-2 gap-6">
+                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Financial Declaration</h3>
+                <div className="grid md:grid-cols-2 gap-4">
                   <Field label="Declared Monthly Income" required>
                     <input
                       type="number"
                       value={formData.declared_monthly_income || ''}
                       onChange={(e) => updateField('declared_monthly_income', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
-                  <Field label="Declared Existing EMI">
+                  <Field label="Declared Existing EMI" required>
                     <input
                       type="number"
                       value={formData.declared_existing_emi || ''}
                       onChange={(e) => updateField('declared_existing_emi', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Credit Score (mock)" required>
@@ -276,30 +276,30 @@ const Config = () => {
                       type="number"
                       value={formData.credit_score || ''}
                       onChange={(e) => updateField('credit_score', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="space-y-10">
+            <div className="space-y-8">
               <div>
-                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-6">Health Profile</h3>
-                <div className="grid md:grid-cols-2 gap-6">
+                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Health Profile</h3>
+                <div className="grid md:grid-cols-2 gap-4">
                   <Field label="Age" required>
                     <input
                       type="number"
                       value={formData.age || ''}
                       onChange={(e) => updateField('age', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Gender" required>
                     <select
                       value={formData.gender || ''}
                       onChange={(e) => updateField('gender', e.target.value)}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     >
                       <option value="">Select gender</option>
                       <option value="Male">Male</option>
@@ -312,7 +312,7 @@ const Config = () => {
                       type="text"
                       value={formData.city || ''}
                       onChange={(e) => updateField('city', e.target.value)}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Family Size">
@@ -320,7 +320,7 @@ const Config = () => {
                       type="number"
                       value={formData.family_size || ''}
                       onChange={(e) => updateField('family_size', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Height (cm)" required>
@@ -328,7 +328,7 @@ const Config = () => {
                       type="number"
                       value={formData.height || ''}
                       onChange={(e) => updateField('height', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Weight (kg)" required>
@@ -336,7 +336,7 @@ const Config = () => {
                       type="number"
                       value={formData.weight || ''}
                       onChange={(e) => updateField('weight', Number(e.target.value) || '')}
-                      className="w-full bg-[#FAF9F6] p-6 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
+                      className="w-full bg-[#FAF9F6] p-4 rounded-3xl outline-none focus:ring-2 ring-[#F4C2C2] font-bold text-[#4B0082]"
                     />
                   </Field>
                   <Field label="Smoker">
@@ -364,8 +364,8 @@ const Config = () => {
               </div>
 
               <div>
-                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-6">Medical History</h3>
-                <div className="grid md:grid-cols-2 gap-6">
+                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Medical History</h3>
+                <div className="grid md:grid-cols-2 gap-4">
                   <Field label="Pre-existing Diseases">
                     <div className="grid grid-cols-2 gap-3">
                       {pedOptions.map((option) => (
@@ -393,8 +393,8 @@ const Config = () => {
               </div>
 
               <div>
-                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-6">Coverage</h3>
-                <div className="grid md:grid-cols-2 gap-6">
+                <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Coverage</h3>
+                <div className="grid md:grid-cols-2 gap-4">
                   <Field label="Sum Insured" required>
                     <input
                       type="number"
@@ -424,7 +424,7 @@ const Config = () => {
 
           <button
             onClick={handleNext}
-            className="w-full py-8 brinjal-gradient text-[#533377] drop-shadow-sm rounded-4xl font-black uppercase tracking-widest shadow-xl hover:scale-[1.01] transition-all"
+            className="w-full py-6 brinjal-gradient text-[#533377] drop-shadow-sm rounded-4xl font-black uppercase tracking-widest shadow-xl hover:scale-[1.01] transition-all"
           >
             Confirm Details & Proceed
           </button>

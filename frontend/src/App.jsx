@@ -32,13 +32,25 @@ const NavigationSource = () => {
   }
 };
 
+const AppShell = () => {
+  const { view } = useShield();
+  const scrollViews = new Set(['config', 'upload', 'prelim', 'kyc', 'partner', 'about', 'how', 'result']);
+  const allowScroll = scrollViews.has(view);
+
+  return (
+    <div className="h-screen bg-[#FAF9F6] flex flex-col overflow-hidden">
+      <Navbar />
+      <main className={`flex-1 min-h-0 ${allowScroll ? 'overflow-y-auto' : 'overflow-hidden'}`}>
+        <NavigationSource />
+      </main>
+    </div>
+  );
+};
+
 function App() {
   return (
     <ShieldProvider>
-      <div className="min-h-screen bg-[#FAF9F6]">
-        <Navbar />
-        <NavigationSource />
-      </div>
+      <AppShell />
     </ShieldProvider>
   );
 }

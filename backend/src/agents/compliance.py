@@ -51,7 +51,7 @@ class ComplianceAgent:
         if self.groq_api_key and RAG_AVAILABLE:
             try:
                 self.llm = ChatGroq(
-                    model="llama-3.3-70b-versatile",
+                    model="openai/gpt-oss-20b",
                     temperature=0.1,  # Very low for strict rule interpretation
                     api_key=self.groq_api_key
                 )
@@ -72,6 +72,9 @@ class ComplianceAgent:
             FAISS vector store or None
         """
         try:
+            from langchain.text_splitter import RecursiveCharacterTextSplitter
+            from langchain.docstore.document import Document
+            
             documents = []
             
             # Load USDA loan rules
@@ -95,9 +98,6 @@ class ComplianceAgent:
             if not documents:
                 logging.warning("No regulatory rules files found")
                 return None
-            
-            from langchain.text_splitter import RecursiveCharacterTextSplitter
-            from langchain.docstore.document import Document
 
             # Split documents into chunks
             text_splitter = RecursiveCharacterTextSplitter(

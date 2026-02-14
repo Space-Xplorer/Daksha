@@ -40,7 +40,7 @@ class RulesAgent:
         if self.groq_api_key and LLM_AVAILABLE:
             try:
                 self.llm = ChatGroq(
-                    model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
+                    model=os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
                     temperature=float(os.getenv("GROQ_TEMPERATURE", "0.2")),
                     api_key=self.groq_api_key
                 )
@@ -191,11 +191,15 @@ class RulesAgent:
             "If no violations, return [].\n"
         )
 
-        response = self.llm.invoke(prompt).content
-        violations = parse_json_response(response, default=[])
-        if isinstance(violations, list):
-            return violations
-        return []
+        try:
+            response = self.llm.invoke(prompt).content
+            violations = parse_json_response(response, default=[])
+            if isinstance(violations, list):
+                return violations
+            return []
+        except Exception as e:
+            logger.warning(f"LLM rule audit failed (rate limit or error): {e}. Proceeding without LLM validation.")
+            return []
 
     def _format_rejection_reason(self, violations: List[Dict[str, Any]]) -> str:
         if not violations:

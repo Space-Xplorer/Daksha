@@ -80,6 +80,8 @@ class FeatureEngineeringAgent:
             or declared.get("existing_emi")
             or ocr_data.get("existing_emi")
         )
+        if existing_emi is None:
+            existing_emi = 0.0
 
         avg_salary_6m = _to_float(
             ocr_data.get("avg_salary_6m")

@@ -7710,3 +7710,1042 @@
 2026-02-14 08:28:25 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for itr_form16: 100.0%
 2026-02-14 08:28:25 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_1313ad8609e8]: completed (duration: 11365.88ms)
 2026-02-14 08:28:25 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:28:25] "POST /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 08:43:06 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 08:43:07 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 08:43:07 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 08:43:44 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:43:44] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 08:43:44 - routes.auth - INFO - [auth.py:93] - New user registered: 123456789012@daksha.local
+2026-02-14 08:43:44 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:43:44] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2026-02-14 08:43:44 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:43:44] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 08:43:44 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 08:43:44 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:43:44] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 08:43:45 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:43:45] "OPTIONS /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 08:43:46 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:43:46] "POST /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 08:44:26 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:44:26] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 08:44:26 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 08:44:27 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 08:44:27 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 08:44:27 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_92604207348f]: started
+2026-02-14 08:44:35 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 08:44:35 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for diagnostic_report: 100.0%
+2026-02-14 08:44:37 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 08:44:37 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 08:44:39 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 08:44:39 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 08:44:39 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_92604207348f]: completed (duration: 12432.65ms)
+2026-02-14 08:44:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:44:39] "POST /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 08:45:14 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:14] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 08:45:14 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:14] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 08:45:14 - routes.applications - INFO - [applications.py:85] - Application created: 07ade512-dc38-4427-868d-6f2d5f6c6dc4 by 123456789012@daksha.local
+2026-02-14 08:45:14 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:14] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 08:45:15 - routes.applications - INFO - [applications.py:85] - Application created: f3c35f59-6eb6-4eac-84bb-76efd745befb by 123456789012@daksha.local
+2026-02-14 08:45:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:15] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 08:45:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:15] "OPTIONS /api/workflow/submit/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:15] "OPTIONS /api/workflow/submit/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:15 - routes.workflow - INFO - [workflow.py:390] - Workflow started for application: 07ade512-dc38-4427-868d-6f2d5f6c6dc4
+2026-02-14 08:45:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:15] "[35m[1mPOST /api/workflow/submit/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1[0m" 202 -
+2026-02-14 08:45:15 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 08:45:15 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 08:45:15 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 08:45:15 - routes.workflow - INFO - [workflow.py:390] - Workflow started for application: f3c35f59-6eb6-4eac-84bb-76efd745befb
+2026-02-14 08:45:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:15] "[35m[1mPOST /api/workflow/submit/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1[0m" 202 -
+2026-02-14 08:45:16 - src.agents.rules - INFO - [rules.py:47] - RulesAgent LLM initialized
+2026-02-14 08:45:16 - src.utils.fraud_detector - INFO - [fraud_detector.py:45] - FraudDetector initialized (enabled=True)
+2026-02-14 08:45:17 - root - INFO - [compliance.py:58] - Compliance LLM initialized
+2026-02-14 08:45:17 - root - ERROR - [compliance.py:121] - Failed to load rules: cannot access local variable 'Document' where it is not associated with a value
+2026-02-14 08:45:17 - src.agents.underwriting - INFO - [underwriting.py:41] - Initializing UnderwritingAgent
+2026-02-14 08:45:17 - src.utils.model_loader - INFO - [model_loader.py:31] - ModelLoader initialized with directory: models
+2026-02-14 08:45:17 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:17] "OPTIONS /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:18 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:18] "OPTIONS /api/workflow/status/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:18 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:18] "GET /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:18 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:18] "GET /api/workflow/status/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:18 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_finance loaded successfully
+2026-02-14 08:45:18 - src.utils.model_loader - INFO - [model_loader.py:71] - Model fin_encoders loaded successfully
+2026-02-14 08:45:18 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_health loaded successfully
+2026-02-14 08:45:18 - src.utils.model_loader - INFO - [model_loader.py:71] - Model health_encoders loaded successfully
+2026-02-14 08:45:18 - src.agents.underwriting - INFO - [underwriting.py:83] - All models loaded successfully
+2026-02-14 08:45:18 - src.agents.underwriting - INFO - [underwriting.py:49] - UnderwritingAgent initialized successfully
+2026-02-14 08:45:18 - src.agents.verification - INFO - [verification.py:41] - Initializing VerificationAgent
+2026-02-14 08:45:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:19] "GET /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:19 - src.agents.verification - INFO - [verification.py:60] - VerificationAgent initialized successfully with Pydantic parser
+2026-02-14 08:45:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:20] "GET /api/workflow/status/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:20 - src.agents.supervisor - INFO - [supervisor.py:29] - Initializing SupervisorAgent
+2026-02-14 08:45:20 - src.agents.supervisor - INFO - [supervisor.py:42] - SupervisorAgent initialized successfully
+2026-02-14 08:45:20 - src.utils.logging - INFO - [logging.py:79] - Request req_58e92a763863: type=insurance, timestamp=2026-02-14T03:15:20.413478, metadata={}
+2026-02-14 08:45:20 - src.utils.logging - INFO - [logging.py:79] - Request req_533e636503d7: type=insurance, timestamp=2026-02-14T03:15:20.413578, metadata={}
+2026-02-14 08:45:20 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_58e92a763863]: started
+2026-02-14 08:45:20 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_533e636503d7]: started
+2026-02-14 08:45:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:21] "GET /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:21 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_58e92a763863]: completed (duration: 1505.22ms)
+2026-02-14 08:45:21 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_533e636503d7]: completed (duration: 1502.12ms)
+2026-02-14 08:45:21 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_58e92a763863]: started
+2026-02-14 08:45:21 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_533e636503d7]: started
+2026-02-14 08:45:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:22] "GET /api/workflow/status/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:23 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:23] "OPTIONS /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:23 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:23] "GET /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:24 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 08:45:24 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for diagnostic_report: 100.0%
+2026-02-14 08:45:24 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 08:45:24 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for diagnostic_report: 100.0%
+2026-02-14 08:45:24 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:24] "OPTIONS /api/workflow/status/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:24 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:24] "GET /api/workflow/status/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:25 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:25] "GET /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:26 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:26 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99980, Requested 173. Please try again in 2m12.191999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:26 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for aadhaar_card: 100.0%
+2026-02-14 08:45:26 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 08:45:26 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 08:45:26 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:26] "GET /api/workflow/status/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:27 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:27] "GET /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:28] "GET /api/workflow/status/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:28 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:28 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99981, Requested 280. Please try again in 3m45.504s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:28 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for itr_form16: 80.0%
+2026-02-14 08:45:28 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_58e92a763863]: completed (duration: 6249.63ms)
+2026-02-14 08:45:28 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_58e92a763863]: started
+2026-02-14 08:45:28 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:28 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99981, Requested 280. Please try again in 3m45.504s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:28 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for itr_form16: 80.0%
+2026-02-14 08:45:28 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_533e636503d7]: completed (duration: 6281.70ms)
+2026-02-14 08:45:28 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_533e636503d7]: started
+2026-02-14 08:45:28 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:28 - src.agents.rules - WARNING - [rules.py:201] - LLM rule audit failed (rate limit or error): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99981, Requested 4234. Please try again in 1h0m41.76s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}. Proceeding without LLM validation.
+2026-02-14 08:45:28 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_58e92a763863]: completed
+2026-02-14 08:45:28 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_58e92a763863]: started
+2026-02-14 08:45:28 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 08:45:28 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:28 - src.agents.rules - WARNING - [rules.py:201] - LLM rule audit failed (rate limit or error): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99981, Requested 4232. Please try again in 1h0m40.032s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}. Proceeding without LLM validation.
+2026-02-14 08:45:28 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_533e636503d7]: completed
+2026-02-14 08:45:28 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_533e636503d7]: started
+2026-02-14 08:45:28 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 08:45:29 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:29 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99980, Requested 187. Please try again in 2m24.288s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:29 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 08:45:29 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:29 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99980, Requested 187. Please try again in 2m24.288s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:29 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 08:45:29 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:29] "OPTIONS /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:29 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:29] "GET /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:30] "OPTIONS /api/workflow/status/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:30] "GET /api/workflow/status/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:30 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:30 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99979, Requested 159. Please try again in 1m59.232s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:30 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 08:45:30 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:30 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99979, Requested 161. Please try again in 2m0.96s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:30 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 08:45:31 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:31 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99977, Requested 270. Please try again in 3m33.408s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_58e92a763863]: completed
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_58e92a763863]: started
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_58e92a763863]: completed
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:103] - Agent ComplianceAgent [req_58e92a763863]: started
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:99] - Agent ComplianceAgent [req_58e92a763863]: completed (duration: 0.24ms)
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:103] - Agent RouterAgent [req_58e92a763863]: started
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:99] - Agent RouterAgent [req_58e92a763863]: completed (duration: 0.16ms)
+2026-02-14 08:45:31 - src.agents.underwriting - INFO - [underwriting.py:174] - Processing insurance application
+2026-02-14 08:45:31 - src.agents.underwriting - INFO - [underwriting.py:201] - Insurance prediction complete: premium = ₹14,300.00
+2026-02-14 08:45:31 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:31 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99977, Requested 270. Please try again in 3m33.408s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_533e636503d7]: completed
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_533e636503d7]: started
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_533e636503d7]: completed
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:103] - Agent ComplianceAgent [req_533e636503d7]: started
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:99] - Agent ComplianceAgent [req_533e636503d7]: completed (duration: 0.23ms)
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:103] - Agent RouterAgent [req_533e636503d7]: started
+2026-02-14 08:45:31 - src.utils.logging - INFO - [logging.py:99] - Agent RouterAgent [req_533e636503d7]: completed (duration: 0.15ms)
+2026-02-14 08:45:31 - src.agents.underwriting - INFO - [underwriting.py:174] - Processing insurance application
+2026-02-14 08:45:31 - src.agents.underwriting - INFO - [underwriting.py:201] - Insurance prediction complete: premium = ₹14,300.00
+2026-02-14 08:45:31 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:31 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:31] "GET /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:31 - src.agents.verification - ERROR - [verification.py:273] - Insurance verification failed (likely rate limit): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99977, Requested 483. Please try again in 6m37.44s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:31 - src.agents.verification - INFO - [verification.py:85] - Insurance verification: True
+2026-02-14 08:45:31 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:31 - src.agents.verification - ERROR - [verification.py:273] - Insurance verification failed (likely rate limit): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99977, Requested 483. Please try again in 6m37.44s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:31 - src.agents.verification - INFO - [verification.py:85] - Insurance verification: True
+2026-02-14 08:45:31 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:31 - src.agents.transparency - WARNING - [transparency.py:148] - Transparency LLM failed, using fallback: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99977, Requested 132. Please try again in 1m34.176s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:31 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:31 - src.agents.transparency - WARNING - [transparency.py:148] - Transparency LLM failed, using fallback: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99977, Requested 136. Please try again in 1m37.631999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:31 - src.agents.supervisor - INFO - [supervisor.py:89] - Supervisor decision: proceed - Continue workflow
+2026-02-14 08:45:31 - routes.workflow - INFO - [workflow.py:381] - Workflow completed for application: 07ade512-dc38-4427-868d-6f2d5f6c6dc4
+2026-02-14 08:45:31 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:31 - src.agents.transparency - WARNING - [transparency.py:148] - Transparency LLM failed, using fallback: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99977, Requested 132. Please try again in 1m34.176s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:31 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 08:45:31 - src.agents.transparency - WARNING - [transparency.py:148] - Transparency LLM failed, using fallback: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99977, Requested 136. Please try again in 1m37.631999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 08:45:31 - src.agents.supervisor - INFO - [supervisor.py:89] - Supervisor decision: proceed - Continue workflow
+2026-02-14 08:45:31 - routes.workflow - INFO - [workflow.py:381] - Workflow completed for application: f3c35f59-6eb6-4eac-84bb-76efd745befb
+2026-02-14 08:45:32 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:32] "GET /api/workflow/status/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:32 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:32] "OPTIONS /api/workflow/results/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:32 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:32] "GET /api/workflow/results/f3c35f59-6eb6-4eac-84bb-76efd745befb HTTP/1.1" 200 -
+2026-02-14 08:45:33 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:33] "GET /api/workflow/status/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:33 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:33] "OPTIONS /api/workflow/results/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:45:34 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 08:45:34] "GET /api/workflow/results/07ade512-dc38-4427-868d-6f2d5f6c6dc4 HTTP/1.1" 200 -
+2026-02-14 08:52:28 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 08:52:28 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 08:52:28 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 08:59:11 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 08:59:11 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 08:59:11 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 09:00:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:00:20] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 09:00:20 - routes.auth - INFO - [auth.py:93] - New user registered: 123456789012@daksha.local
+2026-02-14 09:00:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:00:20] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2026-02-14 09:00:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:00:20] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:00:21 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 09:00:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:00:21] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:00:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:00:21] "OPTIONS /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:00:23 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:00:23] "POST /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:01:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:01:00] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 09:01:00 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 09:01:01 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 09:01:01 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 09:01:01 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_a40a4c03fa34]: started
+2026-02-14 09:01:12 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:01:12 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 09:01:14 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:01:14 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 09:01:16 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:01:16 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 09:01:18 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:01:18 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 100.0%
+2026-02-14 09:01:18 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_a40a4c03fa34]: completed (duration: 17062.85ms)
+2026-02-14 09:01:18 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:01:18] "POST /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 09:02:41 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:02:41] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 09:02:41 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:02:41] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 409 -
+2026-02-14 09:02:41 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:02:41] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:02:42 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 09:02:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:02:42] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:02:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:02:42] "OPTIONS /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:02:44 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:02:44] "POST /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:02:56 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:02:56] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 09:02:56 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 09:02:56 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 09:02:56 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 09:02:56 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_46c7df72d97f]: started
+2026-02-14 09:02:58 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:02:58 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 09:03:00 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:03:00 - groq._base_client - INFO - [_base_client.py:1068] - Retrying request to /openai/v1/chat/completions in 26.000000 seconds
+2026-02-14 09:03:26 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:03:26 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 09:03:28 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:03:28 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99998, Requested 171. Please try again in 2m26.016s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:03:28 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 100.0%
+2026-02-14 09:03:30 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:03:30 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99996, Requested 174. Please try again in 2m26.88s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:03:30 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for aadhaar_card: 100.0%
+2026-02-14 09:03:30 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_46c7df72d97f]: completed (duration: 33791.10ms)
+2026-02-14 09:03:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:03:30] "POST /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 09:08:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:00] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 09:08:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:00] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 09:08:00 - routes.applications - INFO - [applications.py:85] - Application created: 6f575f23-2e7f-4c79-b0e4-33475afdd9de by 123456789012@daksha.local
+2026-02-14 09:08:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:00] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 09:08:00 - routes.applications - INFO - [applications.py:85] - Application created: 2e0198db-42cd-4fe8-bafe-96582ebd2dc2 by 123456789012@daksha.local
+2026-02-14 09:08:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:00] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 09:08:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:00] "OPTIONS /api/workflow/submit/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:00 - routes.workflow - INFO - [workflow.py:390] - Workflow started for application: 6f575f23-2e7f-4c79-b0e4-33475afdd9de
+2026-02-14 09:08:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:00] "[35m[1mPOST /api/workflow/submit/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1[0m" 202 -
+2026-02-14 09:08:01 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:01] "OPTIONS /api/workflow/submit/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:01 - routes.workflow - INFO - [workflow.py:390] - Workflow started for application: 2e0198db-42cd-4fe8-bafe-96582ebd2dc2
+2026-02-14 09:08:01 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:01] "[35m[1mPOST /api/workflow/submit/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1[0m" 202 -
+2026-02-14 09:08:01 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 09:08:01 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 09:08:01 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 09:08:02 - src.agents.rules - INFO - [rules.py:47] - RulesAgent LLM initialized
+2026-02-14 09:08:02 - src.utils.fraud_detector - INFO - [fraud_detector.py:45] - FraudDetector initialized (enabled=True)
+2026-02-14 09:08:03 - root - INFO - [compliance.py:58] - Compliance LLM initialized
+2026-02-14 09:08:03 - root - ERROR - [compliance.py:121] - Failed to load rules: cannot access local variable 'Document' where it is not associated with a value
+2026-02-14 09:08:03 - src.agents.underwriting - INFO - [underwriting.py:41] - Initializing UnderwritingAgent
+2026-02-14 09:08:03 - src.utils.model_loader - INFO - [model_loader.py:31] - ModelLoader initialized with directory: models
+2026-02-14 09:08:03 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:03] "OPTIONS /api/workflow/status/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:03 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:03] "OPTIONS /api/workflow/status/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:03 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:03] "GET /api/workflow/status/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:03 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:03] "GET /api/workflow/status/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:04 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:04] "GET /api/workflow/status/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:05 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_finance loaded successfully
+2026-02-14 09:08:05 - src.utils.model_loader - INFO - [model_loader.py:71] - Model fin_encoders loaded successfully
+2026-02-14 09:08:05 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_health loaded successfully
+2026-02-14 09:08:05 - src.utils.model_loader - INFO - [model_loader.py:71] - Model health_encoders loaded successfully
+2026-02-14 09:08:05 - src.agents.underwriting - INFO - [underwriting.py:83] - All models loaded successfully
+2026-02-14 09:08:05 - src.agents.underwriting - INFO - [underwriting.py:49] - UnderwritingAgent initialized successfully
+2026-02-14 09:08:05 - src.agents.verification - INFO - [verification.py:41] - Initializing VerificationAgent
+2026-02-14 09:08:05 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:05] "GET /api/workflow/status/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:05 - src.agents.verification - INFO - [verification.py:60] - VerificationAgent initialized successfully with Pydantic parser
+2026-02-14 09:08:06 - src.agents.supervisor - INFO - [supervisor.py:29] - Initializing SupervisorAgent
+2026-02-14 09:08:06 - src.agents.supervisor - INFO - [supervisor.py:42] - SupervisorAgent initialized successfully
+2026-02-14 09:08:06 - src.utils.logging - INFO - [logging.py:79] - Request req_f6dd8edb0a37: type=loan, timestamp=2026-02-14T03:38:06.749470, metadata={}
+2026-02-14 09:08:06 - src.utils.logging - INFO - [logging.py:79] - Request req_5bbe97760946: type=loan, timestamp=2026-02-14T03:38:06.749609, metadata={}
+2026-02-14 09:08:06 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_f6dd8edb0a37]: started
+2026-02-14 09:08:06 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_5bbe97760946]: started
+2026-02-14 09:08:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:06] "GET /api/workflow/status/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:07 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:07] "GET /api/workflow/status/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:08 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_f6dd8edb0a37]: completed (duration: 1502.57ms)
+2026-02-14 09:08:08 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_f6dd8edb0a37]: started
+2026-02-14 09:08:08 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_5bbe97760946]: completed (duration: 1501.93ms)
+2026-02-14 09:08:08 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_5bbe97760946]: started
+2026-02-14 09:08:08 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:08] "OPTIONS /api/workflow/status/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:09 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:09] "GET /api/workflow/status/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:09 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:09] "OPTIONS /api/workflow/status/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:09 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:09] "GET /api/workflow/status/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:10 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:08:10 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 09:08:10 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:08:10 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99956, Requested 281. Please try again in 3m24.768s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:08:10 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for bank_statement: 80.0%
+2026-02-14 09:08:11 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:11] "GET /api/workflow/status/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:11 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:11] "GET /api/workflow/status/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:12 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:08:12 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99954, Requested 172. Please try again in 1m48.864s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:08:12 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 100.0%
+2026-02-14 09:08:12 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:08:12 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99954, Requested 172. Please try again in 1m48.864s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:08:12 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 100.0%
+2026-02-14 09:08:12 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:12] "GET /api/workflow/status/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:13 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:13] "GET /api/workflow/status/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:14 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:08:14 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99952, Requested 171. Please try again in 1m46.271999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:08:14 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 100.0%
+2026-02-14 09:08:14 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:08:14 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99952, Requested 171. Please try again in 1m46.271999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:08:14 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 100.0%
+2026-02-14 09:08:14 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:14] "OPTIONS /api/workflow/status/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:15] "GET /api/workflow/status/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:15] "OPTIONS /api/workflow/status/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:15] "GET /api/workflow/status/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:16 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:08:16 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99949, Requested 174. Please try again in 1m46.271999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:08:16 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for aadhaar_card: 100.0%
+2026-02-14 09:08:16 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_5bbe97760946]: completed (duration: 8407.63ms)
+2026-02-14 09:08:16 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_5bbe97760946]: started
+2026-02-14 09:08:16 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:08:16 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99949, Requested 174. Please try again in 1m46.271999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:08:16 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for aadhaar_card: 100.0%
+2026-02-14 09:08:16 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_f6dd8edb0a37]: completed (duration: 8458.54ms)
+2026-02-14 09:08:16 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_f6dd8edb0a37]: started
+2026-02-14 09:08:16 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:08:16 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:08:16 - src.agents.rules - WARNING - [rules.py:201] - LLM rule audit failed (rate limit or error): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99949, Requested 4308. Please try again in 1h1m18.048s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}. Proceeding without LLM validation.
+2026-02-14 09:08:16 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_f6dd8edb0a37]: completed
+2026-02-14 09:08:16 - routes.workflow - INFO - [workflow.py:381] - Workflow completed for application: 6f575f23-2e7f-4c79-b0e4-33475afdd9de
+2026-02-14 09:08:16 - src.agents.rules - WARNING - [rules.py:201] - LLM rule audit failed (rate limit or error): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99949, Requested 4297. Please try again in 1h1m8.544s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}. Proceeding without LLM validation.
+2026-02-14 09:08:16 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_5bbe97760946]: completed
+2026-02-14 09:08:16 - routes.workflow - INFO - [workflow.py:381] - Workflow completed for application: 2e0198db-42cd-4fe8-bafe-96582ebd2dc2
+2026-02-14 09:08:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:16] "GET /api/workflow/status/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:17 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:17] "OPTIONS /api/workflow/results/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:17 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:17] "GET /api/workflow/status/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:17 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:17] "GET /api/workflow/results/6f575f23-2e7f-4c79-b0e4-33475afdd9de HTTP/1.1" 200 -
+2026-02-14 09:08:17 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:17] "OPTIONS /api/workflow/results/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:08:17 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:08:17] "GET /api/workflow/results/2e0198db-42cd-4fe8-bafe-96582ebd2dc2 HTTP/1.1" 200 -
+2026-02-14 09:15:55 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 09:15:55 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 09:15:55 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 09:19:35 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:19:35] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 09:19:36 - routes.auth - INFO - [auth.py:93] - New user registered: 123456789012@daksha.local
+2026-02-14 09:19:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:19:36] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2026-02-14 09:19:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:19:36] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:19:36 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 09:19:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:19:36] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:19:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:19:36] "OPTIONS /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:19:38 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:19:38] "POST /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:20:18 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:20:18] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 09:20:18 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 09:20:19 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 09:20:19 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 09:20:19 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_6bd9d3d174cd]: started
+2026-02-14 09:20:28 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:20:28 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for diagnostic_report: 100.0%
+2026-02-14 09:20:31 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:20:31 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 09:20:33 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:20:33 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 09:20:33 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_6bd9d3d174cd]: completed (duration: 13392.08ms)
+2026-02-14 09:20:33 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:20:33] "POST /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 09:22:47 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:47] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 09:22:47 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:47] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 09:22:47 - routes.applications - INFO - [applications.py:85] - Application created: f510c225-f2f7-42b6-8772-501c331e085d by 123456789012@daksha.local
+2026-02-14 09:22:47 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:47] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 09:22:47 - routes.applications - INFO - [applications.py:85] - Application created: 86ea01d3-eb83-42e8-bcf5-903c82c9f619 by 123456789012@daksha.local
+2026-02-14 09:22:47 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:47] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 09:22:47 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:47] "OPTIONS /api/workflow/submit/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:22:48 - routes.workflow - INFO - [workflow.py:390] - Workflow started for application: f510c225-f2f7-42b6-8772-501c331e085d
+2026-02-14 09:22:48 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:48] "[35m[1mPOST /api/workflow/submit/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1[0m" 202 -
+2026-02-14 09:22:48 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:48] "OPTIONS /api/workflow/submit/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:22:48 - routes.workflow - INFO - [workflow.py:390] - Workflow started for application: 86ea01d3-eb83-42e8-bcf5-903c82c9f619
+2026-02-14 09:22:48 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:48] "[35m[1mPOST /api/workflow/submit/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1[0m" 202 -
+2026-02-14 09:22:48 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 09:22:48 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 09:22:48 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 09:22:49 - src.agents.rules - INFO - [rules.py:47] - RulesAgent LLM initialized
+2026-02-14 09:22:49 - src.utils.fraud_detector - INFO - [fraud_detector.py:45] - FraudDetector initialized (enabled=True)
+2026-02-14 09:22:50 - root - INFO - [compliance.py:58] - Compliance LLM initialized
+2026-02-14 09:22:50 - root - ERROR - [compliance.py:121] - Failed to load rules: No module named 'langchain.text_splitter'
+2026-02-14 09:22:50 - src.agents.underwriting - INFO - [underwriting.py:41] - Initializing UnderwritingAgent
+2026-02-14 09:22:50 - src.utils.model_loader - INFO - [model_loader.py:31] - ModelLoader initialized with directory: models
+2026-02-14 09:22:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:50] "OPTIONS /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:22:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:50] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:22:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:50] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:22:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:50] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:22:52 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_finance loaded successfully
+2026-02-14 09:22:52 - src.utils.model_loader - INFO - [model_loader.py:71] - Model fin_encoders loaded successfully
+2026-02-14 09:22:52 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_health loaded successfully
+2026-02-14 09:22:52 - src.utils.model_loader - INFO - [model_loader.py:71] - Model health_encoders loaded successfully
+2026-02-14 09:22:52 - src.agents.underwriting - INFO - [underwriting.py:83] - All models loaded successfully
+2026-02-14 09:22:52 - src.agents.underwriting - INFO - [underwriting.py:49] - UnderwritingAgent initialized successfully
+2026-02-14 09:22:52 - src.agents.verification - INFO - [verification.py:41] - Initializing VerificationAgent
+2026-02-14 09:22:52 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:52] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:22:52 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:52] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:22:53 - src.agents.verification - INFO - [verification.py:60] - VerificationAgent initialized successfully with Pydantic parser
+2026-02-14 09:22:54 - src.agents.supervisor - INFO - [supervisor.py:29] - Initializing SupervisorAgent
+2026-02-14 09:22:54 - src.agents.supervisor - INFO - [supervisor.py:42] - SupervisorAgent initialized successfully
+2026-02-14 09:22:54 - src.utils.logging - INFO - [logging.py:79] - Request req_15f7d75a3669: type=insurance, timestamp=2026-02-14T03:52:54.046094, metadata={}
+2026-02-14 09:22:54 - src.utils.logging - INFO - [logging.py:79] - Request req_834cae504ff9: type=insurance, timestamp=2026-02-14T03:52:54.046234, metadata={}
+2026-02-14 09:22:54 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_15f7d75a3669]: started
+2026-02-14 09:22:54 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_834cae504ff9]: started
+2026-02-14 09:22:54 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:54] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:22:54 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:54] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:22:55 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_15f7d75a3669]: completed (duration: 1507.00ms)
+2026-02-14 09:22:55 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_834cae504ff9]: completed (duration: 1504.12ms)
+2026-02-14 09:22:55 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_15f7d75a3669]: started
+2026-02-14 09:22:55 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_834cae504ff9]: started
+2026-02-14 09:22:56 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:56] "OPTIONS /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:22:56 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:56] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:22:56 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:56] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:22:56 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:56] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:22:58 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:58] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:22:58 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:22:58] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:00] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:00] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:02] "OPTIONS /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:02] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:02] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:02] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:04 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:04] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:04 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:04] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:06] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:06] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:08 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:08] "OPTIONS /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:08 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:08] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:08 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:08] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:08 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:08] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:10 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:10] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:10 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:10] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:12 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:12] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:12 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:12] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:14 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:14] "OPTIONS /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:14 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:14] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:14 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:14] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:14 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:14] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:16] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:16] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:18 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:18] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:18 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:18] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:20] "OPTIONS /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:20] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:20] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:20] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:21 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:23:21 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for diagnostic_report: 100.0%
+2026-02-14 09:23:21 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:23:21 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for diagnostic_report: 100.0%
+2026-02-14 09:23:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:22] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:22] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:24 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:24] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:24 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:24] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:26 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:26] "OPTIONS /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:26 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:26] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:26 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:26] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:26 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:26] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:28] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:28] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:30] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:30] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:32 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:32] "OPTIONS /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:33 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:33] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:33 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:33] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:33 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:33] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:35 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:35] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:35 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:35] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:36] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:37 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:37] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:39] "OPTIONS /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:39] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:39] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:39] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:40 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:40] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:40 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:40] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:42] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:42] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:44 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:44] "OPTIONS /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:44 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:44] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:44 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:44] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:44 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:44] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:46 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:46] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:46 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:46] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:48 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:48] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:48 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:48] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:50 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:23:50 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99935, Requested 173. Please try again in 1m33.312s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:23:50 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for aadhaar_card: 100.0%
+2026-02-14 09:23:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:50] "OPTIONS /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:50] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:50] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:50] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:52 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:52] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:52 - src.utils.ocr_service_production - WARNING - [ocr_service_production.py:97] - OCR.space failed for temp\uploads\f510c225-f2f7-42b6-8772-501c331e085d\aadhaar_card_2.pdf: The read operation timed out
+2026-02-14 09:23:52 - src.utils.ocr_service_production - WARNING - [ocr_service_production.py:116] - Tesseract not available: /usr/bin/tesseract is not installed or it's not in your PATH. See README file for more information.
+2026-02-14 09:23:52 - src.utils.logging - ERROR - [logging.py:132] - Error [req_15f7d75a3669]: type=onboarding, message=Onboarding processing error: The read operation timed out, context={}
+2026-02-14 09:23:52 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_15f7d75a3669]: failed (duration: 56844.54ms)
+2026-02-14 09:23:52 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_15f7d75a3669]: started
+2026-02-14 09:23:52 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_15f7d75a3669]: completed
+2026-02-14 09:23:52 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_15f7d75a3669]: started
+2026-02-14 09:23:52 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_15f7d75a3669]: completed
+2026-02-14 09:23:52 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_15f7d75a3669]: started
+2026-02-14 09:23:52 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_15f7d75a3669]: completed
+2026-02-14 09:23:52 - src.utils.logging - INFO - [logging.py:103] - Agent ComplianceAgent [req_15f7d75a3669]: started
+2026-02-14 09:23:52 - src.utils.logging - INFO - [logging.py:99] - Agent ComplianceAgent [req_15f7d75a3669]: completed (duration: 0.26ms)
+2026-02-14 09:23:52 - src.utils.logging - INFO - [logging.py:103] - Agent RouterAgent [req_15f7d75a3669]: started
+2026-02-14 09:23:52 - src.utils.logging - INFO - [logging.py:99] - Agent RouterAgent [req_15f7d75a3669]: completed (duration: 0.20ms)
+2026-02-14 09:23:52 - src.agents.underwriting - INFO - [underwriting.py:174] - Processing insurance application
+2026-02-14 09:23:52 - src.agents.underwriting - INFO - [underwriting.py:201] - Insurance prediction complete: premium = ₹14,460.00
+2026-02-14 09:23:52 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:52] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:53 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:23:53 - src.agents.verification - INFO - [verification.py:85] - Insurance verification: True
+2026-02-14 09:23:53 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:23:53 - src.agents.supervisor - INFO - [supervisor.py:89] - Supervisor decision: proceed - Continue workflow
+2026-02-14 09:23:53 - routes.workflow - INFO - [workflow.py:381] - Workflow completed for application: f510c225-f2f7-42b6-8772-501c331e085d
+2026-02-14 09:23:54 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:54] "GET /api/workflow/status/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:54 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:54] "OPTIONS /api/workflow/results/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:54 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:54] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:54 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:54] "GET /api/workflow/results/f510c225-f2f7-42b6-8772-501c331e085d HTTP/1.1" 200 -
+2026-02-14 09:23:56 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:56] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:56 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:56] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:23:58 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:23:58] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:24:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:24:00] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:24:01 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:24:01 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99921, Requested 280. Please try again in 2m53.664s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:24:01 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for itr_form16: 80.0%
+2026-02-14 09:24:01 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_834cae504ff9]: completed (duration: 66198.07ms)
+2026-02-14 09:24:01 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_834cae504ff9]: started
+2026-02-14 09:24:01 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:24:01 - src.agents.rules - WARNING - [rules.py:201] - LLM rule audit failed (rate limit or error): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99921, Requested 4232. Please try again in 59m48.192s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}. Proceeding without LLM validation.
+2026-02-14 09:24:01 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_834cae504ff9]: completed
+2026-02-14 09:24:01 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_834cae504ff9]: started
+2026-02-14 09:24:01 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 09:24:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:24:02] "OPTIONS /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:24:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:24:02] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:24:02 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:24:02 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99920, Requested 187. Please try again in 1m32.448s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:24:02 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 09:24:03 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:24:03 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99919, Requested 161. Please try again in 1m9.12s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:24:03 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 09:24:04 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:24:04] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:24:04 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:24:04 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99918, Requested 270. Please try again in 2m42.432s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:24:04 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_834cae504ff9]: completed
+2026-02-14 09:24:04 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_834cae504ff9]: started
+2026-02-14 09:24:04 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_834cae504ff9]: completed
+2026-02-14 09:24:04 - src.utils.logging - INFO - [logging.py:103] - Agent ComplianceAgent [req_834cae504ff9]: started
+2026-02-14 09:24:04 - src.utils.logging - INFO - [logging.py:99] - Agent ComplianceAgent [req_834cae504ff9]: completed (duration: 0.19ms)
+2026-02-14 09:24:04 - src.utils.logging - INFO - [logging.py:103] - Agent RouterAgent [req_834cae504ff9]: started
+2026-02-14 09:24:04 - src.utils.logging - INFO - [logging.py:99] - Agent RouterAgent [req_834cae504ff9]: completed (duration: 0.21ms)
+2026-02-14 09:24:04 - src.agents.underwriting - INFO - [underwriting.py:174] - Processing insurance application
+2026-02-14 09:24:04 - src.agents.underwriting - INFO - [underwriting.py:201] - Insurance prediction complete: premium = ₹14,460.00
+2026-02-14 09:24:05 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:24:05 - src.agents.verification - INFO - [verification.py:85] - Insurance verification: True
+2026-02-14 09:24:05 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:24:05 - src.agents.supervisor - INFO - [supervisor.py:89] - Supervisor decision: proceed - Continue workflow
+2026-02-14 09:24:05 - routes.workflow - INFO - [workflow.py:381] - Workflow completed for application: 86ea01d3-eb83-42e8-bcf5-903c82c9f619
+2026-02-14 09:24:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:24:06] "GET /api/workflow/status/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:24:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:24:06] "OPTIONS /api/workflow/results/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:24:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:24:06] "GET /api/workflow/results/86ea01d3-eb83-42e8-bcf5-903c82c9f619 HTTP/1.1" 200 -
+2026-02-14 09:41:12 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 09:41:12 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 09:41:12 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 09:42:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:42:20] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 09:42:20 - routes.auth - INFO - [auth.py:93] - New user registered: 123456789012@daksha.local
+2026-02-14 09:42:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:42:20] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2026-02-14 09:42:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:42:20] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:42:21 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 09:42:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:42:21] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:42:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:42:21] "OPTIONS /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:42:23 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:42:23] "POST /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:44:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:44:19] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 09:44:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:44:19] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 409 -
+2026-02-14 09:44:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:44:19] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:44:19 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 09:44:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:44:19] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:44:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:44:19] "OPTIONS /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:44:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:44:21] "POST /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:45:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:45:19] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 09:45:19 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 09:45:20 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 09:45:20 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 09:45:20 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_d07cdfe74631]: started
+2026-02-14 09:45:29 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:45:29 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 09:45:31 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:45:31 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for bank_statement: 50.0%
+2026-02-14 09:45:33 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:45:33 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 90.0%
+2026-02-14 09:45:35 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:45:35 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 09:45:35 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_d07cdfe74631]: completed (duration: 15396.45ms)
+2026-02-14 09:45:35 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:45:35] "POST /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 09:46:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:15] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 09:46:15 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:15] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 09:46:16 - routes.applications - INFO - [applications.py:85] - Application created: 5445d045-83c2-4b3c-b90b-74754358f682 by 123456789012@daksha.local
+2026-02-14 09:46:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:16] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 09:46:16 - routes.applications - INFO - [applications.py:85] - Application created: 740f7045-c33f-4fb6-af03-33500df101cb by 123456789012@daksha.local
+2026-02-14 09:46:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:16] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 09:46:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:16] "OPTIONS /api/workflow/submit/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:16 - routes.workflow - INFO - [workflow.py:390] - Workflow started for application: 5445d045-83c2-4b3c-b90b-74754358f682
+2026-02-14 09:46:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:16] "[35m[1mPOST /api/workflow/submit/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1[0m" 202 -
+2026-02-14 09:46:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:16] "OPTIONS /api/workflow/submit/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:16 - routes.workflow - INFO - [workflow.py:390] - Workflow started for application: 740f7045-c33f-4fb6-af03-33500df101cb
+2026-02-14 09:46:16 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:16] "[35m[1mPOST /api/workflow/submit/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1[0m" 202 -
+2026-02-14 09:46:16 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 09:46:16 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 09:46:16 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 09:46:17 - src.agents.rules - INFO - [rules.py:47] - RulesAgent LLM initialized
+2026-02-14 09:46:17 - src.utils.fraud_detector - INFO - [fraud_detector.py:45] - FraudDetector initialized (enabled=True)
+2026-02-14 09:46:18 - root - INFO - [compliance.py:58] - Compliance LLM initialized
+2026-02-14 09:46:18 - root - ERROR - [compliance.py:121] - Failed to load rules: No module named 'langchain.text_splitter'
+2026-02-14 09:46:18 - src.agents.underwriting - INFO - [underwriting.py:41] - Initializing UnderwritingAgent
+2026-02-14 09:46:18 - src.utils.model_loader - INFO - [model_loader.py:31] - ModelLoader initialized with directory: models
+2026-02-14 09:46:18 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:18] "OPTIONS /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:18 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:18] "OPTIONS /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:19] "GET /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:19 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:19] "GET /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:20 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_finance loaded successfully
+2026-02-14 09:46:20 - src.utils.model_loader - INFO - [model_loader.py:71] - Model fin_encoders loaded successfully
+2026-02-14 09:46:20 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_health loaded successfully
+2026-02-14 09:46:20 - src.utils.model_loader - INFO - [model_loader.py:71] - Model health_encoders loaded successfully
+2026-02-14 09:46:20 - src.agents.underwriting - INFO - [underwriting.py:83] - All models loaded successfully
+2026-02-14 09:46:20 - src.agents.underwriting - INFO - [underwriting.py:49] - UnderwritingAgent initialized successfully
+2026-02-14 09:46:20 - src.agents.verification - INFO - [verification.py:41] - Initializing VerificationAgent
+2026-02-14 09:46:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:20] "GET /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:20] "GET /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:21 - src.agents.verification - INFO - [verification.py:60] - VerificationAgent initialized successfully with Pydantic parser
+2026-02-14 09:46:22 - src.agents.supervisor - INFO - [supervisor.py:29] - Initializing SupervisorAgent
+2026-02-14 09:46:22 - src.agents.supervisor - INFO - [supervisor.py:42] - SupervisorAgent initialized successfully
+2026-02-14 09:46:22 - src.utils.logging - INFO - [logging.py:79] - Request req_88a41f25b239: type=loan, timestamp=2026-02-14T04:16:22.175985, metadata={}
+2026-02-14 09:46:22 - src.utils.logging - INFO - [logging.py:79] - Request req_a73d630178a9: type=loan, timestamp=2026-02-14T04:16:22.176114, metadata={}
+2026-02-14 09:46:22 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_a73d630178a9]: started
+2026-02-14 09:46:22 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_88a41f25b239]: started
+2026-02-14 09:46:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:22] "GET /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:22] "GET /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:23 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_a73d630178a9]: completed (duration: 1504.91ms)
+2026-02-14 09:46:23 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_88a41f25b239]: completed (duration: 1503.21ms)
+2026-02-14 09:46:23 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_a73d630178a9]: started
+2026-02-14 09:46:23 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_88a41f25b239]: started
+2026-02-14 09:46:24 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:24] "OPTIONS /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:24 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:24] "GET /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:24 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:24] "OPTIONS /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:25 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:25] "GET /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:25 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:46:25 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 09:46:25 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:46:25 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 09:46:26 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:26] "GET /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:26 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:26] "GET /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:27 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:27 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99963, Requested 328. Please try again in 4m11.423999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:27 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 50.0%
+2026-02-14 09:46:27 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:27 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99963, Requested 328. Please try again in 4m11.423999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:27 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 50.0%
+2026-02-14 09:46:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:28] "GET /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:28 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:28] "GET /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:30 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:30 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:30 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99961, Requested 239. Please try again in 2m52.8s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:30 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99961, Requested 239. Please try again in 2m52.8s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:30 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 90.0%
+2026-02-14 09:46:30 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 90.0%
+2026-02-14 09:46:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:30] "OPTIONS /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:30] "GET /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:30] "OPTIONS /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:31 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:31] "GET /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:32 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:32 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99958, Requested 173. Please try again in 1m53.184s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:32 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for aadhaar_card: 100.0%
+2026-02-14 09:46:32 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_88a41f25b239]: completed (duration: 8374.04ms)
+2026-02-14 09:46:32 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_88a41f25b239]: started
+2026-02-14 09:46:32 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:32 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99958, Requested 173. Please try again in 1m53.184s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:32 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for aadhaar_card: 100.0%
+2026-02-14 09:46:32 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_a73d630178a9]: completed (duration: 8422.74ms)
+2026-02-14 09:46:32 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_a73d630178a9]: started
+2026-02-14 09:46:32 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:32 - src.agents.rules - WARNING - [rules.py:201] - LLM rule audit failed (rate limit or error): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99958, Requested 4631. Please try again in 1h6m4.896s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}. Proceeding without LLM validation.
+2026-02-14 09:46:32 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:32 - src.agents.rules - WARNING - [rules.py:201] - LLM rule audit failed (rate limit or error): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99958, Requested 4639. Please try again in 1h6m11.807999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}. Proceeding without LLM validation.
+2026-02-14 09:46:32 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_a73d630178a9]: completed
+2026-02-14 09:46:32 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_a73d630178a9]: started
+2026-02-14 09:46:32 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_88a41f25b239]: completed
+2026-02-14 09:46:32 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_88a41f25b239]: started
+2026-02-14 09:46:32 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 09:46:32 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 09:46:32 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:32] "GET /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:32 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:32] "GET /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:33 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:33 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99957, Requested 270. Please try again in 3m16.128s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:33 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 09:46:33 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:33 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99957, Requested 270. Please try again in 3m16.128s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:33 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 09:46:34 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:34 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99955, Requested 367. Please try again in 4m38.208s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:34 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 09:46:34 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:34 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99955, Requested 367. Please try again in 4m38.208s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:34 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 09:46:34 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:34] "GET /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:34 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:34] "GET /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:35 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:35 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99954, Requested 226. Please try again in 2m35.519999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:35 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 09:46:35 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:35 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99954, Requested 226. Please try again in 2m35.519999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:35 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 09:46:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:36] "OPTIONS /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:36 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:36 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99953, Requested 161. Please try again in 1m38.496s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_88a41f25b239]: completed
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_88a41f25b239]: started
+2026-02-14 09:46:36 - src.utils.logging - ERROR - [logging.py:132] - Error [req_88a41f25b239]: type=feature_engineering, message=Feature engineering failed: unsupported operand type(s) for +: 'NoneType' and 'float', context={}
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_88a41f25b239]: failed
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent ComplianceAgent [req_88a41f25b239]: started
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:99] - Agent ComplianceAgent [req_88a41f25b239]: completed (duration: 0.29ms)
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent RouterAgent [req_88a41f25b239]: started
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:99] - Agent RouterAgent [req_88a41f25b239]: completed (duration: 0.29ms)
+2026-02-14 09:46:36 - src.agents.underwriting - INFO - [underwriting.py:123] - Processing loan application
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_88a41f25b239]: started
+2026-02-14 09:46:36 - src.utils.logging - ERROR - [logging.py:132] - Error [req_88a41f25b239]: type=feature_engineering, message=Feature engineering failed: unsupported operand type(s) for +: 'NoneType' and 'float', context={}
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_88a41f25b239]: failed
+2026-02-14 09:46:36 - src.agents.underwriting - ERROR - [underwriting.py:157] - Loan processing failed: No derived loan features found in state
+2026-02-14 09:46:36 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:46:36 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99953, Requested 161. Please try again in 1m38.496s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_a73d630178a9]: completed
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_a73d630178a9]: started
+2026-02-14 09:46:36 - src.utils.logging - ERROR - [logging.py:132] - Error [req_a73d630178a9]: type=feature_engineering, message=Feature engineering failed: unsupported operand type(s) for +: 'NoneType' and 'float', context={}
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_a73d630178a9]: failed
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent ComplianceAgent [req_a73d630178a9]: started
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:99] - Agent ComplianceAgent [req_a73d630178a9]: completed (duration: 0.16ms)
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent RouterAgent [req_a73d630178a9]: started
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:99] - Agent RouterAgent [req_a73d630178a9]: completed (duration: 0.33ms)
+2026-02-14 09:46:36 - src.agents.underwriting - INFO - [underwriting.py:123] - Processing loan application
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_a73d630178a9]: started
+2026-02-14 09:46:36 - src.utils.logging - ERROR - [logging.py:132] - Error [req_a73d630178a9]: type=feature_engineering, message=Feature engineering failed: unsupported operand type(s) for +: 'NoneType' and 'float', context={}
+2026-02-14 09:46:36 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_a73d630178a9]: failed
+2026-02-14 09:46:36 - src.agents.underwriting - ERROR - [underwriting.py:157] - Loan processing failed: No derived loan features found in state
+2026-02-14 09:46:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:36] "GET /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:36 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:36] "OPTIONS /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:37 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:37] "GET /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:37 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:46:37 - src.agents.supervisor - INFO - [supervisor.py:89] - Supervisor decision: proceed - Continue workflow
+2026-02-14 09:46:37 - routes.workflow - INFO - [workflow.py:381] - Workflow completed for application: 5445d045-83c2-4b3c-b90b-74754358f682
+2026-02-14 09:46:37 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:46:37 - src.agents.supervisor - INFO - [supervisor.py:89] - Supervisor decision: proceed - Continue workflow
+2026-02-14 09:46:37 - routes.workflow - INFO - [workflow.py:381] - Workflow completed for application: 740f7045-c33f-4fb6-af03-33500df101cb
+2026-02-14 09:46:38 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:38] "GET /api/workflow/status/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:38 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:38] "OPTIONS /api/workflow/results/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:38 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:38] "GET /api/workflow/status/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:39] "GET /api/workflow/results/5445d045-83c2-4b3c-b90b-74754358f682 HTTP/1.1" 200 -
+2026-02-14 09:46:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:39] "OPTIONS /api/workflow/results/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:46:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:46:39] "GET /api/workflow/results/740f7045-c33f-4fb6-af03-33500df101cb HTTP/1.1" 200 -
+2026-02-14 09:51:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:51:22] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 09:51:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:51:22] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 409 -
+2026-02-14 09:51:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:51:22] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:51:22 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 09:51:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:51:22] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:51:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:51:22] "OPTIONS /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:51:24 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:51:24] "POST /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:51:46 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:51:46] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 09:51:47 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 09:51:47 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 09:51:47 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 09:51:47 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_94b2f16bc807]: started
+2026-02-14 09:51:49 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:51:49 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 09:51:51 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:51:51 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99873, Requested 328. Please try again in 2m53.664s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:51:51 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 50.0%
+2026-02-14 09:51:53 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:51:53 - src.utils.ocr_service_production - ERROR - [ocr_service_production.py:368] - LLM classification failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99871, Requested 239. Please try again in 1m35.04s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 09:51:53 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 90.0%
+2026-02-14 09:51:54 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 09:51:54 - groq._base_client - INFO - [_base_client.py:1068] - Retrying request to /openai/v1/chat/completions in 37.000000 seconds
+2026-02-14 09:52:32 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:52:32 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 09:52:32 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_94b2f16bc807]: completed (duration: 44829.58ms)
+2026-02-14 09:52:32 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:52:32] "POST /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 09:58:13 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 09:58:13 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 09:58:13 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 09:58:24 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:58:24] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 09:58:25 - routes.auth - INFO - [auth.py:93] - New user registered: 123456789012@daksha.local
+2026-02-14 09:58:25 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:58:25] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2026-02-14 09:58:25 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:58:25] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:58:25 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 09:58:25 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:58:25] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 09:58:25 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:58:25] "OPTIONS /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:58:27 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:58:27] "POST /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 09:58:51 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:58:51] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 09:58:51 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 09:58:52 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 09:58:52 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 09:58:52 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_ec18502aab2b]: started
+2026-02-14 09:58:58 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:58:59 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 09:59:00 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:59:00 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for bank_statement: 50.0%
+2026-02-14 09:59:02 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:59:02 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 90.0%
+2026-02-14 09:59:04 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 09:59:04 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 09:59:04 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_ec18502aab2b]: completed (duration: 12127.96ms)
+2026-02-14 09:59:04 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 09:59:04] "POST /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 10:03:59 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:03:59] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 10:03:59 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:03:59] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 409 -
+2026-02-14 10:03:59 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:03:59] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 10:03:59 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 10:03:59 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:03:59] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 10:03:59 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:03:59] "OPTIONS /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 10:04:01 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:04:01] "POST /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 10:05:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:05:30] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 10:05:31 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 10:05:31 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 10:05:31 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 10:05:31 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_57fffcd3a363]: started
+2026-02-14 10:05:33 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:05:33 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for bank_statement: 50.0%
+2026-02-14 10:05:35 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:05:35 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 10:05:37 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:05:37 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 10:05:39 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:05:39 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 90.0%
+2026-02-14 10:05:39 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_57fffcd3a363]: completed (duration: 8072.73ms)
+2026-02-14 10:05:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:05:39] "POST /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 10:07:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:42] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 10:07:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:42] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 10:07:42 - routes.applications - INFO - [applications.py:85] - Application created: 3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 by 123456789012@daksha.local
+2026-02-14 10:07:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:42] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 10:07:42 - routes.applications - INFO - [applications.py:85] - Application created: a39280d8-89b9-49e6-b942-34bda275fa49 by 123456789012@daksha.local
+2026-02-14 10:07:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:42] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 201 -
+2026-02-14 10:07:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:42] "OPTIONS /api/workflow/submit/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:42 - routes.workflow - INFO - [workflow.py:390] - Workflow started for application: 3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8
+2026-02-14 10:07:42 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:42] "[35m[1mPOST /api/workflow/submit/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1[0m" 202 -
+2026-02-14 10:07:43 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:43] "OPTIONS /api/workflow/submit/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:43 - routes.workflow - INFO - [workflow.py:390] - Workflow started for application: a39280d8-89b9-49e6-b942-34bda275fa49
+2026-02-14 10:07:43 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:43] "[35m[1mPOST /api/workflow/submit/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1[0m" 202 -
+2026-02-14 10:07:43 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 10:07:43 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 10:07:43 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 10:07:44 - src.agents.rules - INFO - [rules.py:47] - RulesAgent LLM initialized
+2026-02-14 10:07:44 - src.utils.fraud_detector - INFO - [fraud_detector.py:45] - FraudDetector initialized (enabled=True)
+2026-02-14 10:07:44 - root - INFO - [compliance.py:58] - Compliance LLM initialized
+2026-02-14 10:07:44 - root - ERROR - [compliance.py:121] - Failed to load rules: No module named 'langchain.text_splitter'
+2026-02-14 10:07:44 - src.agents.underwriting - INFO - [underwriting.py:41] - Initializing UnderwritingAgent
+2026-02-14 10:07:44 - src.utils.model_loader - INFO - [model_loader.py:31] - ModelLoader initialized with directory: models
+2026-02-14 10:07:45 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:45] "OPTIONS /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:45 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:45] "OPTIONS /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:45 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:45] "GET /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:45 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:45] "GET /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:46 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_finance loaded successfully
+2026-02-14 10:07:46 - src.utils.model_loader - INFO - [model_loader.py:71] - Model fin_encoders loaded successfully
+2026-02-14 10:07:46 - src.utils.model_loader - INFO - [model_loader.py:71] - Model ebm_health loaded successfully
+2026-02-14 10:07:46 - src.utils.model_loader - INFO - [model_loader.py:71] - Model health_encoders loaded successfully
+2026-02-14 10:07:46 - src.agents.underwriting - INFO - [underwriting.py:83] - All models loaded successfully
+2026-02-14 10:07:46 - src.agents.underwriting - INFO - [underwriting.py:49] - UnderwritingAgent initialized successfully
+2026-02-14 10:07:46 - src.agents.verification - INFO - [verification.py:41] - Initializing VerificationAgent
+2026-02-14 10:07:46 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:46] "GET /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:47 - src.agents.verification - INFO - [verification.py:60] - VerificationAgent initialized successfully with Pydantic parser
+2026-02-14 10:07:47 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:47] "GET /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:48 - src.agents.supervisor - INFO - [supervisor.py:29] - Initializing SupervisorAgent
+2026-02-14 10:07:48 - src.agents.supervisor - INFO - [supervisor.py:42] - SupervisorAgent initialized successfully
+2026-02-14 10:07:48 - src.utils.logging - INFO - [logging.py:79] - Request req_5dfa29af1ba1: type=loan, timestamp=2026-02-14T04:37:48.109211, metadata={}
+2026-02-14 10:07:48 - src.utils.logging - INFO - [logging.py:79] - Request req_1ed981eff665: type=loan, timestamp=2026-02-14T04:37:48.109325, metadata={}
+2026-02-14 10:07:48 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_5dfa29af1ba1]: started
+2026-02-14 10:07:48 - src.utils.logging - INFO - [logging.py:103] - Agent KYCAgent [req_1ed981eff665]: started
+2026-02-14 10:07:48 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:48] "GET /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:49 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:49] "GET /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:49 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_5dfa29af1ba1]: completed (duration: 1506.10ms)
+2026-02-14 10:07:49 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_5dfa29af1ba1]: started
+2026-02-14 10:07:49 - src.utils.logging - INFO - [logging.py:99] - Agent KYCAgent [req_1ed981eff665]: completed (duration: 1504.12ms)
+2026-02-14 10:07:49 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_1ed981eff665]: started
+2026-02-14 10:07:50 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:50] "OPTIONS /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:51 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:51] "GET /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:51 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:51] "OPTIONS /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:51 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:51] "GET /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:51 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:07:51 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for bank_statement: 50.0%
+2026-02-14 10:07:51 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:07:51 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for bank_statement: 50.0%
+2026-02-14 10:07:52 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:52] "GET /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:53 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:53] "GET /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:53 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:07:53 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 10:07:53 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:07:53 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 10:07:54 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:54] "GET /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:55 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:55] "GET /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:55 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:07:55 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 10:07:55 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:07:55 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 10:07:56 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:56] "OPTIONS /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:57 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:57] "GET /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:57 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:57] "OPTIONS /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:57 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:57] "GET /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:58 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:07:58 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 90.0%
+2026-02-14 10:07:58 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_1ed981eff665]: completed (duration: 8424.13ms)
+2026-02-14 10:07:58 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_1ed981eff665]: started
+2026-02-14 10:07:58 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:07:58 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 90.0%
+2026-02-14 10:07:58 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_5dfa29af1ba1]: completed (duration: 8479.42ms)
+2026-02-14 10:07:58 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_5dfa29af1ba1]: started
+2026-02-14 10:07:58 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 10:07:58 - src.agents.rules - WARNING - [rules.py:201] - LLM rule audit failed (rate limit or error): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98929, Requested 4637. Please try again in 51m21.024s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}. Proceeding without LLM validation.
+2026-02-14 10:07:58 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_1ed981eff665]: completed
+2026-02-14 10:07:58 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_1ed981eff665]: started
+2026-02-14 10:07:58 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 10:07:58 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 10:07:58 - src.agents.rules - WARNING - [rules.py:201] - LLM rule audit failed (rate limit or error): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98929, Requested 4653. Please try again in 51m34.848s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}. Proceeding without LLM validation.
+2026-02-14 10:07:58 - src.utils.logging - INFO - [logging.py:103] - Agent RulesAgent [req_5dfa29af1ba1]: completed
+2026-02-14 10:07:58 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_5dfa29af1ba1]: started
+2026-02-14 10:07:58 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 10:07:58 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:58] "GET /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:07:59 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:07:59] "GET /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:07:59 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:07:59 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 10:08:00 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:08:00 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 10:08:00 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 10:08:00 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 100000, Requested 270. Please try again in 3m53.28s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 10:08:00 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 10:08:00 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:00] "GET /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:08:00 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 10:08:00 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99999, Requested 270. Please try again in 3m52.416s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 10:08:01 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 10:08:01 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:01] "GET /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:08:01 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 10:08:01 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99998, Requested 159. Please try again in 2m15.648s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 10:08:01 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 10:08:01 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 10:08:01 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99998, Requested 159. Please try again in 2m15.648s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 10:08:01 - src.utils.fraud_detector - ERROR - [fraud_detector.py:181] - Image analysis failed: Unable to get page count. Is poppler installed and in PATH?
+2026-02-14 10:08:02 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 10:08:02 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99997, Requested 226. Please try again in 3m12.672s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_5dfa29af1ba1]: completed
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_5dfa29af1ba1]: started
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_5dfa29af1ba1]: completed
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:103] - Agent ComplianceAgent [req_5dfa29af1ba1]: started
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:99] - Agent ComplianceAgent [req_5dfa29af1ba1]: completed (duration: 0.16ms)
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:103] - Agent RouterAgent [req_5dfa29af1ba1]: started
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:99] - Agent RouterAgent [req_5dfa29af1ba1]: completed (duration: 0.14ms)
+2026-02-14 10:08:02 - src.agents.underwriting - INFO - [underwriting.py:123] - Processing loan application
+2026-02-14 10:08:02 - src.agents.underwriting - INFO - [underwriting.py:151] - Loan prediction complete: True (probability: 95.00%)
+2026-02-14 10:08:02 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-14 10:08:02 - src.utils.fraud_detector - ERROR - [fraud_detector.py:545] - LLM consistency check failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01khb9tw6wfcwakerafn419kh1` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99997, Requested 226. Please try again in 3m12.672s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:103] - Agent FraudAgent [req_1ed981eff665]: completed
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_1ed981eff665]: started
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:103] - Agent FeatureEngineeringAgent [req_1ed981eff665]: completed
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:103] - Agent ComplianceAgent [req_1ed981eff665]: started
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:99] - Agent ComplianceAgent [req_1ed981eff665]: completed (duration: 0.21ms)
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:103] - Agent RouterAgent [req_1ed981eff665]: started
+2026-02-14 10:08:02 - src.utils.logging - INFO - [logging.py:99] - Agent RouterAgent [req_1ed981eff665]: completed (duration: 0.23ms)
+2026-02-14 10:08:02 - src.agents.underwriting - INFO - [underwriting.py:123] - Processing loan application
+2026-02-14 10:08:02 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:02] "OPTIONS /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:08:02 - src.agents.underwriting - INFO - [underwriting.py:151] - Loan prediction complete: True (probability: 95.00%)
+2026-02-14 10:08:03 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:03] "GET /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:08:03 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:03] "OPTIONS /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:08:03 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:08:03 - src.agents.verification - INFO - [verification.py:79] - Loan verification: False
+2026-02-14 10:08:03 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:03] "GET /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:08:03 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:08:03 - src.agents.verification - INFO - [verification.py:79] - Loan verification: False
+2026-02-14 10:08:03 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:08:03 - src.agents.supervisor - INFO - [supervisor.py:89] - Supervisor decision: proceed - Continue workflow
+2026-02-14 10:08:03 - routes.workflow - INFO - [workflow.py:381] - Workflow completed for application: 3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8
+2026-02-14 10:08:03 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:08:03 - src.agents.supervisor - INFO - [supervisor.py:89] - Supervisor decision: proceed - Continue workflow
+2026-02-14 10:08:03 - routes.workflow - INFO - [workflow.py:381] - Workflow completed for application: a39280d8-89b9-49e6-b942-34bda275fa49
+2026-02-14 10:08:05 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:05] "GET /api/workflow/status/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:08:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:06] "GET /api/workflow/status/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:08:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:06] "OPTIONS /api/workflow/results/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:08:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:06] "GET /api/workflow/results/3fb06149-fd8f-4e75-8b4a-c36ff0dfb5a8 HTTP/1.1" 200 -
+2026-02-14 10:08:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:06] "OPTIONS /api/workflow/results/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:08:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:08:06] "GET /api/workflow/results/a39280d8-89b9-49e6-b942-34bda275fa49 HTTP/1.1" 200 -
+2026-02-14 10:16:08 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:16:08] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 10:16:09 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:16:09] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 409 -
+2026-02-14 10:16:09 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:16:09] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 10:16:09 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 10:16:09 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:16:09] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 10:16:09 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:16:09] "OPTIONS /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 10:16:11 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:16:11] "POST /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 10:16:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:16:21] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 10:16:21 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 10:16:21 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 10:16:21 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 10:16:21 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_50034ad01bbe]: started
+2026-02-14 10:16:23 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:16:23 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for bank_statement: 50.0%
+2026-02-14 10:16:25 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:16:25 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 10:16:27 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:16:27 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 10:16:29 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:16:29 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 90.0%
+2026-02-14 10:16:29 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_50034ad01bbe]: completed (duration: 8231.59ms)
+2026-02-14 10:16:29 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:16:29] "POST /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 10:17:45 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 10:17:45 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 10:17:45 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 10:17:52 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:17:52] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 10:17:52 - routes.auth - INFO - [auth.py:93] - New user registered: 123456789012@daksha.local
+2026-02-14 10:17:52 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:17:52] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2026-02-14 10:17:52 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:17:52] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 10:17:53 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 10:17:53 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:17:53] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 10:17:53 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:17:53] "OPTIONS /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 10:17:55 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:17:55] "POST /api/workflow/verify-kyc HTTP/1.1" 200 -
+2026-02-14 10:18:06 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:18:06] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 10:18:06 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in production mode
+2026-02-14 10:18:07 - src.utils.ocr_service_production - INFO - [ocr_service_production.py:70] - OCR.space key detected, using OCR.space API as primary OCR
+2026-02-14 10:18:07 - src.utils.ocr_service_mock - INFO - [ocr_service_mock.py:23] - OCR service initialized in mock mode
+2026-02-14 10:18:07 - src.utils.logging - INFO - [logging.py:103] - Agent OnboardingAgent [req_7c1773e7adef]: started
+2026-02-14 10:18:15 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:18:15 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for bank_statement: 50.0%
+2026-02-14 10:18:17 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:18:17 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for salary_slip: 80.0%
+2026-02-14 10:18:19 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:18:19 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for pan_card: 100.0%
+2026-02-14 10:18:21 - httpx - INFO - [_client.py:1038] - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-14 10:18:21 - src.agents.onboarding - INFO - [onboarding.py:134] - OCR confidence for unknown: 90.0%
+2026-02-14 10:18:21 - src.utils.logging - INFO - [logging.py:99] - Agent OnboardingAgent [req_7c1773e7adef]: completed (duration: 14435.74ms)
+2026-02-14 10:18:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 10:18:21] "POST /api/workflow/preview-ocr HTTP/1.1" 200 -

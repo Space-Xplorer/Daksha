@@ -9,7 +9,7 @@ const Navbar = () => {
   const isQuestActive = !['landing', 'partner', 'about', 'how-it-works'].includes(view);
 
   return (
-    <nav className="flex justify-between items-center px-12 py-8 z-50 border-b border-[#4B0082]/5 bg-[#FAF9F6]/80 backdrop-blur-md sticky top-0">
+    <nav className="flex justify-between items-center px-8 py-4 z-50 border-b border-[#4B0082]/5 bg-[#FAF9F6]/80 backdrop-blur-md sticky top-0">
       
       {/* --- LOGO --- */}
       <div 
@@ -20,10 +20,10 @@ const Navbar = () => {
           <Shield className="text-[#F4C2C2]" size={20} fill="currentColor" />
         </div>
         <div className="flex flex-col">
-          <span className="text-2xl font-black tracking-tighter text-[#4B0082] uppercase italic leading-none">
+          <span className="text-xl font-black tracking-tighter text-[#4B0082] uppercase italic leading-none">
             Daksha
           </span>
-          <span className="text-[8px] font-black uppercase tracking-[0.3em] text-[#F4C2C2] mt-1">
+          <span className="text-[7px] font-black uppercase tracking-[0.3em] text-[#F4C2C2] mt-1">
             Explainable. Realiable. Responsible.
           </span>
         </div>
@@ -55,7 +55,7 @@ const Navbar = () => {
             </button>
           </>
         ) : (
-          <div className="px-4 py-2 bg-[#4B0082]/5 rounded-full border border-[#4B0082]/10 flex items-center gap-3">
+           <div className="px-3 py-1.5 bg-[#4B0082]/5 rounded-full border border-[#4B0082]/10 flex items-center gap-3">
              <div className="w-2 h-2 bg-[#F4C2C2] rounded-full animate-pulse" />
              <span className="text-[9px] font-black uppercase tracking-widest text-[#4B0082]">Quest in Progress</span>
           </div>
@@ -67,7 +67,7 @@ const Navbar = () => {
         {isQuestActive ? (
           <button 
             onClick={() => setView('landing')} 
-            className="flex items-center gap-2 bg-white border-2 border-slate-100 text-slate-400 p-3 rounded-2xl hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all group"
+            className="flex items-center gap-2 bg-white border-2 border-slate-100 text-slate-400 px-3 py-2 rounded-2xl hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all group"
             title="Exit Quest"
           >
             <X size={20} className="group-hover:rotate-90 transition-transform" />
@@ -76,7 +76,7 @@ const Navbar = () => {
         ) : (
           <button 
             onClick={() => setView('kyc')} 
-            className="bg-[#4B0082] text-[#F4C2C2] border-2 border-[#4B0082] px-8 py-3 rounded-full font-black text-[10px] uppercase tracking-widest shadow-xl shadow-[#4B0082]/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-3"
+            className="bg-[#4B0082] text-[#F4C2C2] border-2 border-[#4B0082] px-6 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest shadow-xl shadow-[#4B0082]/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-3"
           >
             Start Quest <Rocket size={14} />
           </button>

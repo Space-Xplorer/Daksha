@@ -7,31 +7,31 @@ const Landing = () => {
   const { setView } = useShield();
 
   return (
-    <div className="relative min-h-[80vh] flex items-center px-12 overflow-hidden">
-      <div className="grid lg:grid-cols-2 gap-16 items-center w-full relative z-10">
+    <div className="relative min-h-screen flex items-center px-8 overflow-hidden">
+      <div className="grid lg:grid-cols-2 gap-10 items-center w-full relative z-10">
         
         {/* --- LEFT CONTENT --- */}
         <div className="animate-in slide-in-from-left-10 duration-1000">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#4B0082]/5 border border-[#4B0082]/10 text-[10px] font-black uppercase tracking-[0.2em] text-[#4B0082] mb-8 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#4B0082]/5 border border-[#4B0082]/10 text-[10px] font-black uppercase tracking-[0.2em] text-[#4B0082] mb-6 shadow-sm">
             <Zap size={14} className="text-[#F4C2C2]" fill="currentColor" /> 
-            World's First Glass-Box Underwriting
+            AI-Powered Underwriting
           </div>
           
-          <h1 className="text-[9vw] lg:text-[7.5vw] font-black leading-[0.85] tracking-tighter text-[#4B0082] mb-10">
+          <h1 className="text-[8.5vw] lg:text-[6.5vw] font-black leading-[0.85] tracking-tighter text-[#4B0082] mb-6">
             FAIR RISK.<br />
             <span className="text-transparent bg-clip-text bg-linear-to-r from-[#4B0082] via-[#F4C2C2] to-[#4B0082] bg-size-[200%_auto] animate-[shine_3s_linear_infinite] italic">
               DECODED.
             </span>
           </h1>
 
-          <p className="max-w-md text-slate-500 font-medium text-xl mb-12 leading-relaxed">
+          <p className="max-w-md text-slate-500 font-medium text-lg mb-8 leading-relaxed">
             No more "Black Box" rejections. Get verified, see the math, and unlock your true potential with <strong>Daksha Agentic Intelligence</strong>.
           </p>
 
           <div className="flex flex-wrap gap-6">
             <button 
               onClick={() => setView('kyc')} 
-              className="brinjal-gradient text-[#4b2d67] px-12 py-7 rounded-full font-black uppercase tracking-[0.2em] text-xs flex items-center gap-4 hover:scale-105 transition-all shadow-2xl shadow-[#4B0082]/30 pink-glow border-2 border-[#4B0082]"
+              className="brinjal-gradient text-[#4b2d67] px-10 py-5 rounded-full font-black uppercase tracking-[0.2em] text-xs flex items-center gap-4 hover:scale-105 transition-all shadow-2xl shadow-[#4B0082]/30 pink-glow border-2 border-[#4B0082]"
             >
               Initialize Quest <Rocket size={20} />
             </button>
@@ -43,15 +43,15 @@ const Landing = () => {
         <div className="relative animate-in zoom-in-95 duration-1000">
           <div className="absolute inset-0 bg-[#4B0082] rounded-[4rem] rotate-3 opacity-5 scale-105 blur-2xl" />
           
-          <GlassCard className="p-16 border-2 border-white/80 relative group">
+          <GlassCard className="p-10 border-2 border-white/80 relative group">
             {/* The Scanner Line Animation */}
             <div className="absolute inset-0 overflow-hidden rounded-[3rem]">
                <div className="h-0.5 w-full bg-linear-to-r from-transparent via-[#F4C2C2] to-transparent absolute top-0 left-0 shadow-[0_0_15px_#F4C2C2] animate-[scan_4s_ease-in-out_infinite] z-20" />
             </div>
 
-            <div className="flex justify-between items-start mb-16">
+            <div className="flex justify-between items-start mb-10">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-[#4B0082] flex items-center justify-center text-[#F4C2C2] shadow-xl rotate-3">
+                <div className="w-12 h-12 rounded-2xl bg-[#4B0082] flex items-center justify-center text-[#F4C2C2] shadow-xl rotate-3">
                   <BrainCircuit size={28} />
                 </div>
                 <div>
@@ -64,13 +64,13 @@ const Landing = () => {
               </div>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-4">
               {[
                 { label: "Identity Sync", icon: <Shield size={14} /> },
                 { label: "OCR Extraction", icon: <Sparkles size={14} /> },
                 { label: "EBM Logic Engine", icon: <Activity size={14} /> }
               ].map((agent, i) => (
-                <div key={i} className="flex items-center justify-between p-6 bg-white/60 rounded-3xl border border-white/50 group-hover:translate-x-2 transition-transform duration-500">
+                <div key={i} className="flex items-center justify-between p-4 bg-white/60 rounded-3xl border border-white/50 group-hover:translate-x-2 transition-transform duration-500">
                   <div className="flex items-center gap-4">
                     <div className="text-[#4B0082]">{agent.icon}</div>
                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{agent.label}</span>
@@ -82,7 +82,7 @@ const Landing = () => {
               ))}
             </div>
 
-            <div className="mt-12 flex items-center justify-center gap-2 text-[9px] font-black uppercase tracking-[0.4em] text-[#4B0082]/30 italic">
+            <div className="mt-8 flex items-center justify-center gap-2 text-[9px] font-black uppercase tracking-[0.4em] text-[#4B0082]/30 italic">
               <ShieldCheck size={14} /> Transparent Underwriting Protocol
             </div>
           </GlassCard>
