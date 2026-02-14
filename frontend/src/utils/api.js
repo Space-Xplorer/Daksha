@@ -37,6 +37,16 @@ export const loginUser = async (payload) => {
   });
 };
 
+export const verifyKyc = async (token, payload) => {
+  return requestJson("/workflow/verify-kyc", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  });
+};
+
 export const createApplication = async (token, payload) => {
   return requestJson("/applications/", {
     method: "POST",

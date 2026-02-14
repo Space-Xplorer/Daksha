@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { useShield } from '../context/ShieldContext';
-import { ArrowLeft, FileText, CheckCircle } from 'lucide-react';
+import { ArrowLeft, FileText, CheckCircle, Loader2 } from 'lucide-react';
 import { previewOcr } from '../utils/api';
 
 const Upload = () => {
-  const { setView, service, loanType, authToken, applicantData, uploadedDocs, setUploadedDocs, uploadedDocuments, setUploadedDocuments, setOcrPreviewData } = useShield();
+  const { setView, service, loanType, authToken, applicantData, uploadedDocs, setUploadedDocs, uploadedDocuments, setUploadedDocuments, setOcrPreviewData, kycData } = useShield();
   const inputRefs = useRef({});
   const [errorMessage, setErrorMessage] = useState('');
+  const [ocrLoading, setOcrLoading] = useState(false);
 
   const loanDocs = [
     { label: "Bank Statement (6 months)", type: "bank_statement", required: true },
@@ -76,6 +77,13 @@ const Upload = () => {
         <h2 className="text-3xl font-black text-[#4B0082] italic tracking-tighter">Vault: {service === 'loan' ? 'Loan Quest' : 'Life Quest'}</h2>
       </div>
 
+      {ocrLoading ? (
+        <div className="mb-8 flex items-center justify-center gap-3 bg-[#4B0082]/10 text-[#4B0082] rounded-2xl py-3 text-xs font-black uppercase tracking-widest">
+          <Loader2 size={16} className="animate-spin" />
+          OCR extraction in progress
+        </div>
+      ) : null}
+
       <div className="space-y-4 mb-12">
         {currentDocs.map((doc, i) => (
           <div key={i} className="flex items-center justify-between p-6 glass-card rounded-3xl">
@@ -119,21 +127,37 @@ const Upload = () => {
 
           try {
             setErrorMessage('');
+            setOcrLoading(true);
             const response = await previewOcr(authToken, {
               request_type: service,
               declared_data: applicantData,
-              uploaded_documents: uploadedDocuments
+              uploaded_documents: uploadedDocuments,
+              kyc_data: kycData
             });
-            setOcrPreviewData(response.ocr_extracted_data || {});
+            console.log('OCR Preview Response:', response);
+            console.log('Declared Prefill:', response.declared_prefill);
+            console.log('OCR Extracted Data:', response.ocr_extracted_data);
+            setOcrPreviewData(response.declared_prefill || response.ocr_extracted_data || {});
             setView('config');
           } catch (error) {
             setErrorMessage(error.message || 'Failed to extract documents.');
+          } finally {
+            setOcrLoading(false);
           }
         }}
-        disabled={!isComplete}
-        className="w-full py-8 brinjal-gradient text-white rounded-[2.5rem] font-black uppercase tracking-widest shadow-2xl disabled:opacity-30"
+        disabled={!isComplete || ocrLoading}
+        className={`w-full py-8 brinjal-gradient text-white rounded-[2.5rem] font-black uppercase tracking-widest shadow-2xl flex items-center justify-center gap-3 ${
+          ocrLoading ? 'opacity-100' : 'disabled:opacity-30'
+        }`}
       >
-        Continue to Declaration
+        {ocrLoading ? (
+          <>
+            <Loader2 size={18} className="animate-spin" />
+            Extracting OCR...
+          </>
+        ) : (
+          'Continue to Declaration'
+        )}
       </button>
     </div>
   );

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useShield } from '../context/ShieldContext';
 import { Fingerprint } from 'lucide-react';
-import { registerUser, loginUser } from '../utils/api';
+import { registerUser, loginUser, verifyKyc } from '../utils/api';
 
 const KYC = () => {
-  const { setView, userData, setUserData, setAuthToken, setWorkflowError } = useShield();
+  const { setView, userData, setUserData, setAuthToken, setKycData, setWorkflowError } = useShield();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [localError, setLocalError] = useState('');
 
@@ -45,6 +45,28 @@ const KYC = () => {
       });
 
       setAuthToken(loginResponse.access_token);
+
+      // Verify KYC and get mock DB data
+      try {
+        const kycResponse = await verifyKyc(loginResponse.access_token, {
+          name: normalizedName,
+          aadhaar: normalizedAadhaar,
+          dob: userData.dob
+        });
+        
+        if (kycResponse.verified && kycResponse.kyc_data) {
+          setKycData(kycResponse.kyc_data);
+          // Update userData with verified data
+          setUserData({
+            ...userData,
+            ...kycResponse.kyc_data
+          });
+        }
+      } catch (kycError) {
+        console.warn('KYC verification failed, continuing without prefill:', kycError);
+        // Continue even if KYC verification fails
+      }
+
       setView('selection');
     } catch (error) {
       setLocalError(error.message || 'Failed to validate identity');

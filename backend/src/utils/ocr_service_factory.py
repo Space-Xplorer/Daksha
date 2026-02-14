@@ -20,8 +20,12 @@ def get_ocr_service(groq_api_key: Optional[str] = None) -> Any:
     
     logger.info(f"Initializing OCR service in {ocr_mode} mode")
     
+    if ocr_mode in ["mock", "development", "dev", "test"]:
+        from src.utils.ocr_service_mock import OCRService
+        return OCRService(groq_api_key=groq_api_key)
+
     if ocr_mode != 'production':
-        raise RuntimeError(f"Unsupported OCR_MODE: {ocr_mode}. Set OCR_MODE=production.")
+        raise RuntimeError(f"Unsupported OCR_MODE: {ocr_mode}. Set OCR_MODE=production or OCR_MODE=mock.")
 
     try:
         from src.utils.ocr_service_production import ProductionOCRService

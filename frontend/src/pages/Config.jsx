@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useShield } from '../context/ShieldContext';
 import { ArrowLeft } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
@@ -13,7 +13,7 @@ const pedOptions = [
 ];
 
 const Config = () => {
-  const { setView, service, userData, setUserData, applicantData, setApplicantData, loanType, setLoanType, ocrPreviewData } = useShield();
+  const { setView, service, userData, setUserData, applicantData, setApplicantData, loanType, setLoanType, ocrPreviewData, kycData } = useShield();
   const [formData, setFormData] = useState({
     loan_type: loanType || 'home',
     employment_type: 'Salaried',
@@ -21,10 +21,27 @@ const Config = () => {
     alcohol: 'None',
     smoker: 'No',
     pre_existing_diseases: [],
+    ...kycData,
     ...applicantData,
     ...ocrPreviewData
   });
   const [formError, setFormError] = useState('');
+
+  // Update form data when OCR preview data or KYC data changes
+  useEffect(() => {
+    if (Object.keys(ocrPreviewData).length > 0 || Object.keys(kycData).length > 0) {
+      console.log('Updating form data with:', { kycData, ocrPreviewData });
+      setFormData(prev => ({
+        ...prev,
+        ...kycData,
+        ...ocrPreviewData
+      }));
+    }
+  }, [ocrPreviewData, kycData]);
+
+  useEffect(() => {
+    console.log('Config form data:', formData);
+  }, [formData]);
 
   const updateField = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -69,7 +86,7 @@ const Config = () => {
 
     setUserData({ ...userData, ...formData });
     setApplicantData({ ...applicantData, ...formData });
-    setView('upload');
+    setView('analysis');
   };
 
   return (

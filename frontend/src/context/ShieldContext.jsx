@@ -15,6 +15,7 @@ export const ShieldProvider = ({ children }) => {
   const [uploadedDocs, setUploadedDocs] = useState({});
   const [uploadedDocuments, setUploadedDocuments] = useState([]);
   const [applicantData, setApplicantData] = useState({});
+  const [kycData, setKycData] = useState({});
   const [ocrPreviewData, setOcrPreviewData] = useState({});
   const [loanType, setLoanType] = useState('home');
   const [authToken, setAuthToken] = useState(null);
@@ -31,6 +32,7 @@ export const ShieldProvider = ({ children }) => {
       uploadedDocs, setUploadedDocs,
       uploadedDocuments, setUploadedDocuments,
       applicantData, setApplicantData,
+      kycData, setKycData,
       ocrPreviewData, setOcrPreviewData,
       loanType, setLoanType,
       authToken, setAuthToken,

@@ -127,7 +127,8 @@ class MockDigiLockerAPI:
                     "pan_number": user_data.get("pan_number", user_data.get("pan")),
                     "passport_number": user_data.get("passport_number"),
                     "voter_id_number": user_data.get("voter_id_number"),
-                    "address": user_data.get("address")
+                    "address": user_data.get("address"),
+                    "cibil_score": user_data.get("cibil_score")
                 }
         
         # No match found

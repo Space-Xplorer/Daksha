@@ -103,6 +103,145 @@ def _materialize_uploaded_documents(app_id: str, uploaded_documents):
     return materialized
 
 
+def _build_declared_prefill(ocr_data, declared_data, kyc_data=None):
+    """
+    Build prefilled declaration form data from OCR extracted data and KYC verified data.
+    Priority: declared_data (user input) > ocr_data (documents) > kyc_data (mock DB)
+    """
+    prefill = dict(declared_data or {})
+    kyc = kyc_data or {}
+
+    def _pick(*values):
+        for value in values:
+            if value is not None and value != "":
+                return value
+        return None
+
+    def _to_float(value):
+        if value is None or value == "":
+            return None
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return None
+
+    def _normalize_gender(value):
+        if not value:
+            return None
+        text = str(value).strip().lower()
+        if text in ["m", "male"]:
+            return "Male"
+        if text in ["f", "female"]:
+            return "Female"
+        return "Other"
+
+    # Age (OCR > KYC)
+    age = _pick(ocr_data.get("age"))
+    if age is not None:
+        prefill.setdefault("age", _to_float(age))
+
+    # Gender (OCR > KYC)
+    gender = _normalize_gender(_pick(ocr_data.get("gender"), kyc.get("gender")))
+    if gender:
+        prefill.setdefault("gender", gender)
+
+    # Credit Score (KYC > OCR) - KYC is more reliable for CIBIL
+    credit_score = _pick(kyc.get("cibil_score"), ocr_data.get("cibil_score"))
+    if credit_score is not None:
+        prefill.setdefault("credit_score", int(float(credit_score)))
+
+    # Income (OCR only - not in KYC)
+    income_annum = _to_float(_pick(ocr_data.get("income_annum")))
+    monthly_income = _to_float(_pick(ocr_data.get("monthly_income")))
+    if monthly_income is None and income_annum is not None:
+        monthly_income = income_annum / 12.0
+    if monthly_income is not None:
+        prefill.setdefault("declared_monthly_income", round(monthly_income, 2))
+
+    # Property value (OCR only)
+    property_value = _to_float(_pick(ocr_data.get("property_value")))
+    if property_value is not None:
+        prefill.setdefault("property_value", property_value)
+
+    # Height & Weight (OCR only)
+    height_cm = _to_float(_pick(ocr_data.get("height_cm"), ocr_data.get("height")))
+    weight_kg = _to_float(_pick(ocr_data.get("weight_kg"), ocr_data.get("weight")))
+    if height_cm is not None:
+        prefill.setdefault("height", height_cm)
+    if weight_kg is not None:
+        prefill.setdefault("weight", weight_kg)
+
+    # Smoker (OCR only)
+    smoker = _pick(ocr_data.get("smoker"))
+    if smoker is not None:
+        prefill.setdefault("smoker", "Yes" if bool(smoker) else "No")
+
+    # Pre-existing diseases (OCR only)
+    pre_existing = []
+    if _pick(ocr_data.get("diabetes")):
+        pre_existing.append("Diabetes")
+    if _pick(ocr_data.get("bloodpressure")):
+        pre_existing.append("Hypertension")
+    if pre_existing:
+        prefill.setdefault("pre_existing_diseases", pre_existing)
+
+    # Additional KYC fields (address, pan_number) - for reference
+    if kyc.get("address"):
+        prefill.setdefault("address", kyc.get("address"))
+    if kyc.get("pan_number"):
+        prefill.setdefault("pan_number", kyc.get("pan_number"))
+
+    return prefill
+
+
+@bp.route('/verify-kyc', methods=['POST'])
+@jwt_required()
+def verify_kyc():
+    """
+    Verify KYC using DigiLocker mock API.
+    
+    Returns verified user data from mock database.
+    """
+    try:
+        from src.services.kyc import MockDigiLockerAPI
+        
+        data = request.get_json() or {}
+        name = data.get('name')
+        aadhaar = data.get('aadhaar')
+        dob = data.get('dob')
+        
+        if not name or not aadhaar:
+            return jsonify({'error': 'Name and Aadhaar are required'}), 400
+        
+        digilocker = MockDigiLockerAPI()
+        result = digilocker.verify_kyc(
+            submitted_aadhaar=aadhaar,
+            submitted_name=name,
+            submitted_dob=dob
+        )
+        
+        if result.get('status') == 'FAILED':
+            return jsonify({'error': result.get('reason', 'KYC verification failed')}), 400
+        
+        return jsonify({
+            'verified': True,
+            'kyc_data': {
+                'verified_id': result.get('verified_id'),
+                'name': result.get('name'),
+                'dob': result.get('dob'),
+                'gender': result.get('gender'),
+                'aadhaar_number': result.get('aadhaar_number'),
+                'pan_number': result.get('pan_number'),
+                'cibil_score': result.get('cibil_score'),
+                'address': result.get('address')
+            }
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"KYC verification error: {str(e)}")
+        return jsonify({'error': f'KYC verification failed: {str(e)}'}), 500
+
+
 @bp.route('/preview-ocr', methods=['POST'])
 @jwt_required()
 def preview_ocr():
@@ -114,6 +253,7 @@ def preview_ocr():
         request_type = data.get("request_type")
         uploaded_documents = data.get("uploaded_documents", [])
         declared_data = data.get("declared_data", {})
+        kyc_data = data.get("kyc_data", {})
 
         if not request_type:
             return jsonify({"error": "request_type is required"}), 400
@@ -132,8 +272,12 @@ def preview_ocr():
         onboarding_agent = OnboardingAgent()
         result_state = onboarding_agent.process_documents(state)
 
+        ocr_extracted_data = result_state.get("ocr_extracted_data", {})
+        declared_prefill = _build_declared_prefill(ocr_extracted_data, declared_data, kyc_data)
+
         return jsonify({
-            "ocr_extracted_data": result_state.get("ocr_extracted_data", {}),
+            "ocr_extracted_data": ocr_extracted_data,
+            "declared_prefill": declared_prefill,
             "ocr_documents": result_state.get("ocr_documents", [])
         }), 200
     except Exception as e:
@@ -320,8 +464,8 @@ def get_workflow_status(app_id):
             response['insurance_prediction'] = state.get('insurance_prediction')
             response['loan_explanation'] = state.get('loan_explanation')
             response['insurance_explanation'] = state.get('insurance_explanation')
-            response['loan_description'] = state.get('loan_explanation')
-            response['insurance_description'] = state.get('insurance_explanation')
+            response['loan_description'] = state.get('loan_description')
+            response['insurance_description'] = state.get('insurance_description')
             response['supervisor_decision'] = state.get('supervisor_decision')
         
         # Add error if failed
@@ -395,7 +539,7 @@ def get_workflow_results(app_id):
             'loan': {
                 'prediction': final_state.get('loan_prediction'),
                 'explanation': final_state.get('loan_explanation'),
-                'description': final_state.get('loan_explanation'),
+                'description': final_state.get('loan_description'),
                 'verification': final_state.get('loan_verification')
             } if final_state.get('loan_prediction') else None,
             
@@ -403,7 +547,7 @@ def get_workflow_results(app_id):
             'insurance': {
                 'prediction': final_state.get('insurance_prediction'),
                 'explanation': final_state.get('insurance_explanation'),
-                'description': final_state.get('insurance_explanation'),
+                'description': final_state.get('insurance_description'),
                 'verification': final_state.get('insurance_verification')
             } if final_state.get('insurance_prediction') else None,
             
