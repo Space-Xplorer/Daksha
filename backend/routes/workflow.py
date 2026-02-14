@@ -14,7 +14,8 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from src.schemas.state import create_initial_state
 from routes.applications import applications_db
-from src.utils.storage import save_applicant_data
+from src.utils.storage import save_declared_data
+from src.agents.onboarding import OnboardingAgent
 from src.utils.validation import check_basic_rules
 
 logger = logging.getLogger(__name__)
@@ -102,6 +103,44 @@ def _materialize_uploaded_documents(app_id: str, uploaded_documents):
     return materialized
 
 
+@bp.route('/preview-ocr', methods=['POST'])
+@jwt_required()
+def preview_ocr():
+    """
+    Run OCR extraction only to prefill the declaration form.
+    """
+    try:
+        data = request.get_json() or {}
+        request_type = data.get("request_type")
+        uploaded_documents = data.get("uploaded_documents", [])
+        declared_data = data.get("declared_data", {})
+
+        if not request_type:
+            return jsonify({"error": "request_type is required"}), 400
+
+        materialized = _materialize_uploaded_documents("preview", uploaded_documents)
+        state = create_initial_state(
+            request_type=request_type,
+            applicant_data=declared_data,
+            loan_type=declared_data.get("loan_type"),
+            submitted_name=None,
+            submitted_dob=None,
+            uploaded_documents=materialized,
+            application_id=None
+        )
+
+        onboarding_agent = OnboardingAgent()
+        result_state = onboarding_agent.process_documents(state)
+
+        return jsonify({
+            "ocr_extracted_data": result_state.get("ocr_extracted_data", {}),
+            "ocr_documents": result_state.get("ocr_documents", [])
+        }), 200
+    except Exception as e:
+        logger.error(f"Preview OCR error: {e}")
+        return jsonify({"error": "Failed to preview OCR"}), 500
+
+
 @bp.route('/submit/<app_id>', methods=['POST'])
 @jwt_required()
 def submit_application(app_id):
@@ -139,6 +178,15 @@ def submit_application(app_id):
             application.get("uploaded_documents", [])
         )
 
+        save_declared_data(
+            app_id,
+            application.get("applicant_data", {}),
+            metadata={
+                "request_type": application.get("request_type"),
+                "user_email": user_email
+            }
+        )
+
         is_allowed, rule_reason = check_basic_rules(
             application["request_type"],
             application.get("applicant_data", {})
@@ -150,15 +198,6 @@ def submit_application(app_id):
                 "error": "Application rejected",
                 "reason": rule_reason
             }), 400
-
-        save_applicant_data(
-            app_id,
-            application.get("applicant_data", {}),
-            metadata={
-                "request_type": application.get("request_type"),
-                "user_email": user_email
-            }
-        )
 
         state = create_initial_state(
             request_type=application['request_type'],
@@ -258,6 +297,20 @@ def get_workflow_status(app_id):
         response['rules_passed'] = state.get('rules_passed', False)
         response['compliance_passed'] = state.get('compliance_passed', False)
         response['hitl_checkpoint'] = state.get('hitl_checkpoint', False)
+        response['rejected'] = state.get('rejected', False)
+        response['rejection_reason'] = state.get('rejection_reason')
+        response['rules_violations'] = state.get('rules_violations', [])
+        response['fraud_results'] = state.get('fraud_results', [])
+        response['loan_prediction'] = state.get('loan_prediction')
+        response['insurance_prediction'] = state.get('insurance_prediction')
+        response['loan_explanation'] = state.get('loan_explanation')
+        response['insurance_explanation'] = state.get('insurance_explanation')
+        response['loan_description'] = state.get('loan_explanation')
+        response['insurance_description'] = state.get('insurance_explanation')
+        response['loan_verification'] = state.get('loan_verification')
+        response['insurance_verification'] = state.get('insurance_verification')
+        response['supervisor_decision'] = state.get('supervisor_decision')
+        response['completed'] = state.get('completed', False)
         
         # Add results if completed
         if execution['status'] == 'completed':
@@ -267,6 +320,8 @@ def get_workflow_status(app_id):
             response['insurance_prediction'] = state.get('insurance_prediction')
             response['loan_explanation'] = state.get('loan_explanation')
             response['insurance_explanation'] = state.get('insurance_explanation')
+            response['loan_description'] = state.get('loan_explanation')
+            response['insurance_description'] = state.get('insurance_explanation')
             response['supervisor_decision'] = state.get('supervisor_decision')
         
         # Add error if failed
@@ -340,6 +395,7 @@ def get_workflow_results(app_id):
             'loan': {
                 'prediction': final_state.get('loan_prediction'),
                 'explanation': final_state.get('loan_explanation'),
+                'description': final_state.get('loan_explanation'),
                 'verification': final_state.get('loan_verification')
             } if final_state.get('loan_prediction') else None,
             
@@ -347,6 +403,7 @@ def get_workflow_results(app_id):
             'insurance': {
                 'prediction': final_state.get('insurance_prediction'),
                 'explanation': final_state.get('insurance_explanation'),
+                'description': final_state.get('insurance_explanation'),
                 'verification': final_state.get('insurance_verification')
             } if final_state.get('insurance_prediction') else None,
             
@@ -355,6 +412,11 @@ def get_workflow_results(app_id):
             
             # Errors
             'errors': final_state.get('errors', []),
+
+            # Engine outputs
+            'validation_report': final_state.get('validation_report', {}),
+            'derived_features': final_state.get('derived_features', {}),
+            'model_output': final_state.get('model_output', {}),
             
             # Metadata
             'completed': final_state.get('completed', False),
@@ -401,8 +463,8 @@ def get_hitl_data(app_id):
         
         return jsonify({
             'app_id': app_id,
-            'extracted_data': state.get('extracted_data', {}),
-            'applicant_data': state.get('applicant_data', {}),
+            'extracted_data': state.get('ocr_extracted_data', {}),
+            'applicant_data': state.get('declared_data', {}),
             'documents_processed': state.get('documents_processed', [])
         }), 200
         
@@ -456,7 +518,8 @@ def approve_hitl(app_id):
         # Apply corrections
         corrections = data.get('corrections', {})
         if corrections:
-            state['applicant_data'].update(corrections)
+            state.setdefault('declared_data', {}).update(corrections)
+            state.setdefault('applicant_data', {}).update(corrections)
             state['hitl_data_corrected'] = True
             state['hitl_corrections'] = corrections
         

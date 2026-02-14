@@ -7,7 +7,7 @@ const Selection = () => {
 
 const handleSelect = (type) => {
   setService(type);
-  setView('config'); // Now it goes to the details form first
+  setView('prelim');
 };
 
   return (
@@ -25,7 +25,7 @@ const handleSelect = (type) => {
           <ChevronRight className="mx-auto text-[#F4C2C2]" />
         </div>
 
-        <div onClick={() => handleSelect('health')} className="group glass-card p-12 rounded-[4rem] text-center cursor-pointer hover:border-[#4B0082] transition-all relative overflow-hidden">
+        <div onClick={() => handleSelect('insurance')} className="group glass-card p-12 rounded-[4rem] text-center cursor-pointer hover:border-[#4B0082] transition-all relative overflow-hidden">
           <div className="w-20 h-20 bg-[#4B0082] rounded-3xl flex items-center justify-center mx-auto mb-8 text-[#F4C2C2] group-hover:scale-110 transition shadow-sm"><Heart size={40} /></div>
           <h3 className="text-2xl font-black text-[#4B0082] mb-4">Life Shield</h3>
           <p className="text-slate-400 text-sm font-medium mb-8">Assess biomarkers and life premiums.</p>

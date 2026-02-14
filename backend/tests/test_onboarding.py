@@ -27,6 +27,8 @@ def _base_state(request_type: str):
 		"request_id": "ONBOARD-TEST",
 		"request_type": request_type,
 		"uploaded_documents": [],
+		"declared_data": {},
+		"ocr_extracted_data": {},
 		"applicant_data": {},
 		"errors": []
 	}
@@ -57,14 +59,14 @@ def test_onboarding_extracts_loan_fields(agent):
 
 	result = agent.process_documents(state)
 
-	extracted = result.get("extracted_data", {})
+	extracted = result.get("ocr_extracted_data", {})
 	assert extracted.get("cibil_score") == 750
 	assert extracted.get("income_annum") == 1200000.0
 	assert extracted.get("bank_asset_value") == 250000.0
 
 	assert result.get("onboarding_completed") is True
 	assert result.get("document_verification") is not None
-	assert result["applicant_data"].get("cibil_score") == 750
+	assert result["declared_data"].get("cibil_score") is None
 
 
 def test_onboarding_extracts_health_fields(agent):
@@ -77,7 +79,7 @@ def test_onboarding_extracts_health_fields(agent):
 
 	result = agent.process_documents(state)
 
-	extracted = result.get("extracted_data", {})
+	extracted = result.get("ocr_extracted_data", {})
 	assert extracted.get("hba1c") == 5.8
 	assert extracted.get("diabetes") == 0
 	assert extracted.get("cholesterol") == 180.0
@@ -102,5 +104,5 @@ def test_onboarding_handles_no_documents(agent):
 	result = agent.process_documents(state)
 
 	assert result.get("onboarding_completed") is True
-	assert result.get("extracted_data") == {}
+	assert result.get("ocr_extracted_data") == {}
 	assert result.get("document_verification") == {}

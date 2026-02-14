@@ -9,7 +9,7 @@ const Navbar = () => {
   const isQuestActive = !['landing', 'partner', 'about', 'how-it-works'].includes(view);
 
   return (
-    <nav className="flex justify-between items-center px-12 py-8 relative z-50 border-b border-[#4B0082]/5 bg-[#FAF9F6]/80 backdrop-blur-md sticky top-0">
+    <nav className="flex justify-between items-center px-12 py-8 z-50 border-b border-[#4B0082]/5 bg-[#FAF9F6]/80 backdrop-blur-md sticky top-0">
       
       {/* --- LOGO --- */}
       <div 

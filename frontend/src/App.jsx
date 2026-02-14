@@ -8,6 +8,7 @@ import Upload from './pages/Upload';
 import Analysis from './pages/Analysis';
 import Result from './pages/Result';
 import Config from './pages/Config';
+import Preliminary from './pages/Preliminary';
 import Partners from './pages/Partners';
 import About from './pages/About';
 import HowItWorks from './pages/HowItWorks';
@@ -19,6 +20,7 @@ const NavigationSource = () => {
     case 'landing': return <Landing />;
     case 'kyc': return <KYC />;
     case 'selection': return <Selection />;
+    case 'prelim': return <Preliminary />;
     case 'upload': return <Upload />;
     case 'analysis': return <Analysis />;
     case 'result': return <Result />;

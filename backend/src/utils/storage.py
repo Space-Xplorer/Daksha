@@ -21,16 +21,42 @@ def get_application_dir(app_id: str) -> Path:
 def _write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as handle:
-        json.dump(payload, handle, ensure_ascii=False, indent=2)
+        json.dump(payload, handle, ensure_ascii=True, indent=2)
+
+
+def save_declared_data(
+    app_id: str,
+    declared_data: Dict[str, Any],
+    metadata: Optional[Dict[str, Any]] = None
+) -> Path:
+    """Persist declared (user-typed) data to storage."""
+    payload = {
+        "metadata": metadata or {},
+        "declared_data": declared_data or {}
+    }
+    target = get_application_dir(app_id) / "declared_data.json"
+    _write_json(target, payload)
+    return target
 
 
 def save_applicant_data(app_id: str, applicant_data: Dict[str, Any], metadata: Optional[Dict[str, Any]] = None) -> Path:
-    """Persist applicant input data to storage."""
+    """Backward-compatible alias for declared data persistence."""
+    return save_declared_data(app_id, applicant_data, metadata)
+
+
+def save_ocr_data(
+    app_id: str,
+    ocr_extracted_data: Dict[str, Any],
+    ocr_documents: Optional[list[Dict[str, Any]]] = None,
+    metadata: Optional[Dict[str, Any]] = None
+) -> Path:
+    """Persist OCR extracted data and document artifacts to storage."""
     payload = {
         "metadata": metadata or {},
-        "applicant_data": applicant_data or {}
+        "ocr_extracted_data": ocr_extracted_data or {},
+        "ocr_documents": ocr_documents or []
     }
-    target = get_application_dir(app_id) / "applicant.json"
+    target = get_application_dir(app_id) / "ocr_extracted_data.json"
     _write_json(target, payload)
     return target
 
@@ -41,12 +67,50 @@ def save_extracted_data(
     ocr_documents: Optional[list[Dict[str, Any]]] = None,
     metadata: Optional[Dict[str, Any]] = None
 ) -> Path:
-    """Persist OCR extracted data and document artifacts to storage."""
+    """Backward-compatible alias for OCR data persistence."""
+    return save_ocr_data(app_id, extracted_data, ocr_documents, metadata)
+
+
+def save_derived_features(
+    app_id: str,
+    derived_features: Dict[str, Any],
+    metadata: Optional[Dict[str, Any]] = None
+) -> Path:
+    """Persist derived features to storage."""
     payload = {
         "metadata": metadata or {},
-        "extracted_data": extracted_data or {},
-        "ocr_documents": ocr_documents or []
+        "derived_features": derived_features or {}
     }
-    target = get_application_dir(app_id) / "extracted.json"
+    target = get_application_dir(app_id) / "derived_features.json"
+    _write_json(target, payload)
+    return target
+
+
+def save_validation_report(
+    app_id: str,
+    validation_report: Dict[str, Any],
+    metadata: Optional[Dict[str, Any]] = None
+) -> Path:
+    """Persist validation report to storage."""
+    payload = {
+        "metadata": metadata or {},
+        "validation_report": validation_report or {}
+    }
+    target = get_application_dir(app_id) / "validation_report.json"
+    _write_json(target, payload)
+    return target
+
+
+def save_model_output(
+    app_id: str,
+    model_output: Dict[str, Any],
+    metadata: Optional[Dict[str, Any]] = None
+) -> Path:
+    """Persist model outputs to storage."""
+    payload = {
+        "metadata": metadata or {},
+        "model_output": model_output or {}
+    }
+    target = get_application_dir(app_id) / "model_output.json"
     _write_json(target, payload)
     return target

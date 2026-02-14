@@ -10,6 +10,7 @@
       "aadhaar_last4": "9012",
       "pan": "ABCDE1234F",
       "pan_number": "ABCDE1234F",
+      "cibil_score": 780,
       "passport_number": "P1234567",
       "voter_id_number": "ABC1234567"
     },
@@ -23,6 +24,7 @@
       "aadhaar_last4": "0123",
       "pan": "FGHIJ5678K",
       "pan_number": "FGHIJ5678K",
+      "cibil_score": 720,
       "passport_number": "N7654321",
       "voter_id_number": "DEF2345678"
     },
@@ -36,6 +38,7 @@
       "aadhaar_last4": "1234",
       "pan": "KLMNO9012P",
       "pan_number": "KLMNO9012P",
+      "cibil_score": 810,
       "passport_number": "T3456789",
       "voter_id_number": "GHI3456789"
     },
@@ -49,6 +52,7 @@
       "aadhaar_last4": "2345",
       "pan": "PQRST3456U",
       "pan_number": "PQRST3456U",
+      "cibil_score": 690,
       "passport_number": "M2345678",
       "voter_id_number": "JKL4567890"
     },
@@ -62,6 +66,7 @@
       "aadhaar_last4": "4567",
       "pan": "ABCDE6789L",
       "pan_number": "ABCDE6789L",
+      "cibil_score": 640,
       "passport_number": "Z1234567",
       "voter_id_number": "PQR6789012"
     },
@@ -75,6 +80,7 @@
       "aadhaar_last4": "3456",
       "pan": "UVWXY7890Z",
       "pan_number": "UVWXY7890Z",
+      "cibil_score": 760,
       "passport_number": "R9876543",
       "voter_id_number": "MNO5678901"
     }

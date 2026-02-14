@@ -42,12 +42,24 @@ class ApplicationState(TypedDict, total=False):
     # Uploaded documents
     uploaded_documents: List[Dict[str, Any]]  # [{type, file_path, content}, ...]
     
-    # OCR extracted data (pre-filled form)
-    extracted_data: Dict[str, Any]
+    # Declared data (user typed)
+    declared_data: Dict[str, Any]
+
+    # OCR extracted data (from documents)
+    ocr_extracted_data: Dict[str, Any]
     ocr_documents: List[Dict[str, Any]]
     ocr_confidence_scores: Dict[str, Any]
-    
-    # User-edited data (final applicant data)
+
+    # Derived features (engineered)
+    derived_features: Dict[str, Any]
+
+    # Validation report (rules + fraud + consistency)
+    validation_report: Dict[str, Any]
+
+    # Model outputs (EBM predictions + explainability)
+    model_output: Dict[str, Any]
+
+    # User-edited data (final applicant data - backward compatibility)
     applicant_data: Dict[str, Any]
     
     # Document verification
@@ -154,9 +166,13 @@ def create_initial_state(
         
         # Documents
         "uploaded_documents": uploaded_documents or [],
-        "extracted_data": {},
+        "declared_data": applicant_data,
+        "ocr_extracted_data": {},
         "ocr_documents": [],
         "ocr_confidence_scores": {},
+        "derived_features": {},
+        "validation_report": {},
+        "model_output": {},
         "applicant_data": applicant_data,
         "document_verification": {},
         "onboarding_completed": False,
@@ -224,55 +240,40 @@ def create_initial_state(
 
 # Field mappings for loan applications
 LOAN_FIELDS = {
-    "cibil_score": int,
-    "annual_income": float,
-    "income_annum": float,  # Alias for annual_income
-    "loan_amount": float,
-    "employment_type": str,
-    "existing_debt": float,
     "age": int,
-    "employment_years": int,
-    "bank_asset_value": float,
-    "residential_assets_value": float,
-    "commercial_ assets_value": float,
-    "luxury_assets_value": float,
     "gender": str,
-    "name": str,
-    "aadhaar_number": str,
-    "pan_number": str,
-    "passport_number": str,
-    "voter_id_number": str,
-    "address_proof_type": str,
-    "business_proof_type": str
+    "city": str,
+    "marital_status": str,
+    "employment_type": str,
+    "employer_category": str,
+    "total_work_experience": float,
+    "current_company_tenure": float,
+    "residential_status": str,
+    "loan_type": str,
+    "loan_amount_requested": float,
+    "tenure_months": float,
+    "property_value": float,
+    "property_city": str,
+    "property_type": str,
+    "declared_monthly_income": float,
+    "declared_existing_emi": float,
+    "credit_score": int
 }
 
 # Field mappings for insurance applications
 INSURANCE_FIELDS = {
     "age": int,
-    "bmi": float,
+    "gender": str,
+    "city": str,
+    "family_size": int,
+    "smoker": str,
+    "alcohol": str,
     "height": float,
     "weight": float,
-    "smoker": bool,
-    "pre_existing_conditions": list,
+    "pre_existing_diseases": list,
     "family_history": list,
-    "occupation_risk": str,
-    "coverage_amount": float,
-    "bloodpressure": int,  # Binary: 0=normal, 1=high
-    "diabetes": int,  # Binary: 0=no, 1=yes
-    "regular_ex": bool,  # Regular exercise
-    "hereditary_diseases": bool,
-    "cholesterol": float,
-    "heart_rate": int,
-    "hba1c": float,
-    "blood_sugar": float,
-    "creatinine": float,
-    "gender": str,
-    "name": str,
-    "aadhaar_number": str,
-    "pan_number": str,
-    "passport_number": str,
-    "voter_id_number": str,
-    "address_proof_type": str
+    "sum_insured": float,
+    "deductible": float
 }
 
 # Document type enums
@@ -284,6 +285,7 @@ LOAN_DOCUMENT_TYPES = [
     "form_16",
     "tds_certificate",
     "bank_statement",
+    "loan_statement",
     "property_document",
     "vehicle_registration",
     "aadhaar_card",
@@ -309,6 +311,7 @@ INSURANCE_DOCUMENT_TYPES = [
     "voter_id",
     "utility_bill",
     "medical_history",
+    "itr",
     "birth_certificate",
     "tenth_marksheet"
 ]

@@ -14,7 +14,7 @@ from src.utils.ocr_service_factory import get_ocr_service
 from src.utils.ocr_service_mock import OCRService as MockOCRService
 from src.utils.logging import log_agent_execution, log_error
 from src.utils.error_handling import safe_agent_wrapper
-from src.utils.storage import save_extracted_data
+from src.utils.storage import save_ocr_data
 
 
 class OnboardingAgent:
@@ -63,7 +63,7 @@ class OnboardingAgent:
             if not uploaded_docs:
                 # No documents uploaded, mark as completed (manual entry mode)
                 state["onboarding_completed"] = True
-                state["extracted_data"] = {}
+                state["ocr_extracted_data"] = {}
                 state["document_verification"] = {}
                 
                 duration_ms = (time.time() - start_time) * 1000
@@ -157,20 +157,15 @@ class OnboardingAgent:
                 )
             
             # Update state with extracted data and confidence scores
-            state["extracted_data"] = extracted_data
+            state["ocr_extracted_data"] = extracted_data
             state["document_verification"] = verification_status
             state["ocr_confidence_scores"] = ocr_confidence_scores  # Add confidence tracking
             state["ocr_documents"] = ocr_documents
             
-            # Merge extracted data with applicant_data (don't overwrite existing)
-            for key, value in extracted_data.items():
-                if key not in state["applicant_data"] or state["applicant_data"][key] is None:
-                    state["applicant_data"][key] = value
-            
             state["onboarding_completed"] = True
 
             if state.get("application_id"):
-                save_extracted_data(
+                save_ocr_data(
                     state["application_id"],
                     extracted_data,
                     ocr_documents=ocr_documents,

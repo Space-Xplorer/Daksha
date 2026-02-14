@@ -310,18 +310,17 @@ class TestComplianceRejectionScenarios:
         
         # KYC should pass
         assert final_state["kyc_verified"] is True
-        
-        # Compliance should fail
-        assert final_state["compliance_passed"] is False
-        assert len(final_state.get("compliance_violations", [])) > 0
-        
-        # Check for CIBIL-related violation
-        violations = final_state.get("compliance_violations", [])
-        cibil_violation = any("cibil" in str(v).lower() or "credit" in str(v).lower() 
-                             for v in violations)
+
+        # Rule engine should fail on credit score threshold
+        assert final_state.get("rules_passed") is False
+        assert len(final_state.get("rules_violations", [])) > 0
+
+        violations = final_state.get("rules_violations", [])
+        cibil_violation = any("credit" in str(v).lower() or "score" in str(v).lower()
+                     for v in violations)
         assert cibil_violation
-        
-        # Workflow should stop after compliance failure
+
+        # Workflow should stop after rules failure
         assert final_state.get("loan_prediction") is None
     
     def test_compliance_rejection_high_risk_insurance(self, invalid_insurance_application_high_risk):
@@ -377,7 +376,7 @@ class TestDocumentVerificationScenarios:
         assert "loan_prediction" in final_state
         
         # Onboarding should handle missing documents gracefully
-        assert "extracted_data" in final_state
+        assert "ocr_extracted_data" in final_state
 
 
 class TestHITLWorkflow:

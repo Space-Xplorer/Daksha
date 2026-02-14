@@ -527,3 +527,67 @@
  * Running on http://127.0.0.1:8000
  * Running on http://10.100.9.33:8000
 2026-02-14 01:05:05 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 06:18:37 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 06:18:37 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 06:18:37 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 06:22:13 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:22:13] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 06:22:26 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:22:26] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 06:24:51 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:24:51] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 06:26:06 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 06:26:06 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 06:26:06 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 06:26:39 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:26:39] "[33mOPTIONS /auth/register HTTP/1.1[0m" 404 -
+2026-02-14 06:28:02 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 06:28:02 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 06:28:02 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 06:28:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:28:21] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 06:28:22 - routes.auth - INFO - [auth.py:93] - New user registered: 123456789012@daksha.local
+2026-02-14 06:28:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:28:22] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2026-02-14 06:28:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:28:22] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 06:28:22 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 06:28:22 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:28:22] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 06:30:46 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:30:46] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 06:30:46 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:30:46] "OPTIONS /api/applications/ HTTP/1.1" 200 -
+2026-02-14 06:30:46 - routes.applications - ERROR - [applications.py:93] - Create application error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2026-02-14 06:30:46 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:30:46] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 500 -
+2026-02-14 06:30:46 - routes.applications - ERROR - [applications.py:93] - Create application error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2026-02-14 06:30:46 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:30:46] "[35m[1mPOST /api/applications/ HTTP/1.1[0m" 500 -
+2026-02-14 06:37:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:37:20] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 06:37:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:37:20] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 409 -
+2026-02-14 06:37:20 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:37:20] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 06:37:21 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 06:37:21 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:37:21] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 06:58:45 - root - INFO - [logging.py:66] - Logging initialized at INFO level
+2026-02-14 06:58:45 - werkzeug - INFO - [_internal.py:97] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.100.9.33:8000
+2026-02-14 06:58:45 - werkzeug - INFO - [_internal.py:97] - [33mPress CTRL+C to quit[0m
+2026-02-14 06:59:10 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:59:10] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 06:59:10 - routes.auth - INFO - [auth.py:93] - New user registered: 123456789012@daksha.local
+2026-02-14 06:59:10 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:59:10] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2026-02-14 06:59:10 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:59:10] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 06:59:11 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 06:59:11 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:59:11] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 06:59:53 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:59:53] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 06:59:53 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in development mode
+2026-02-14 06:59:53 - routes.workflow - ERROR - [workflow.py:140] - Preview OCR error: Unsupported OCR_MODE: development. Set OCR_MODE=production.
+2026-02-14 06:59:53 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 06:59:53] "[35m[1mPOST /api/workflow/preview-ocr HTTP/1.1[0m" 500 -
+2026-02-14 07:02:30 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 07:02:30] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-02-14 07:02:31 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 07:02:31] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 409 -
+2026-02-14 07:02:31 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 07:02:31] "OPTIONS /api/auth/login HTTP/1.1" 200 -
+2026-02-14 07:02:31 - routes.auth - INFO - [auth.py:151] - User logged in: 123456789012@daksha.local
+2026-02-14 07:02:31 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 07:02:31] "POST /api/auth/login HTTP/1.1" 200 -
+2026-02-14 07:03:09 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 07:03:09] "OPTIONS /api/workflow/preview-ocr HTTP/1.1" 200 -
+2026-02-14 07:03:09 - src.utils.ocr_service_factory - INFO - [ocr_service_factory.py:21] - Initializing OCR service in development mode
+2026-02-14 07:03:09 - routes.workflow - ERROR - [workflow.py:140] - Preview OCR error: Unsupported OCR_MODE: development. Set OCR_MODE=production.
+2026-02-14 07:03:09 - werkzeug - INFO - [_internal.py:97] - 127.0.0.1 - - [14/Feb/2026 07:03:09] "[35m[1mPOST /api/workflow/preview-ocr HTTP/1.1[0m" 500 -

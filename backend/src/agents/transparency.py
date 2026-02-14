@@ -45,7 +45,8 @@ class TransparencyAgent:
 	def explain_loan_decision(self, state: ApplicationState) -> ApplicationState:
 		"""Generate explanation for loan decision."""
 		prediction = state.get("loan_prediction") or {}
-		reasoning = prediction.get("reasoning") or {}
+		model_output = (state.get("model_output") or {}).get("loan", {})
+		reasoning = model_output.get("feature_contributions") or prediction.get("reasoning") or {}
 
 		approved = bool(prediction.get("approved"))
 		probability = float(prediction.get("probability", 0.0))
@@ -71,7 +72,8 @@ class TransparencyAgent:
 	def explain_insurance_premium(self, state: ApplicationState) -> ApplicationState:
 		"""Generate explanation for insurance premium."""
 		prediction = state.get("insurance_prediction") or {}
-		reasoning = prediction.get("reasoning") or {}
+		model_output = (state.get("model_output") or {}).get("insurance", {})
+		reasoning = model_output.get("feature_contributions") or prediction.get("reasoning") or {}
 
 		premium = float(prediction.get("premium", 0.0))
 		top_factors = self._format_top_factors(reasoning)

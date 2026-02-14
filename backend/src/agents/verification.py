@@ -103,7 +103,7 @@ class VerificationAgent:
         """
         try:
             prediction = state["loan_prediction"]
-            applicant_data = state["applicant_data"]
+            applicant_data = state.get("declared_data") or state.get("applicant_data") or {}
             
             if not self.llm or not self.parser:
                 return self._fallback_verification("REVIEW")
@@ -159,7 +159,7 @@ Task: Verify if this decision is reasonable. Consider:
         """
         try:
             prediction = state["loan_prediction"]
-            applicant_data = state["applicant_data"]
+            applicant_data = state.get("declared_data") or state.get("applicant_data") or {}
             
             # Format reasoning for prompt
             reasoning_text = self._format_reasoning(prediction.get("reasoning", {}))
@@ -218,7 +218,7 @@ Task: Verify if this decision is reasonable. Consider:
         """
         try:
             prediction = state["insurance_prediction"]
-            applicant_data = state["applicant_data"]
+            applicant_data = state.get("declared_data") or state.get("applicant_data") or {}
             
             if not self.llm or not self.parser:
                 return self._fallback_verification("REVIEW")

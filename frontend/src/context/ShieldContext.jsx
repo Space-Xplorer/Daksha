@@ -4,14 +4,41 @@ const ShieldContext = createContext();
 
 export const ShieldProvider = ({ children }) => {
   const [view, setView] = useState('landing');
-  const [service, setService] = useState(null); // 'loan' or 'health'
-  const [userData, setUserData] = useState({ aadhaar: "", name: "Spoorthy" });
+  const [service, setService] = useState(null); // 'loan' or 'insurance'
+  const [userData, setUserData] = useState({
+    aadhaar: "",
+    name: "",
+    dob: "",
+    email: "",
+    password: ""
+  });
   const [uploadedDocs, setUploadedDocs] = useState({});
+  const [uploadedDocuments, setUploadedDocuments] = useState([]);
+  const [applicantData, setApplicantData] = useState({});
+  const [ocrPreviewData, setOcrPreviewData] = useState({});
+  const [loanType, setLoanType] = useState('home');
+  const [authToken, setAuthToken] = useState(null);
+  const [applicationId, setApplicationId] = useState(null);
+  const [requestId, setRequestId] = useState(null);
+  const [workflowStatus, setWorkflowStatus] = useState(null);
+  const [workflowResult, setWorkflowResult] = useState(null);
+  const [workflowError, setWorkflowError] = useState(null);
 
   return (
     <ShieldContext.Provider value={{ 
       view, setView, service, setService, 
-      userData, setUserData, uploadedDocs, setUploadedDocs 
+      userData, setUserData,
+      uploadedDocs, setUploadedDocs,
+      uploadedDocuments, setUploadedDocuments,
+      applicantData, setApplicantData,
+      ocrPreviewData, setOcrPreviewData,
+      loanType, setLoanType,
+      authToken, setAuthToken,
+      applicationId, setApplicationId,
+      requestId, setRequestId,
+      workflowStatus, setWorkflowStatus,
+      workflowResult, setWorkflowResult,
+      workflowError, setWorkflowError
     }}>
       {children}
     </ShieldContext.Provider>

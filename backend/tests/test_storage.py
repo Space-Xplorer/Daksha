@@ -16,7 +16,7 @@ def test_save_applicant_data_writes_json(tmp_path, monkeypatch):
     assert path.exists()
     payload = json.loads(path.read_text(encoding="utf-8"))
     assert payload["metadata"]["source"] == "test"
-    assert payload["applicant_data"]["name"] == "Asha"
+    assert payload["declared_data"]["name"] == "Asha"
 
 
 def test_save_extracted_data_writes_json(tmp_path, monkeypatch):
@@ -36,5 +36,5 @@ def test_save_extracted_data_writes_json(tmp_path, monkeypatch):
     assert path.exists()
     payload = json.loads(path.read_text(encoding="utf-8"))
     assert payload["metadata"]["request_type"] == "loan"
-    assert payload["extracted_data"]["cibil_score"] == 720
+    assert payload["ocr_extracted_data"]["cibil_score"] == 720
     assert payload["ocr_documents"][0]["document_type"] == "cibil_report"

@@ -8,10 +8,6 @@ const Landing = () => {
 
   return (
     <div className="relative min-h-[80vh] flex items-center px-12 overflow-hidden">
-      {/* --- BACKGROUND ANIMATIONS --- */}
-      <div className="fixed top-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-[#4B0082] blur-[120px] opacity-10 animate-pulse" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-[#F4C2C2] rounded-full blur-[100px] opacity-20" />
-
       <div className="grid lg:grid-cols-2 gap-16 items-center w-full relative z-10">
         
         {/* --- LEFT CONTENT --- */}
@@ -23,7 +19,7 @@ const Landing = () => {
           
           <h1 className="text-[9vw] lg:text-[7.5vw] font-black leading-[0.85] tracking-tighter text-[#4B0082] mb-10">
             FAIR RISK.<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4B0082] via-[#F4C2C2] to-[#4B0082] bg-[length:200%_auto] animate-[shine_3s_linear_infinite] italic">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-[#4B0082] via-[#F4C2C2] to-[#4B0082] bg-size-[200%_auto] animate-[shine_3s_linear_infinite] italic">
               DECODED.
             </span>
           </h1>
@@ -50,7 +46,7 @@ const Landing = () => {
           <GlassCard className="p-16 border-2 border-white/80 relative group">
             {/* The Scanner Line Animation */}
             <div className="absolute inset-0 overflow-hidden rounded-[3rem]">
-               <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#F4C2C2] to-transparent absolute top-0 left-0 shadow-[0_0_15px_#F4C2C2] animate-[scan_4s_ease-in-out_infinite] z-20" />
+               <div className="h-0.5 w-full bg-linear-to-r from-transparent via-[#F4C2C2] to-transparent absolute top-0 left-0 shadow-[0_0_15px_#F4C2C2] animate-[scan_4s_ease-in-out_infinite] z-20" />
             </div>
 
             <div className="flex justify-between items-start mb-16">

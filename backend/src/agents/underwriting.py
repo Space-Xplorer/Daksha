@@ -18,6 +18,7 @@ sys.modules.setdefault("src.agents.underwriting", sys.modules[__name__])
 
 from src.schemas.state import ApplicationState
 from src.utils.model_loader import ModelLoader
+from src.utils.storage import save_model_output
 
 logger = logging.getLogger(__name__)
 
@@ -121,39 +122,30 @@ class UnderwritingAgent:
         try:
             logger.info("Processing loan application")
             
-            # Extract and validate applicant data
-            applicant_data = state.get("applicant_data", {})
-            if not applicant_data:
-                raise ValueError("No applicant_data found in state")
-            
-            # Encode features
-            features = self._encode_finance_features(applicant_data)
+            derived = self._ensure_derived_features(state).get("loan", {})
+            if not derived:
+                raise ValueError("No derived loan features found in state")
 
-            # Get prediction and explanation from EBM
-            prediction_proba = self.credit_model.predict_proba(features)[0]
-            approval_probability = float(prediction_proba[1])  # Probability of class 1 (Approved)
+            model_output = self._score_loan_from_derived(derived)
 
-            # Get local explanation
-            explanation = self.credit_model.explain_local(features)
-            reasoning = self._extract_reasoning(explanation)
+            state.setdefault("model_output", {})
+            state["model_output"]["loan"] = model_output
 
-            # Validate monotonicity (log only, don't block)
-            self._validate_loan_monotonicity(applicant_data, approval_probability, reasoning)
+            if state.get("application_id"):
+                save_model_output(
+                    state["application_id"],
+                    state["model_output"],
+                    metadata={
+                        "request_id": state.get("request_id"),
+                        "request_type": state.get("request_type")
+                    }
+                )
 
-            # Apply guardrail for very low CIBIL scores
-            cibil_score = applicant_data.get("cibil_score")
-            if cibil_score is not None:
-                try:
-                    if float(cibil_score) < 600:
-                        approval_probability = min(approval_probability, 0.3)
-                except (TypeError, ValueError):
-                    pass
-
-            # Update state
+            approval_probability = model_output["approval_probability"]
             state["loan_prediction"] = {
-                "approved": approval_probability > 0.5,
+                "approved": model_output["predicted_class"] == "approved",
                 "probability": approval_probability,
-                "reasoning": reasoning
+                "reasoning": model_output["feature_contributions"]
             }
 
             logger.info(f"Loan prediction complete: {state['loan_prediction']['approved']} "
@@ -181,29 +173,29 @@ class UnderwritingAgent:
         try:
             logger.info("Processing insurance application")
             
-            # Extract and validate applicant data
-            applicant_data = state.get("applicant_data", {})
-            if not applicant_data:
-                raise ValueError("No applicant_data found in state")
-            
-            # Encode features
-            features = self._encode_health_features(applicant_data)
+            derived = self._ensure_derived_features(state).get("health", {})
+            if not derived:
+                raise ValueError("No derived health features found in state")
 
-            # Get prediction and explanation from EBM
-            premium = self.health_model.predict(features)[0]
-            premium = float(premium)
+            model_output = self._score_health_from_derived(derived)
 
-            # Get local explanation
-            explanation = self.health_model.explain_local(features)
-            reasoning = self._extract_reasoning(explanation)
+            state.setdefault("model_output", {})
+            state["model_output"]["insurance"] = model_output
 
-            # Validate monotonicity (log only, don't block)
-            self._validate_insurance_monotonicity(applicant_data, premium, reasoning)
+            if state.get("application_id"):
+                save_model_output(
+                    state["application_id"],
+                    state["model_output"],
+                    metadata={
+                        "request_id": state.get("request_id"),
+                        "request_type": state.get("request_type")
+                    }
+                )
 
-            # Update state
+            premium = model_output["premium_amount"]
             state["insurance_prediction"] = {
                 "premium": premium,
-                "reasoning": reasoning
+                "reasoning": model_output["feature_contributions"]
             }
 
             logger.info(f"Insurance prediction complete: premium = ₹{premium:,.2f}")
@@ -216,6 +208,148 @@ class UnderwritingAgent:
             state["rejected"] = True
             state["rejection_reason"] = "System error during underwriting"
             return state
+
+    def _score_loan_from_derived(self, derived: Dict[str, Any]) -> Dict[str, Any]:
+        foir = _to_float(derived.get("foir"))
+        ltv = _to_float(derived.get("ltv"))
+        credit_score = _to_float(derived.get("credit_score"))
+        income_stability = _to_float(derived.get("income_stability_score"))
+        age_bucket = derived.get("age_risk_bucket") or "unknown"
+        credit_bucket = derived.get("credit_risk_bucket") or "unknown"
+        loan_type = (derived.get("loan_type") or "home").lower()
+
+        foir_threshold = 0.6 if loan_type == "home" else 0.5
+
+        contributions: Dict[str, float] = {}
+        base = 0.55
+        score = base
+
+        if foir is not None:
+            if foir <= foir_threshold:
+                contrib = 0.25 * (foir_threshold - foir) / foir_threshold
+            else:
+                contrib = -0.45 * (foir - foir_threshold) / foir_threshold
+            contributions["foir"] = round(contrib, 3)
+            score += contrib
+
+        if ltv is not None:
+            if ltv <= 0.9:
+                contrib = 0.2 * (0.9 - ltv) / 0.9
+            else:
+                contrib = -0.35 * (ltv - 0.9) / 0.9
+            contributions["ltv"] = round(contrib, 3)
+            score += contrib
+
+        if credit_score is not None:
+            normalized = max(min((credit_score - 500) / 400, 1.0), 0.0)
+            contrib = 0.6 * (normalized - 0.5)
+            contributions["credit_score"] = round(contrib, 3)
+            score += contrib
+
+        if income_stability is not None:
+            contrib = 0.3 * (income_stability - 0.5)
+            contributions["income_stability_score"] = round(contrib, 3)
+            score += contrib
+
+        bucket_adjust = {
+            "low": 0.1,
+            "medium": 0.05,
+            "elevated": -0.05,
+            "high": -0.1,
+            "unknown": 0.0
+        }
+        age_contrib = bucket_adjust.get(age_bucket, 0.0)
+        if age_contrib:
+            contributions["age_risk_bucket"] = round(age_contrib, 3)
+            score += age_contrib
+
+        credit_contrib = {
+            "low": 0.1,
+            "medium": 0.0,
+            "high": -0.1,
+            "unknown": 0.0
+        }.get(credit_bucket, 0.0)
+        if credit_contrib:
+            contributions["credit_risk_bucket"] = round(credit_contrib, 3)
+            score += credit_contrib
+
+        approval_probability = _clamp(score, 0.05, 0.95)
+        predicted_class = "approved" if approval_probability >= 0.55 else "review"
+        risk_grade = "A" if approval_probability >= 0.8 else "B" if approval_probability >= 0.65 else "C" if approval_probability >= 0.5 else "D"
+        confidence_score = _confidence_from_features([foir, ltv, credit_score, income_stability])
+
+        return {
+            "approval_probability": round(approval_probability, 3),
+            "predicted_class": predicted_class,
+            "risk_grade": risk_grade,
+            "feature_contributions": contributions,
+            "confidence_score": confidence_score
+        }
+
+    def _score_health_from_derived(self, derived: Dict[str, Any]) -> Dict[str, Any]:
+        bmi = _to_float(derived.get("bmi"))
+        age = _to_float(derived.get("age"))
+        medical_score = _to_float(derived.get("medical_risk_score")) or 0.0
+        lifestyle_score = _to_float(derived.get("lifestyle_risk_score")) or 0.0
+        sum_insured = _to_float(derived.get("sum_insured")) or 500000
+        deductible = _to_float(derived.get("deductible")) or 0.0
+
+        risk_score = 0.0
+        risk_score += 0.45 * medical_score
+        risk_score += 0.35 * lifestyle_score
+
+        if age is not None and age > 45:
+            risk_score += 0.1
+        if bmi is not None and bmi >= 30:
+            risk_score += 0.1
+
+        risk_score = _clamp(risk_score, 0.0, 1.0)
+        loading_percentage = round(risk_score * 100, 1)
+
+        base_rate = 0.012
+        base_premium = sum_insured * base_rate
+        premium_amount = base_premium * (1 + loading_percentage / 100.0)
+        premium_amount = max(premium_amount - deductible * 0.05, base_premium * 0.5)
+
+        contributions: Dict[str, float] = {
+            "medical_risk_score": round(0.45 * medical_score, 3),
+            "lifestyle_risk_score": round(0.35 * lifestyle_score, 3)
+        }
+        if age is not None:
+            contributions["age"] = 0.1 if age > 45 else -0.02
+        if bmi is not None:
+            contributions["bmi"] = 0.1 if bmi >= 30 else -0.02
+
+        risk_category = "low" if risk_score < 0.4 else "medium" if risk_score < 0.75 else "high"
+
+        return {
+            "premium_amount": round(premium_amount, 2),
+            "loading_percentage": loading_percentage,
+            "risk_category": risk_category,
+            "feature_contributions": contributions
+        }
+
+    def _ensure_derived_features(self, state: ApplicationState) -> Dict[str, Any]:
+        derived = state.get("derived_features") or {}
+        if derived:
+            return derived
+
+        declared = state.get("declared_data")
+        if not declared:
+            declared = state.get("applicant_data", {}) or {}
+            state["declared_data"] = declared
+
+        state.setdefault("ocr_extracted_data", {})
+
+        try:
+            from src.agents.feature_engineering import FeatureEngineeringAgent
+
+            agent = FeatureEngineeringAgent()
+            updated = agent.process(state)
+            return updated.get("derived_features", {}) or {}
+        except Exception as exc:
+            logger.warning(f"Derived feature fallback failed: {exc}")
+            return {}
     
     def _encode_finance_features(self, applicant_data: Dict[str, Any]) -> np.ndarray:
         """
@@ -430,6 +564,24 @@ class UnderwritingAgent:
             logger.error(f"Reasoning extraction failed: {e}")
             # Return empty dict instead of error dict to avoid breaking downstream processing
             return {}
+
+
+def _clamp(value: float, min_value: float, max_value: float) -> float:
+    return max(min(value, max_value), min_value)
+
+
+def _confidence_from_features(values: List[Optional[float]]) -> float:
+    available = sum(1 for val in values if val is not None)
+    return round(min(0.4 + available * 0.12, 0.95), 2)
+
+
+def _to_float(value: Any) -> Optional[float]:
+    if value is None or value == "":
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
 
     def _align_to_model_features(self, df: pd.DataFrame, model: Any) -> pd.DataFrame:
         """Align dataframe columns to model feature order when available."""

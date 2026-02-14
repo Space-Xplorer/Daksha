@@ -12,6 +12,7 @@ from src.services.kyc import KYCAgent
 from src.agents.onboarding import OnboardingAgent
 from src.agents.rules import RulesAgent
 from src.agents.fraud import FraudAgent
+from src.agents.feature_engineering import FeatureEngineeringAgent
 from src.agents.compliance import ComplianceAgent
 from src.agents.underwriting import UnderwritingAgent
 from src.agents.verification import VerificationAgent
@@ -27,6 +28,7 @@ kyc_agent = KYCAgent()
 onboarding_agent = OnboardingAgent()
 rules_agent = RulesAgent()
 fraud_agent = FraudAgent()
+feature_engineering_agent = FeatureEngineeringAgent()
 compliance_agent = ComplianceAgent()
 underwriting_agent = UnderwritingAgent()
 verification_agent = VerificationAgent()
@@ -58,6 +60,11 @@ def rules_node(state: ApplicationState) -> ApplicationState:
 def fraud_node(state: ApplicationState) -> ApplicationState:
     """OCR fraud detection node."""
     return fraud_agent.check_fraud(state)
+
+@safe_agent_wrapper
+def feature_engineering_node(state: ApplicationState) -> ApplicationState:
+    """Derived feature engineering node."""
+    return feature_engineering_agent.process(state)
 
 
 @safe_agent_wrapper
@@ -182,8 +189,13 @@ def should_continue_after_rules(state: ApplicationState) -> Literal["fraud", "en
     return "fraud"
 
 
-def should_continue_after_fraud(state: ApplicationState) -> Literal["compliance"]:
-    """Always continue to compliance after fraud checks."""
+def should_continue_after_fraud(state: ApplicationState) -> Literal["feature_engineering"]:
+    """Continue to feature engineering after fraud checks."""
+    return "feature_engineering"
+
+
+def should_continue_after_feature_engineering(state: ApplicationState) -> Literal["compliance"]:
+    """Continue to compliance after feature engineering."""
     return "compliance"
 
 
@@ -369,6 +381,7 @@ def create_daksha_workflow() -> StateGraph:
     workflow.add_node("onboarding", onboarding_node)
     workflow.add_node("rules", rules_node)
     workflow.add_node("fraud", fraud_node)
+    workflow.add_node("feature_engineering", feature_engineering_node)
     workflow.add_node("hitl_checkpoint", hitl_checkpoint_node)
     workflow.add_node("compliance", compliance_node)
     workflow.add_node("router", router_node)
@@ -415,10 +428,19 @@ def create_daksha_workflow() -> StateGraph:
         }
     )
 
-    # Fraud → Compliance
+    # Fraud → Feature Engineering
     workflow.add_conditional_edges(
         "fraud",
         should_continue_after_fraud,
+        {
+            "feature_engineering": "feature_engineering"
+        }
+    )
+
+    # Feature Engineering → Compliance
+    workflow.add_conditional_edges(
+        "feature_engineering",
+        should_continue_after_feature_engineering,
         {
             "compliance": "compliance"
         }

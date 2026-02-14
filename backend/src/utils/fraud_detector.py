@@ -610,7 +610,7 @@ Response:"""
             # Extract names from all documents
             names = []
             for doc in documents:
-                extracted_data = doc.get('extracted_data', {})
+                extracted_data = doc.get('ocr_extracted_data', {}) or doc.get('extracted_data', {})
                 name = extracted_data.get('name')
                 if name:
                     names.append(name.lower().strip())
@@ -623,7 +623,7 @@ Response:"""
             # Extract DOBs
             dobs = []
             for doc in documents:
-                extracted_data = doc.get('extracted_data', {})
+                extracted_data = doc.get('ocr_extracted_data', {}) or doc.get('extracted_data', {})
                 dob = extracted_data.get('dob') or extracted_data.get('date_of_birth')
                 if dob:
                     dobs.append(dob)

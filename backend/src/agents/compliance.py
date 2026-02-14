@@ -15,13 +15,11 @@ from src.schemas.state import ApplicationState
 from src.utils.llm_helpers import parse_json_response
 from src.utils.logging import log_agent_execution, log_error
 
-# Try to import RAG dependencies
+# Try to import RAG dependencies lazily
 try:
     from langchain_groq import ChatGroq
-    from langchain.text_splitter import RecursiveCharacterTextSplitter
     from langchain_community.vectorstores import FAISS
     from langchain_community.embeddings import HuggingFaceEmbeddings
-    from langchain.docstore.document import Document
     RAG_AVAILABLE = True
 except ImportError:
     RAG_AVAILABLE = False
@@ -98,6 +96,9 @@ class ComplianceAgent:
                 logging.warning("No regulatory rules files found")
                 return None
             
+            from langchain.text_splitter import RecursiveCharacterTextSplitter
+            from langchain.docstore.document import Document
+
             # Split documents into chunks
             text_splitter = RecursiveCharacterTextSplitter(
                 chunk_size=1000,
@@ -148,7 +149,7 @@ class ComplianceAgent:
                 return state
             
             request_type = state["request_type"]
-            applicant_data = state["applicant_data"]
+            applicant_data = state.get("declared_data") or state.get("applicant_data") or {}
             loan_type = state.get("loan_type")
             
             violations = []
@@ -223,7 +224,7 @@ class ComplianceAgent:
                 return state
             
             request_type = state["request_type"]
-            applicant_data = state["applicant_data"]
+            applicant_data = state.get("declared_data") or state.get("applicant_data") or {}
             loan_type = state.get("loan_type")
             
             violations = []
