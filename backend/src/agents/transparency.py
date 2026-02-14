@@ -70,6 +70,10 @@ class TransparencyAgent:
 		top_factor_names = self._top_contributors(reasoning, top_k=1)
 		insight = top_factor_names[0][0] if top_factor_names else "overall financial profile"
 
+		# DESCRIPTION = Simple factual model output (deterministic)
+		description = self._generate_loan_description(decision_text, probability, top_factors)
+		state["loan_description"] = description
+
 		# EXPLANATION = Friendly LLM advisory (for Daksha Advisor)
 		advisor_prompt = self.LOAN_ADVISOR_PROMPT.format(
 			decision=decision_text,
@@ -82,15 +86,17 @@ class TransparencyAgent:
 		)
 		validated = self._sanitize_advisor_text(self._validate_explanation(explanation))
 		state["loan_explanation"] = validated
-		state["loan_description"] = validated
 		
 		return state
 	
 	def _generate_loan_description(self, decision: str, probability: float, factors: str) -> str:
 		"""Generate deterministic factual description of model decision."""
 		return (
-			f"Model Decision: {decision} with {probability:.1%} confidence.\\n\\n"
-			f"Top Contributing Factors:\\n{factors}"
+			"--- OFFICIAL MODEL AUDIT ---\n"
+			f"DECISION: {decision}\n"
+			f"CONFIDENCE: {probability:.2%}\n\n"
+			f"RAW FEATURE CONTRIBUTIONS:\n{factors}\n"
+			"----------------------------"
 		)
 
 	def _sanitize_advisor_text(self, text: str) -> str:
@@ -98,7 +104,16 @@ class TransparencyAgent:
 		if not text:
 			return text
 		sentences = [s.strip() for s in text.replace("\n", " ").split(".") if s.strip()]
-		filtered = [s for s in sentences if not s.endswith("?")]
+		filtered = []
+		for sentence in sentences:
+			lowered = sentence.lower()
+			if sentence.endswith("?"):
+				continue
+			if "i'd like to know" in lowered or "i would like to know" in lowered:
+				continue
+			if "could you" in lowered or "please share" in lowered:
+				continue
+			filtered.append(sentence)
 		if not filtered:
 			return text
 		return ". ".join(filtered).strip() + "."
@@ -115,6 +130,10 @@ class TransparencyAgent:
 		top_factor_names = self._top_contributors(reasoning, top_k=1)
 		insight = top_factor_names[0][0] if top_factor_names else "overall health profile"
 
+		# DESCRIPTION = Simple factual model output (deterministic)
+		description = self._generate_insurance_description(premium, top_factors)
+		state["insurance_description"] = description
+
 		# EXPLANATION = Friendly LLM advisory (for Daksha Advisor)
 		advisor_prompt = self.INSURANCE_ADVISOR_PROMPT.format(
 			premium=f"{premium:,.0f}",
@@ -126,7 +145,6 @@ class TransparencyAgent:
 		)
 		validated = self._sanitize_advisor_text(self._validate_explanation(explanation))
 		state["insurance_explanation"] = validated
-		state["insurance_description"] = validated
 		
 		return state
 	
@@ -171,6 +189,10 @@ class TransparencyAgent:
 		top_factor_names = self._top_contributors(reasoning, top_k=1)
 		insight = top_factor_names[0][0] if top_factor_names else "overall financial profile"
 
+		# DESCRIPTION = Simple factual model output (deterministic)
+		description = self._generate_loan_description(decision_text, probability, top_factors)
+		state["loan_description"] = description
+
 		# EXPLANATION = Friendly LLM advisory (for Daksha Advisor)
 		advisor_prompt = self.LOAN_ADVISOR_PROMPT.format(
 			decision=decision_text,
@@ -183,7 +205,6 @@ class TransparencyAgent:
 		)
 		validated = self._sanitize_advisor_text(self._validate_explanation(explanation))
 		state["loan_explanation"] = validated
-		state["loan_description"] = validated
 		
 		return state
 	
@@ -199,6 +220,10 @@ class TransparencyAgent:
 		top_factor_names = self._top_contributors(reasoning, top_k=1)
 		insight = top_factor_names[0][0] if top_factor_names else "overall health profile"
 
+		# DESCRIPTION = Simple factual model output (deterministic)
+		description = self._generate_insurance_description(premium, top_factors)
+		state["insurance_description"] = description
+
 		# EXPLANATION = Friendly LLM advisory (for Daksha Advisor)
 		advisor_prompt = self.INSURANCE_ADVISOR_PROMPT.format(
 			premium=f"{premium:,.0f}",
@@ -210,17 +235,23 @@ class TransparencyAgent:
 		)
 		validated = self._sanitize_advisor_text(self._validate_explanation(explanation))
 		state["insurance_explanation"] = validated
-		state["insurance_description"] = validated
 		
 		return state
 
 	def _format_top_factors(self, reasoning: Dict[str, float], top_k: int = 5) -> str:
-		"""Sort and format top feature contributions for prompting."""
-		top_items = self._top_contributors(reasoning, top_k=top_k)
-		if not top_items:
-			return "- No strong factors were identified."
+		"""Directly converts EBM scores into a readable factual list."""
+		items = [(name, float(score)) for name, score in reasoning.items()]
+		items.sort(key=lambda x: abs(x[1]), reverse=True)
+		top_items = items[:top_k]
 
-		lines = [f"- {name}: {score:+.3f}" for name, score in top_items]
+		if not top_items:
+			return "- No significant factors identified."
+
+		lines = []
+		for name, score in top_items:
+			direction = "Positive" if score > 0 else "Negative"
+			label = name.replace("_", " ").title()
+			lines.append(f"• {label}: {score:+.4f} ({direction} Impact)")
 		return "\n".join(lines)
 
 	def _top_contributors(self, reasoning: Dict[str, float], top_k: int = 5) -> List[Tuple[str, float]]:

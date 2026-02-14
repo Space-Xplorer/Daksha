@@ -128,6 +128,11 @@ class UnderwritingAgent:
 
             model_output = self._score_loan_from_derived(derived)
 
+            applicant_data = state.get("declared_data") or state.get("applicant_data") or {}
+            model_explanation = self._try_extract_loan_explanation(applicant_data)
+            if model_explanation:
+                model_output["feature_contributions"] = model_explanation
+
             state.setdefault("model_output", {})
             state["model_output"]["loan"] = model_output
 
@@ -178,6 +183,11 @@ class UnderwritingAgent:
                 raise ValueError("No derived health features found in state")
 
             model_output = self._score_health_from_derived(derived)
+
+            applicant_data = state.get("declared_data") or state.get("applicant_data") or {}
+            model_explanation = self._try_extract_insurance_explanation(applicant_data)
+            if model_explanation:
+                model_output["feature_contributions"] = model_explanation
 
             state.setdefault("model_output", {})
             state["model_output"]["insurance"] = model_output
@@ -350,8 +360,38 @@ class UnderwritingAgent:
         except Exception as exc:
             logger.warning(f"Derived feature fallback failed: {exc}")
             return {}
+
+    def _try_extract_loan_explanation(self, applicant_data: Dict[str, Any]) -> Dict[str, float]:
+        if not applicant_data or not hasattr(self.credit_model, "explain_local"):
+            return {}
+
+        try:
+            df = self._encode_finance_features(applicant_data, return_dataframe=True)
+            explanation = self.credit_model.explain_local(df)
+            reasoning = self._extract_reasoning(explanation)
+            if reasoning:
+                self._validate_loan_monotonicity(applicant_data, 0.0, reasoning)
+            return reasoning
+        except Exception as exc:
+            logger.warning(f"Loan explanation extraction failed: {exc}")
+            return {}
+
+    def _try_extract_insurance_explanation(self, applicant_data: Dict[str, Any]) -> Dict[str, float]:
+        if not applicant_data or not hasattr(self.health_model, "explain_local"):
+            return {}
+
+        try:
+            df = self._encode_health_features(applicant_data, return_dataframe=True)
+            explanation = self.health_model.explain_local(df)
+            reasoning = self._extract_reasoning(explanation)
+            if reasoning:
+                self._validate_insurance_monotonicity(applicant_data, 0.0, reasoning)
+            return reasoning
+        except Exception as exc:
+            logger.warning(f"Insurance explanation extraction failed: {exc}")
+            return {}
     
-    def _encode_finance_features(self, applicant_data: Dict[str, Any]) -> np.ndarray:
+    def _encode_finance_features(self, applicant_data: Dict[str, Any], return_dataframe: bool = False):
         """
         Encode finance features using pre-trained encoders.
         
@@ -359,7 +399,7 @@ class UnderwritingAgent:
             applicant_data: Raw applicant data dictionary
         
         Returns:
-            Encoded feature array ready for model prediction
+            Encoded feature array ready for model prediction, or a dataframe when return_dataframe=True
         """
         try:
             # Create DataFrame from applicant data
@@ -423,9 +463,11 @@ class UnderwritingAgent:
             # Align to model feature order to avoid shape mismatches
             df = self._align_to_model_features(df, self.credit_model)
 
-            # Convert to numpy array
+            if return_dataframe:
+                logger.debug(f"Encoded finance features shape: {df.values.shape}")
+                return df
+
             features = df.values
-            
             logger.debug(f"Encoded finance features shape: {features.shape}")
             return features
             
@@ -433,7 +475,7 @@ class UnderwritingAgent:
             logger.error(f"Finance feature encoding failed: {e}")
             raise ValueError(f"Failed to encode finance features: {e}")
     
-    def _encode_health_features(self, applicant_data: Dict[str, Any]) -> np.ndarray:
+    def _encode_health_features(self, applicant_data: Dict[str, Any], return_dataframe: bool = False):
         """
         Encode health features using pre-trained encoders.
         
@@ -441,7 +483,7 @@ class UnderwritingAgent:
             applicant_data: Raw applicant data dictionary
         
         Returns:
-            Encoded feature array ready for model prediction
+            Encoded feature array ready for model prediction, or a dataframe when return_dataframe=True
         """
         try:
             # Normalize known boolean-like fields to numeric values
@@ -507,9 +549,11 @@ class UnderwritingAgent:
             # Align to model feature order to avoid shape mismatches
             df = self._align_to_model_features(df, self.health_model)
 
-            # Convert to numpy array
+            if return_dataframe:
+                logger.debug(f"Encoded health features shape: {df.values.shape}")
+                return df
+
             features = df.values
-            
             logger.debug(f"Encoded health features shape: {features.shape}")
             return features
             

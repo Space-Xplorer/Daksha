@@ -12,7 +12,9 @@ const Result = () => {
   const explanation = isInsurance
     ? workflowResult?.insurance?.explanation
     : workflowResult?.loan?.explanation;
-  const description = explanation;
+  const description = isInsurance
+    ? workflowResult?.insurance?.description
+    : workflowResult?.loan?.description;
   const fallbackReason = rejectionReason || workflowStatus?.error;
   const advisoryFallback = fallbackReason
     ? `Rejected: ${fallbackReason} To improve approval odds, align your inputs with the rule thresholds (e.g., reduce loan amount, increase property value, or adjust declared income) and resubmit.`
@@ -47,6 +49,12 @@ const Result = () => {
     
     return contributions;
   }, [modelOutput]);
+
+  const rawModelExplanation = modelOutput?.feature_contributions
+    ? Object.entries(modelOutput.feature_contributions).map(([name, value]) => (
+        `${name}: ${value}`
+      ))
+    : null;
 
   // Calculate normalized percentages for visualization (0-100%)
   const maxContribution = useMemo(() => {
@@ -139,9 +147,22 @@ const Result = () => {
             </div>
             <div className="p-6 bg-white/80 rounded-[3rem] border border-white">
               <div className="flex items-center gap-3 mb-4"><Sparkles className="text-[#4B0082]" /><h6 className="font-black text-[#4B0082] italic">Decision Description</h6></div>
-              <p className="text-sm text-slate-500 font-medium leading-relaxed italic">
-                {description || advisoryFallback || 'Decision description will appear here once the workflow completes.'}
-              </p>
+              {description ? (
+                <p className="text-sm text-slate-500 font-medium leading-relaxed italic">
+                  {description}
+                </p>
+              ) : (
+                <p className="text-sm text-slate-500 font-medium leading-relaxed italic">
+                  {advisoryFallback || 'Decision description will appear here once the workflow completes.'}
+                </p>
+              )}
+              {rawModelExplanation ? (
+                <ul className="mt-3 text-sm text-slate-500 font-medium leading-relaxed italic list-disc pl-5 space-y-1">
+                  {rawModelExplanation.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              ) : null}
             </div>
             <div className="p-6 bg-[#4B0082] text-white rounded-[3rem] shadow-xl">
               <p className="text-[10px] font-black uppercase tracking-widest opacity-60">

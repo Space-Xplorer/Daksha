@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useShield } from '../context/ShieldContext';
 import { Network, Loader2 } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
@@ -27,6 +27,13 @@ const Analysis = () => {
   const [step, setStep] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [errorCount, setErrorCount] = useState(0);
+  const pollRef = useRef(null);
+  const runRef = useRef(false);
+  const appIdRef = useRef(applicationId || null);
+
+  useEffect(() => {
+    appIdRef.current = applicationId || null;
+  }, [applicationId]);
 
   const steps = [
     "KYC Agent: Verifying identity...",
@@ -41,21 +48,72 @@ const Analysis = () => {
   ];
 
   useEffect(() => {
-    if (!authToken || !service || isRunning || workflowStatus?.status === 'completed' || workflowError) {
+    if (!authToken || !service || runRef.current || workflowStatus?.status === 'completed' || workflowError) {
       return;
     }
 
-    let pollInterval = null;
     let retryCount = 0;
     const MAX_RETRIES = 5;
+
+    const clearPoll = () => {
+      if (pollRef.current) {
+        clearTimeout(pollRef.current);
+        pollRef.current = null;
+      }
+    };
+
+    const pollStatus = async (appId) => {
+      try {
+        const statusResponse = await getWorkflowStatus(authToken, appId);
+        setWorkflowStatus(statusResponse);
+        setStep((prev) => Math.min(prev + 1, steps.length - 1));
+        retryCount = 0;
+        setErrorCount(0);
+
+        if (statusResponse.status === 'completed') {
+          clearPoll();
+          const results = await getWorkflowResults(authToken, appId);
+          setWorkflowResult(results);
+          setView('result');
+          runRef.current = false;
+          return;
+        }
+        if (statusResponse.status === 'failed') {
+          clearPoll();
+          setWorkflowError(statusResponse.error || 'Workflow failed');
+          runRef.current = false;
+          return;
+        }
+
+        pollRef.current = setTimeout(() => {
+          pollStatus(appId);
+        }, 2000);
+      } catch (error) {
+        retryCount += 1;
+        setErrorCount(retryCount);
+
+        if (retryCount >= MAX_RETRIES || String(error.message || '').toLowerCase().includes('404')) {
+          clearPoll();
+          setWorkflowError(error.message || 'Failed to fetch workflow status');
+          setIsRunning(false);
+          runRef.current = false;
+          return;
+        }
+
+        pollRef.current = setTimeout(() => {
+          pollStatus(appId);
+        }, 2000);
+      }
+    };
 
     const runWorkflow = async () => {
       setIsRunning(true);
       setWorkflowError(null);
       setErrorCount(0);
+      runRef.current = true;
 
       try {
-        let appId = applicationId;
+        let appId = appIdRef.current;
         if (!appId) {
           const createPayload = {
             request_type: service,
@@ -70,6 +128,7 @@ const Analysis = () => {
           const created = await createApplication(authToken, createPayload);
           appId = created.application.id;
           setApplicationId(appId);
+          appIdRef.current = appId;
         }
 
         try {
@@ -82,39 +141,12 @@ const Analysis = () => {
           }
         }
 
-        pollInterval = setInterval(async () => {
-          try {
-            const statusResponse = await getWorkflowStatus(authToken, appId);
-            setWorkflowStatus(statusResponse);
-            setStep((prev) => Math.min(prev + 1, steps.length - 1));
-            retryCount = 0; // Reset on success
-            setErrorCount(0);
-
-            if (statusResponse.status === 'completed') {
-              if (pollInterval) clearInterval(pollInterval);
-              const results = await getWorkflowResults(authToken, appId);
-              setWorkflowResult(results);
-              setView('result');
-            }
-            if (statusResponse.status === 'failed') {
-              if (pollInterval) clearInterval(pollInterval);
-              setWorkflowError(statusResponse.error || 'Workflow failed');
-            }
-          } catch (error) {
-            retryCount++;
-            setErrorCount(retryCount);
-            
-            // Stop polling after MAX_RETRIES consecutive errors or on 404
-            if (retryCount >= MAX_RETRIES || error.message.includes('404') || error.message.includes('not found')) {
-              if (pollInterval) clearInterval(pollInterval);
-              setWorkflowError(error.message || 'Failed to fetch workflow status');
-              setIsRunning(false);
-            }
-          }
-        }, 2000);
+        clearPoll();
+        pollStatus(appId);
       } catch (error) {
         setWorkflowError(error.message || 'Workflow initialization failed');
         setIsRunning(false);
+        runRef.current = false;
       }
     };
 
@@ -122,10 +154,7 @@ const Analysis = () => {
 
     // Cleanup function to clear interval on unmount or re-run
     return () => {
-      if (pollInterval) {
-        clearInterval(pollInterval);
-        pollInterval = null;
-      }
+      clearPoll();
     };
   }, [
     authToken,
@@ -135,7 +164,6 @@ const Analysis = () => {
     uploadedDocuments,
     userData,
     applicationId,
-    requestId,
     setApplicationId,
     setRequestId,
     setWorkflowStatus,

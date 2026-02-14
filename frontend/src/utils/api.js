@@ -24,10 +24,27 @@ const requestJson = async (path, options = {}) => {
 };
 
 export const registerUser = async (payload) => {
-  return requestJson("/auth/register", {
+  const response = await fetch(`${API_BASE_URL}/auth/register`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify(payload)
   });
+
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : {};
+
+  if (response.status === 409) {
+    return data;
+  }
+
+  if (!response.ok) {
+    const message = data.error || data.message || "Request failed";
+    throw new Error(message);
+  }
+
+  return data;
 };
 
 export const loginUser = async (payload) => {
